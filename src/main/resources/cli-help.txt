@@ -1,0 +1,9 @@
+Commands:
+  help                         print help message
+
+  send-dc-request              Send the default request (freedonia to elonia)
+
+  send-dc-request   -f <request file>
+                               Send the request  file (Toop Request) to the connectors /users/send endpoint
+
+  quit                         exit simulator

@@ -17,6 +17,7 @@ package eu.toop.simulator;
 
 import com.helger.photon.jetty.JettyStarter;
 import com.typesafe.config.impl.ConfigImpl;
+import eu.toop.simulator.cli.Cli;
 import org.eclipse.jetty.server.Server;
 
 import javax.annotation.Nonnull;
@@ -44,34 +45,8 @@ public class ToopSimulatorMain {
     Thread simulatorThread = startSimulator(simulationMode);
 
     //now prepare and run commander if we are not in SOLE mode
-    if (simulationMode != SimulationMode.SOLE) {
-
-      //if we are not dc, then no CLI
-      if (simulationMode != SimulationMode.DC)
-        System.setProperty("CLI_ENABLED", "false");
-
-      //only one mode (DC or DP) at a time should be available on the commander
-      System.setProperty("DC_ENABLED", simulationMode == SimulationMode.DC ? "true" : "false");
-      System.setProperty("DP_ENABLED", simulationMode == SimulationMode.DP ? "true" : "false");
-
-      //set up the /to-dc and /to-dp ports on the commander.
-      System.setProperty("DC_PORT", SimulatorConfig.dcPort + "");
-      System.setProperty("DP_PORT", SimulatorConfig.dpPort + "");
-
-      //we need to make sure that commander knows our /from-dc and /from-dp endpoints,
-      //both of the endpoints (/from-dc and /from-dp) on the commander will point to the
-      //simulator. We don't have to worry about that because, the commander is here to communicate
-      //with our simulator. And only once side at a time (DC or DP) will be enabled,
-      //the other side, even if configured, will be ignored (disabled)
-      System.setProperty("FROM_DC_HOST", "localhost");
-      System.setProperty("FROM_DC_PORT", SimulatorConfig.connectorPort + "");
-      System.setProperty("FROM_DP_HOST", "localhost");
-      System.setProperty("FROM_DP_PORT", SimulatorConfig.connectorPort + "");
-
-      ConfigImpl.reloadSystemPropertiesConfig();
-
-      //Tip, top. Run the toop commander
-      //ToopCommanderMain.startCommander();
+    if (simulationMode == SimulationMode.DC) {
+      Cli.startCli();
     }
 
 
@@ -135,8 +110,10 @@ public class ToopSimulatorMain {
           }
         }.setPort(httpPort)
             .setStopPort(httpPort + 100)
-            .setSessionCookieName("TOOP_TC_SESSION")
-            .setContainerIncludeJarPattern(JettyStarter.CONTAINER_INCLUDE_JAR_PATTERN_ALL);
+            .setSessionCookieName("TOOP_TS_SESSION")
+            .setContainerIncludeJarPattern(JettyStarter.CONTAINER_INCLUDE_JAR_PATTERN_ALL)
+            .setAllowAnnotationBasedConfig(true)
+            .setWebXmlResource("WEB-INF/web.xml");
         js.run();
 
       } catch (Exception ex) {

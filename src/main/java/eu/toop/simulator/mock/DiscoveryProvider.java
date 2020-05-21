@@ -140,7 +140,7 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
 
       countryAwareServiceMetadataType.getServiceMetadata().forEach(serviceMetadataType -> {
         DocumentIdentifierType documentIdentifier = serviceMetadataType.getServiceInformation().getDocumentIdentifier();
-        IDocumentTypeIdentifier docID = TCIdentifierFactory.INSTANCE_TC.createDocumentTypeIdentifier(documentIdentifier.getScheme(), documentIdentifier.getValue());
+        IDocumentTypeIdentifier docID = TCIdentifierFactory.INSTANCE.createDocumentTypeIdentifier(documentIdentifier.getScheme(), documentIdentifier.getValue());
 
 
         DIRQuery dirQuery = new DIRQuery(countrycode, docID);
@@ -175,15 +175,15 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
       country.getServiceMetadata().stream().map(ServiceMetadataType::getServiceInformation).forEach(serviceInformation -> {
 
         ParticipantIdentifierType participantIdentifier = serviceInformation.getParticipantIdentifier();
-        IParticipantIdentifier participantID = TCIdentifierFactory.INSTANCE_TC.createParticipantIdentifier(participantIdentifier.getScheme(),
+        IParticipantIdentifier participantID = TCIdentifierFactory.INSTANCE.createParticipantIdentifier(participantIdentifier.getScheme(),
             participantIdentifier.getValue());
 
         DocumentIdentifierType documentIdentifier = serviceInformation.getDocumentIdentifier();
-        IDocumentTypeIdentifier documentTypeID = TCIdentifierFactory.INSTANCE_TC.createDocumentTypeIdentifier(documentIdentifier.getScheme(), documentIdentifier.getValue());
+        IDocumentTypeIdentifier documentTypeID = TCIdentifierFactory.INSTANCE.createDocumentTypeIdentifier(documentIdentifier.getScheme(), documentIdentifier.getValue());
 
         serviceInformation.getProcessList().getProcess().forEach(processType -> {
           ProcessIdentifierType processIdentifier = processType.getProcessIdentifier();
-          IProcessIdentifier procID = TCIdentifierFactory.INSTANCE_TC.createProcessIdentifier(processIdentifier.getScheme(), processIdentifier.getValue());
+          IProcessIdentifier procID = TCIdentifierFactory.INSTANCE.createProcessIdentifier(processIdentifier.getScheme(), processIdentifier.getValue());
           processType.getServiceEndpointList().getEndpoint().forEach(endpointType -> {
             String transportProfile = endpointType.getTransportProfile();
 

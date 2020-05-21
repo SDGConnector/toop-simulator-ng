@@ -73,7 +73,7 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-commons-parent-pom</artifactId>
-        <version>9.4.3-SNAPSHOT</version>
+        <version>9.4.3</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -107,7 +107,6 @@
       <artifactId>tc-web-api</artifactId>
       <version>${toop.version}</version>
     </dependency>
-
 
     <dependency>
       <groupId>eu.toop</groupId>
@@ -174,6 +173,12 @@
       <artifactId>ph-oton-jetty</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.jline</groupId>
+      <artifactId>jline</artifactId>
+      <version>3.9.0</version>
+    </dependency>
+
     <!-- JUnit 4 for testing -->
     <dependency>
       <groupId>junit</groupId>
@@ -181,4 +186,54 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>${basedir}/src/main/resources</directory>
+        <targetPath>${project.build.directory}/classes</targetPath>
+      </resource>
+      <resource>
+        <directory>${basedir}/src/main/webapp</directory>
+        <targetPath>${project.build.directory}/webapp-classes</targetPath>
+      </resource>
+      <resource>
+        <directory>${basedir}/src/test/resources</directory>
+        <targetPath>${project.build.directory}/test-classes</targetPath>
+      </resource>
+    </resources>
+
+    <defaultGoal>package</defaultGoal>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.1</version><!--$NO-MVN-MAN-VER$-->
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+
+            <configuration>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+              <shadedClassifierName>bundle</shadedClassifierName>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
+                  <resource>.RSA</resource>
+                  <resource>.SF</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>eu.toop.simulator.ToopSimulatorMain</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
