@@ -15,7 +15,34 @@
  */
 package eu.toop.simulator.mock;
 
-import com.helger.commons.collection.impl.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Node;
+
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.CommonsHashSet;
+import com.helger.commons.collection.impl.CommonsTreeMap;
+import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsSet;
+import com.helger.commons.collection.impl.ICommonsSortedMap;
 import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
 import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
 import com.helger.commons.url.SimpleURL;
@@ -28,36 +55,16 @@ import com.helger.xsds.bdxr.smp1.DocumentIdentifierType;
 import com.helger.xsds.bdxr.smp1.ParticipantIdentifierType;
 import com.helger.xsds.bdxr.smp1.ProcessIdentifierType;
 import com.helger.xsds.bdxr.smp1.ServiceMetadataType;
-import eu.toop.connector.api.TCIdentifierFactory;
+
+import eu.toop.connector.api.TCConfig;
 import eu.toop.connector.api.dd.IDDErrorHandler;
 import eu.toop.connector.api.dd.IDDServiceGroupHrefProvider;
 import eu.toop.connector.api.dd.IDDServiceMetadataProvider;
 import eu.toop.connector.api.dsd.IDSDParticipantIDProvider;
 import eu.toop.connector.api.simulator.CountryAwareServiceMetadataListType;
 import eu.toop.connector.api.simulator.ObjectFactory;
-import eu.toop.connector.api.simulator.TCSimulatorJAXB;
 import eu.toop.simulator.ToopSimulatorResources;
 import eu.toop.simulator.util.JAXBUtil;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Node;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * This class plays the role of both a directory and an SMP server. It reads its contents
@@ -140,7 +147,7 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
 
       countryAwareServiceMetadataType.getServiceMetadata().forEach(serviceMetadataType -> {
         DocumentIdentifierType documentIdentifier = serviceMetadataType.getServiceInformation().getDocumentIdentifier();
-        IDocumentTypeIdentifier docID = TCIdentifierFactory.INSTANCE_TC.createDocumentTypeIdentifier(documentIdentifier.getScheme(), documentIdentifier.getValue());
+        IDocumentTypeIdentifier docID = TCConfig.getIdentifierFactory ().createDocumentTypeIdentifier(documentIdentifier.getScheme(), documentIdentifier.getValue());
 
 
         DIRQuery dirQuery = new DIRQuery(countrycode, docID);
@@ -155,7 +162,7 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
 
         //now add a new participant identifier to this set.
         //TODO: vulnerable, do null check
-        identifierSet.add(TCIdentifierFactory.INSTANCE.createParticipantIdentifier(serviceMetadataType.getServiceInformation().getParticipantIdentifier().getScheme(),
+        identifierSet.add(TCConfig.getIdentifierFactory ().createParticipantIdentifier(serviceMetadataType.getServiceInformation().getParticipantIdentifier().getScheme(),
             serviceMetadataType.getServiceInformation().getParticipantIdentifier().getValue()));
       });
     });
@@ -175,15 +182,15 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
       country.getServiceMetadata().stream().map(ServiceMetadataType::getServiceInformation).forEach(serviceInformation -> {
 
         ParticipantIdentifierType participantIdentifier = serviceInformation.getParticipantIdentifier();
-        IParticipantIdentifier participantID = TCIdentifierFactory.INSTANCE_TC.createParticipantIdentifier(participantIdentifier.getScheme(),
+        IParticipantIdentifier participantID = TCConfig.getIdentifierFactory ().createParticipantIdentifier(participantIdentifier.getScheme(),
             participantIdentifier.getValue());
 
         DocumentIdentifierType documentIdentifier = serviceInformation.getDocumentIdentifier();
-        IDocumentTypeIdentifier documentTypeID = TCIdentifierFactory.INSTANCE_TC.createDocumentTypeIdentifier(documentIdentifier.getScheme(), documentIdentifier.getValue());
+        IDocumentTypeIdentifier documentTypeID = TCConfig.getIdentifierFactory ().createDocumentTypeIdentifier(documentIdentifier.getScheme(), documentIdentifier.getValue());
 
         serviceInformation.getProcessList().getProcess().forEach(processType -> {
           ProcessIdentifierType processIdentifier = processType.getProcessIdentifier();
-          IProcessIdentifier procID = TCIdentifierFactory.INSTANCE_TC.createProcessIdentifier(processIdentifier.getScheme(), processIdentifier.getValue());
+          IProcessIdentifier procID = TCConfig.getIdentifierFactory ().createProcessIdentifier(processIdentifier.getScheme(), processIdentifier.getValue());
           processType.getServiceEndpointList().getEndpoint().forEach(endpointType -> {
             String transportProfile = endpointType.getTransportProfile();
 
