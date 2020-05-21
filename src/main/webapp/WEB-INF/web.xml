@@ -31,7 +31,6 @@
   <listener>
     <listener-class>eu.toop.simulator.web.TSWebAppListener</listener-class>
   </listener>
-
   <servlet>
     <servlet-name>PhotonAPIServlet</servlet-name>
     <servlet-class>com.helger.photon.api.servlet.PhotonAPIServlet</servlet-class>
