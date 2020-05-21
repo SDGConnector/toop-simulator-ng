@@ -21,6 +21,7 @@ import eu.toop.simulator.cli.Cli;
 import org.eclipse.jetty.server.Server;
 
 import javax.annotation.Nonnull;
+import java.io.File;
 
 /**
  * The program entry point
@@ -55,28 +56,6 @@ public class ToopSimulatorMain {
   }
 
   private static Thread startSimulator(SimulationMode simulationMode) throws InterruptedException {
-    String dcURL;
-    String dpURL;
-
-    if (simulationMode == SimulationMode.DC) {
-      //we are simulating dc, so ignore the config URL and create one on localhost
-      dcURL = "http://localhost:" + SimulatorConfig.dcPort + "/to-dc";
-    } else {
-      //we are not simulating dc, it means we need an actual dc endpoint. get it from config
-      dcURL = SimulatorConfig.dcURL;
-    }
-
-    if (simulationMode == SimulationMode.DP) {
-      //we are simulating dp, so ignore the config URL and create one on localhost
-      dpURL = "http://localhost:" + SimulatorConfig.dpPort + "/to-dp";
-    } else {
-      //we are not simulating dp, it means we need an actual dp endpoint. get it from config
-      dpURL = SimulatorConfig.dpURL;
-    }
-
-    //TCConfig.setMPToopInterfaceDCOverrideUrl(dcURL);
-    //TCConfig.setMPToopInterfaceDPOverrideUrl(dpURL);
-
     final Object serverLock = new Object();
 
     //start jetty
@@ -111,9 +90,7 @@ public class ToopSimulatorMain {
         }.setPort(httpPort)
             .setStopPort(httpPort + 100)
             .setSessionCookieName("TOOP_TS_SESSION")
-            .setContainerIncludeJarPattern(JettyStarter.CONTAINER_INCLUDE_JAR_PATTERN_ALL)
-            .setAllowAnnotationBasedConfig(true)
-            .setWebXmlResource("WEB-INF/web.xml");
+            .setContainerIncludeJarPattern(JettyStarter.CONTAINER_INCLUDE_JAR_PATTERN_ALL);
         js.run();
 
       } catch (Exception ex) {
@@ -136,4 +113,5 @@ public class ToopSimulatorMain {
     //TCAPIConfig.setDDServiceMetadataProvider(DiscoveryProvider.getInstance());
     //TCAPIConfig.setDSDPartyIDIdentifier(DiscoveryProvider.getInstance());
   }
+
 }

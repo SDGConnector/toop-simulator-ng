@@ -42,26 +42,6 @@ public class SimulatorConfig {
   public static final SimulationMode mode;
 
   /**
-   * The port that the /to-dc endpoint will be published on. Ignored if mode != DC
-   */
-  public static final int dcPort;
-
-  /**
-   * The port that the /to-dp endpoint will be published on. Ignored if  mode != DP
-   */
-  public static final int dpPort;
-
-  /**
-   * the http endpoint for an actual /to-dc (iff it is not simulated)
-   */
-  public static final String dcURL;
-
-  /**
-   * the http endpoint for an actual /to-dp (iff it is not simulated)
-   */
-  public static final String dpURL;
-
-  /**
    * The port that the connector HTTP server will be published on
    */
   public static final int connectorPort;
@@ -80,21 +60,11 @@ public class SimulatorConfig {
       LOGGER.error(ex.getMessage(), ex);
       throw ex;
     }
-    dcPort = conf.getInt("toop-simulator.dcPort");
-    dpPort = conf.getInt("toop-simulator.dpPort");
-
-    dcURL = conf.getString("toop-simulator.dcURL");
-    dpURL = conf.getString("toop-simulator.dpURL");
-
     connectorPort = conf.getInt("toop-simulator.connectorPort");
 
     mockGateway = conf.getBoolean("toop-simulator.mockGateway");
 
     LOGGER.debug("mode: " + mode);
-    LOGGER.debug("dcPort: " + dcPort);
-    LOGGER.debug("dpPort: " + dpPort);
-    LOGGER.debug("dcURL: " + dcURL);
-    LOGGER.debug("dpURL: " + dpURL);
     LOGGER.debug("connectorPort: " + connectorPort);
     LOGGER.debug("mockGateway: " + mockGateway);
   }

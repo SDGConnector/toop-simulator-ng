@@ -67,18 +67,6 @@ public class ToopSimulatorResources {
 
 
   /**
-   * Copy the toop-simulator.conf, sms.conf and discovery-data.xml from classpath
-   * to the current directory, so that the user can edit them without
-   * dealing with the jar file. <br>
-   * Don't touch if they exist
-   */
-  public static void transferResourcesToFileSystem() {
-    Util.transferResourceToDirectory(DEFAULT_DISCOVERY_DATA_RESOURCE, SIMULATOR_CONFIG_DIR);
-    Util.transferResourceToDirectory(DEFAULT_CONFIG_RESOURCE, SIMULATOR_CONFIG_DIR);
-  }
-
-
-  /**
    * Returns the <code>toop-simulator.conf</code> resource URL
    * @return the <code>toop-simulator.conf</code> resource URL
    */
@@ -123,5 +111,22 @@ public class ToopSimulatorResources {
     }
 
     return ToopSimulatorResources.class.getResource(cpResourceCandidate);
+  }
+
+
+
+  /**
+   * Copy the toop-simulator.conf and discovery-data.xml from classpath
+   * to the current directory, so that the user can edit them without
+   * dealing with the jar file. <br>
+   * Don't touch if they exist
+   */
+  public static void transferResourcesToFileSystem() {
+    Util.transferResourceToDirectory(DEFAULT_DISCOVERY_DATA_RESOURCE, SIMULATOR_CONFIG_DIR);
+    Util.transferResourceToDirectory(DEFAULT_CONFIG_RESOURCE, SIMULATOR_CONFIG_DIR);
+
+    new File("data").mkdir();
+
+    Util.transferResourceToDirectory("toop-request.xml", "data");
   }
 }
