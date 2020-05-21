@@ -173,11 +173,6 @@
       <artifactId>ph-oton-jetty</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>org.jline</groupId>
-      <artifactId>jline</artifactId>
-      <version>3.9.0</version>
-    </dependency>
 
     <!-- JUnit 4 for testing -->
     <dependency>

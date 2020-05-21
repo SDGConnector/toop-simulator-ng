@@ -15,7 +15,6 @@
  */
 package eu.toop.simulator.cli;
 
-import org.jline.reader.UserInterruptException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,7 +66,7 @@ public class Cli {
           Thread.sleep(100);
         }
       }
-    } catch (UserInterruptException ex) {
+    } catch (Exception ex) {
       ex.printStackTrace();
     }
   }
