@@ -165,6 +165,12 @@
     </dependency>
 
     <dependency>
+      <groupId>eu.toop</groupId>
+      <artifactId>toop-demoui-dplib</artifactId>
+      <version>${toop.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-oton-api</artifactId>
     </dependency>

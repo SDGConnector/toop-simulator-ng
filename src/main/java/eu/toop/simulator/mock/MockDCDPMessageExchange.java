@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2018-2020 toop.eu
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,19 +19,31 @@ package eu.toop.simulator.mock;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.error.level.EErrorLevel;
 import eu.toop.connector.api.me.IMessageExchangeSPI;
-import eu.toop.connector.api.me.incoming.IMEIncomingHandler;
+import eu.toop.connector.api.me.incoming.*;
 import eu.toop.connector.api.me.model.MEMessage;
 import eu.toop.connector.api.me.model.MEPayload;
 import eu.toop.connector.api.me.outgoing.IMERoutingInformation;
 import eu.toop.connector.api.me.outgoing.MEOutgoingException;
+import eu.toop.connector.app.incoming.MPTrigger;
+import eu.toop.edm.EDMErrorResponse;
+import eu.toop.edm.EDMRequest;
+import eu.toop.edm.EDMResponse;
+import eu.toop.edm.IEDMTopLevelObject;
+import eu.toop.edm.xml.EDMPayloadDeterminator;
+import eu.toop.kafkaclient.ToopKafkaClient;
+import eu.toop.playground.dp.DPException;
+import eu.toop.playground.dp.service.ToopDP;
+import eu.toop.simulator.SimulationMode;
+import eu.toop.simulator.SimulatorConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.servlet.ServletContext;
-import java.io.IOException;
 
 /**
  * TOOP {@link eu.toop.connector.api.me.IMessageExchangeSPI} implementation using ph-as4.
@@ -44,6 +56,8 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
   private static final Logger LOGGER = LoggerFactory.getLogger(MockDCDPMessageExchange.class);
 
   private IMEIncomingHandler m_aIncomingHandler;
+
+  private final ToopDP miniDP = new ToopDP();
 
   public MockDCDPMessageExchange() {
   }
@@ -67,40 +81,67 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
   @Override
   public void sendOutgoing(@Nonnull IMERoutingInformation imeRoutingInformation, @Nonnull MEMessage meMessage) throws MEOutgoingException {
     try {
-      processRequestResponse(meMessage);
-    } catch (Exception ex) {
+      final MEPayload aHead = meMessage.payloads().getFirst();
+      final IEDMTopLevelObject aTopLevel = EDMPayloadDeterminator.parseAndFind(aHead.getData().getInputStream());
+      // TODO get metadata in here
+      final MEIncomingTransportMetadata aMetadata = new MEIncomingTransportMetadata(null, null, null, null);
+      if (aTopLevel instanceof EDMRequest) {
+        if (SimulatorConfig.mode == SimulationMode.DP) {
+          loopBackFromElonia((EDMRequest) aTopLevel, aMetadata);
+        } else {
+          //send it to the configured /to-dp
+          sendRequestToDp((EDMRequest) aTopLevel);
+        }
+      } else if (aTopLevel instanceof EDMResponse) {
+        // Response, send to freedonia
+        final ICommonsList<MEPayload> aAttachments = new CommonsArrayList<>();
+        for (final MEPayload aItem : meMessage.payloads())
+          if (aItem != aHead)
+            aAttachments.add(aItem);
+        m_aIncomingHandler.handleIncomingResponse(new IncomingEDMResponse((EDMResponse) aTopLevel,
+            aAttachments,
+            aMetadata));
+      } else if (aTopLevel instanceof EDMErrorResponse) {
+        // Error response
+        m_aIncomingHandler.handleIncomingErrorResponse(new IncomingEDMErrorResponse((EDMErrorResponse) aTopLevel,
+            aMetadata));
+      } else {
+        // Unknown
+        ToopKafkaClient.send(EErrorLevel.ERROR, () -> "Unsupported Message: " + aTopLevel);
+      }
+    } catch (MEIncomingException ex) {
       throw new MEOutgoingException(ex.getMessage(), ex);
     }
   }
 
-  public void processRequestResponse(@Nonnull MEMessage aMessage) throws IOException {
+  /**
+   * Send the request directly to the DP/to-dp
+   *
+   * @param aTopLevel
+   */
+  private void sendRequestToDp(EDMRequest aTopLevel) {
 
-    final ICommonsList<MEPayload> plList = aMessage.getAllPayloads();
+  }
 
-    plList.forEach(mePayload -> {
-      //// Extract from ASiC
-      //final ICommonsList<AsicReadEntry> aAttachments = new CommonsArrayList<>();
-      //
-      //final Serializable aMsg = ToopMessageBuilder140.parseRequestOrResponse(mePayload.getData().getInputStream(), aAttachments::add);
-//
-      //// Response before Request because it is derived from Request!
-      //if (aMsg instanceof TDETOOPResponseType) {
-      //  // This is the way from DP back to DC; we're in DC incoming mode
-      //  final ToopResponseWithAttachments140 aResponse = new ToopResponseWithAttachments140((TDETOOPResponseType) aMsg,
-      //      aAttachments);
-      //  m_aIncomingHandler.handleIncomingResponse(aResponse);
-      //} else if (aMsg instanceof TDETOOPRequestType) {
-      //  // This is the way from DC to DP; we're in DP incoming mode
-      //  final ToopRequestWithAttachments140 aRequest = new ToopRequestWithAttachments140((TDETOOPRequestType) aMsg,
-      //      aAttachments);
-//
-      //  IncomingEDMRequest
-      //  m_aIncomingHandler.handleIncomingRequest();
-      //} else
-      //  ToopKafkaClient.send(EErrorLevel.ERROR, () -> "Unsupported Message: " + aMsg);
-    });
-    //else
-    //  ToopKafkaClient.send(EErrorLevel.WARN, () -> "MEMessage contains no payload: " + aMessage);
+  private void loopBackFromElonia(EDMRequest aTopLevel, MEIncomingTransportMetadata aMetadata) throws MEOutgoingException {
+    EDMRequest request = aTopLevel;
+    byte[] responseBytes;
+    try {
+      responseBytes = miniDP.createXMLResponseFromRequest(request.getWriter().getAsBytes());
+      if (responseBytes == null)
+        throw new IllegalStateException("Coudln't get automatic response from elonia");
+    } catch (DPException e) {
+      throw new MEOutgoingException(e.getMessage(), e);
+    }
+    EDMResponse edmResponse = EDMResponse.reader().read(responseBytes);
+    //we have a response from DP, push it back
+    try {
+      m_aIncomingHandler.handleIncomingResponse(new IncomingEDMResponse(edmResponse,
+          new CommonsArrayList<>(),
+          aMetadata));
+    } catch (MEIncomingException e) {
+      throw new MEOutgoingException(e.getMessage(), e);
+    }
   }
 
 

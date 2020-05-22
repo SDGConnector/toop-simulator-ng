@@ -46,10 +46,22 @@ public class SimulatorConfig {
    */
   public static final int connectorPort;
 
+
+
   /**
    * A flag that indicates whether the gateway communication should be mocked (<code>true</code>) or not (<code>false</code>)
    */
   public static final boolean mockGateway;
+
+  /**
+   * The /to-dc endpoint URL of the DC (used only when not in DC mode, i.e. DC is not being simulated)
+   */
+  public static final String dcEndpoint;
+
+  /**
+   * The /to-dp endpoint URL of the DP (used only when not in DP mode, i.e. DP is not being simulated)
+   */
+  public static final String dpEndpoint;
 
   static {
     Config conf = Util.resolveConfiguration(ToopSimulatorResources.getSimulatorConfResource(), true);
@@ -61,10 +73,14 @@ public class SimulatorConfig {
       throw ex;
     }
     connectorPort = conf.getInt("toop-simulator.connectorPort");
+    dcEndpoint = conf.getString("toop-simulator.dcEndpoint");
+    dpEndpoint = conf.getString("toop-simulator.dpEndpoint");
 
     mockGateway = conf.getBoolean("toop-simulator.mockGateway");
 
     LOGGER.debug("mode: " + mode);
+    LOGGER.debug("dcEndpoint: " + dcEndpoint);
+    LOGGER.debug("dpEndpoint: " + dpEndpoint);
     LOGGER.debug("connectorPort: " + connectorPort);
     LOGGER.debug("mockGateway: " + mockGateway);
   }

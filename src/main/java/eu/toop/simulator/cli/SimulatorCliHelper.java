@@ -56,7 +56,7 @@ public class SimulatorCliHelper {
    * @return boolean
    */
   public boolean readLine() {
-    System.out.println(prompt);
+    System.out.print(prompt);
     try {
       lastLine = reader.readLine();//prompt, sdf.format(Calendar.getInstance().getTime()), (MaskingCallback) null, null) != null;
     } catch (IOException e) {

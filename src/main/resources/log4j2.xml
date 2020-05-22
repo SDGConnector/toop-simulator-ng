@@ -37,5 +37,8 @@
     <Logger name="com.helger.httpclient" level="off" additivity="false">
       <AppenderRef ref="STDOUT"/>
     </Logger>
+    <Logger name="com.helger.xservlet" level="off" additivity="false">
+      <AppenderRef ref="STDOUT"/>
+    </Logger>
   </Loggers>
 </Configuration>
