@@ -120,6 +120,11 @@
     </dependency>
     <dependency>
       <groupId>eu.toop</groupId>
+      <artifactId>toop-commons</artifactId>
+      <version>${toop.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>eu.toop</groupId>
       <artifactId>dsd-api</artifactId>
       <version>${toop.version}</version>
     </dependency>
