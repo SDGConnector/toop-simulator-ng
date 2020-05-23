@@ -44,6 +44,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.servlet.ServletContext;
+import java.io.InputStream;
 
 /**
  * TOOP {@link eu.toop.connector.api.me.IMessageExchangeSPI} implementation using ph-as4.
@@ -82,7 +83,8 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
   public void sendOutgoing(@Nonnull IMERoutingInformation imeRoutingInformation, @Nonnull MEMessage meMessage) throws MEOutgoingException {
     try {
       final MEPayload aHead = meMessage.payloads().getFirst();
-      final IEDMTopLevelObject aTopLevel = EDMPayloadDeterminator.parseAndFind(aHead.getData().getInputStream());
+      final InputStream inputStream = aHead.getData().getInputStream();
+      final IEDMTopLevelObject aTopLevel = EDMPayloadDeterminator.parseAndFind(inputStream);
       // TODO get metadata in here
       final MEIncomingTransportMetadata aMetadata = new MEIncomingTransportMetadata(null, null, null, null);
       if (aTopLevel instanceof EDMRequest) {
@@ -109,7 +111,8 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
         // Unknown
         ToopKafkaClient.send(EErrorLevel.ERROR, () -> "Unsupported Message: " + aTopLevel);
       }
-    } catch (MEIncomingException ex) {
+    } catch (Exception ex) {
+      LOGGER.error(ex.getMessage(), ex);
       throw new MEOutgoingException(ex.getMessage(), ex);
     }
   }
