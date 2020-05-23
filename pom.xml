@@ -85,13 +85,13 @@
 
     <dependency>
       <groupId>eu.toop</groupId>
-      <artifactId>tc-web-api</artifactId>
+      <artifactId>toop-regrep</artifactId>
       <version>${toop.version}</version>
     </dependency>
 
     <dependency>
       <groupId>eu.toop</groupId>
-      <artifactId>toop-regrep</artifactId>
+      <artifactId>tc-web-api</artifactId>
       <version>${toop.version}</version>
     </dependency>
 
