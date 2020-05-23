@@ -77,13 +77,6 @@
       <version>9.4.3</version>
     </dependency>
 
-
-    <dependency>
-      <groupId>eu.toop</groupId>
-      <artifactId>toop-regrep</artifactId>
-      <version>${toop.version}</version>
-    </dependency>
-    
     <dependency>
       <groupId>com.sun.activation</groupId>
       <artifactId>jakarta.activation</artifactId>
@@ -93,6 +86,12 @@
     <dependency>
       <groupId>eu.toop</groupId>
       <artifactId>tc-web-api</artifactId>
+      <version>${toop.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>eu.toop</groupId>
+      <artifactId>toop-regrep</artifactId>
       <version>${toop.version}</version>
     </dependency>
 
