@@ -28,7 +28,7 @@
   <groupId>eu.toop</groupId>
   <artifactId>toop-simulator-ng</artifactId>
   <version>2.0.0-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
 
   <name>toop-simulator-ng</name>
   <description>Base POM to build the TOOP Simulator NG</description>
@@ -36,6 +36,7 @@
 
   <properties>
     <toop.version>2.0.0-SNAPSHOT</toop.version>
+    <ph-xsds.version>2.2.6</ph-xsds.version>
   </properties>
 
   <inceptionYear>2020</inceptionYear>
@@ -68,39 +69,26 @@
     </developer>
   </developers>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>com.helger</groupId>
-        <artifactId>ph-commons-parent-pom</artifactId>
-        <version>9.4.4</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.helger</groupId>
-        <artifactId>ph-web-parent-pom</artifactId>
-        <version>9.1.12</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.helger</groupId>
-        <artifactId>ph-ubl-parent-pom</artifactId>
-        <version>6.2.1</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.helger</groupId>
-        <artifactId>phoss-directory-parent-pom</artifactId>
-        <version>0.8.6</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <dependencies>
+
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-commons</artifactId>
+      <version>9.4.3</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>eu.toop</groupId>
+      <artifactId>toop-regrep</artifactId>
+      <version>${toop.version}</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.sun.activation</groupId>
+      <artifactId>jakarta.activation</artifactId>
+      <version>1.2.2</version>
+    </dependency>
 
     <dependency>
       <groupId>eu.toop</groupId>
@@ -110,29 +98,28 @@
 
     <dependency>
       <groupId>eu.toop</groupId>
-      <artifactId>toop-regrep</artifactId>
-      <version>${toop.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>eu.toop</groupId>
       <artifactId>toop-edm</artifactId>
       <version>${toop.version}</version>
     </dependency>
+
     <dependency>
       <groupId>eu.toop</groupId>
       <artifactId>toop-commons</artifactId>
       <version>${toop.version}</version>
     </dependency>
+
     <dependency>
       <groupId>eu.toop</groupId>
       <artifactId>dsd-api</artifactId>
       <version>${toop.version}</version>
     </dependency>
+
     <dependency>
       <groupId>eu.toop</groupId>
       <artifactId>tc-api</artifactId>
       <version>${toop.version}</version>
     </dependency>
+
     <!-- Logging -->
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
@@ -163,6 +150,7 @@
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
     </dependency>
+
     <dependency>
       <groupId>com.ftpix</groupId>
       <artifactId>sherdog-parser</artifactId>
@@ -178,17 +166,19 @@
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-oton-api</artifactId>
+      <version>8.2.3</version>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-oton-jetty</artifactId>
+      <version>8.2.3</version>
     </dependency>
-
 
     <!-- JUnit 4 for testing -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+      <version>4.13</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
