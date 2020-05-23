@@ -46,9 +46,9 @@ public class ToopSimulatorMain {
     Thread simulatorThread = startSimulator(simulationMode);
 
     //now prepare and run commander if we are not in SOLE mode
-    if (simulationMode == SimulationMode.DC) {
+    //if (simulationMode == SimulationMode.DC) {
       Cli.startCli();
-    }
+    //}
 
 
     //wait for the simulator thread to exit

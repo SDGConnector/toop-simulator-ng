@@ -123,7 +123,7 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
    * @param aTopLevel
    */
   private void sendRequestToDp(EDMRequest aTopLevel) {
-
+    //TODO: send the request directly to SimulatorConfig.dpEndpoint
   }
 
   private void loopBackFromElonia(EDMRequest aTopLevel, MEIncomingTransportMetadata aMetadata) throws MEOutgoingException {
