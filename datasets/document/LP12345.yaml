@@ -1,0 +1,28 @@
+legalPersonID: LP12345
+description: A small description with various words.
+title: An example document
+distribution:
+  documentURI: www.example.com/document.pdf
+  documentDescription: Example PDF
+  documentType: PDF
+  localeCode: EN
+ids:
+  - id1
+  - id2
+issued: 2020-03-02T03:03
+language: EN
+lastModified: 2020-03-02T03:03
+validFrom: 2020-03-02T03:03
+validTo: 2021-03-02T03:03
+repositoryItemRef:
+  link: www.example.com/document.pdf
+  title: Example PDF
+creator:
+  id: 1234
+  idScheme: VAT
+  name: Elonian Authority
+  postName: ElonianPostName
+qualifiedRelation:
+  - description: Legal Description
+    title: Legal title
+    id: qwerty
