@@ -192,6 +192,7 @@
     <resources>
       <resource>
         <directory>${basedir}/src/main/webapp</directory>
+        <targetPath>${project.build.directory}/webapp-classes</targetPath>
         <includes>
           <include>WEB-INF/**/*</include>
         </includes>

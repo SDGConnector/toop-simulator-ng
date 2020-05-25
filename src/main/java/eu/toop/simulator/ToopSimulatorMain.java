@@ -19,6 +19,9 @@ import com.helger.photon.jetty.JettyStarter;
 import eu.toop.connector.api.TCConfig;
 import eu.toop.simulator.cli.Cli;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.util.resource.JarFileResource;
+import org.eclipse.jetty.util.resource.Resource;
+import org.eclipse.jetty.util.resource.URLResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,9 +95,14 @@ public class ToopSimulatorMain {
         }.setPort(httpPort)
             .setStopPort(httpPort + 100)
             .setSessionCookieName("TOOP_TS_SESSION")
+            .setWebXmlResource(ToopSimulatorMain.class.getClassLoader().getResource("WEB-INF/web.xml").toString())
             .setContainerIncludeJarPattern(JettyStarter.CONTAINER_INCLUDE_JAR_PATTERN_ALL)
             .setWebInfIncludeJarPattern(JettyStarter.CONTAINER_INCLUDE_JAR_PATTERN_ALL)
             .setAllowAnnotationBasedConfig(true);
+
+
+        LOGGER.info("JETTY RESOURCE BASE " + js.getResourceBase());
+        LOGGER.info("JETTY WEBXML RES BASE " + js.getWebXmlResource());
         js.run();
 
       } catch (Exception ex) {
