@@ -54,5 +54,6 @@ public class ToopSimulatorResources {
   public static void transferResourcesToFileSystem() {
     new File("data").mkdir();
     Util.transferResourceToDirectory("toop-request.xml", "data");
+    Util.transferAllResourcesToFileSystem("datasets");
   }
 }

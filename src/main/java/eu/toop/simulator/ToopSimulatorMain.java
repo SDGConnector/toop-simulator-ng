@@ -92,7 +92,9 @@ public class ToopSimulatorMain {
         }.setPort(httpPort)
             .setStopPort(httpPort + 100)
             .setSessionCookieName("TOOP_TS_SESSION")
-            .setContainerIncludeJarPattern(JettyStarter.CONTAINER_INCLUDE_JAR_PATTERN_ALL);
+            .setContainerIncludeJarPattern(JettyStarter.CONTAINER_INCLUDE_JAR_PATTERN_ALL)
+            .setWebInfIncludeJarPattern(JettyStarter.CONTAINER_INCLUDE_JAR_PATTERN_ALL)
+            .setAllowAnnotationBasedConfig(true);
         js.run();
 
       } catch (Exception ex) {

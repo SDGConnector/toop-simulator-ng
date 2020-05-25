@@ -97,4 +97,13 @@ public class Util {
       }
     }
   }
+
+  /**
+   * Transfer ALL the resources residing under the provided classpath resource to the
+   * filesystem with the same directory structure.
+   * @param datasets
+   */
+  public static void transferAllResourcesToFileSystem(String datasets) {
+
+  }
 }

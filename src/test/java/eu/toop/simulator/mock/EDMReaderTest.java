@@ -4,7 +4,6 @@ import eu.toop.edm.IEDMTopLevelObject;
 import eu.toop.edm.xml.EDMPayloadDeterminator;
 import org.junit.Test;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
