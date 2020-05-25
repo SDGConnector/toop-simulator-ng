@@ -86,7 +86,11 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
       final InputStream inputStream = aHead.getData().getInputStream();
       final IEDMTopLevelObject aTopLevel = EDMPayloadDeterminator.parseAndFind(inputStream);
       // TODO get metadata in here
-      final MEIncomingTransportMetadata aMetadata = new MEIncomingTransportMetadata(null, null, null, null);
+      // NOTE: (yerlibilgin): I got the metadata as follows:
+      final MEIncomingTransportMetadata aMetadata = new MEIncomingTransportMetadata(
+          imeRoutingInformation.getSenderID(), imeRoutingInformation.getReceiverID(),
+          imeRoutingInformation.getDocumentTypeID(), imeRoutingInformation.getProcessID());
+
       if (aTopLevel instanceof EDMRequest) {
         if (SimulatorConfig.mode == SimulationMode.DP) {
           loopBackFromElonia((EDMRequest) aTopLevel, aMetadata);
@@ -139,9 +143,18 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
     EDMResponse edmResponse = EDMResponse.reader().read(responseBytes);
     //we have a response from DP, push it back
     try {
+
+      //we need to create a new metadat where the sender and receiver are switched.
+
+      final MEIncomingTransportMetadata aMetadataInverse = new MEIncomingTransportMetadata(
+          aMetadata.getReceiverID(), aMetadata.getSenderID(),
+          aMetadata.getDocumentTypeID(), aMetadata.getProcessID());
+
       m_aIncomingHandler.handleIncomingResponse(new IncomingEDMResponse(edmResponse,
+          //NOTE: payloads are empty
           new CommonsArrayList<>(),
-          aMetadata));
+          aMetadataInverse));
+
     } catch (MEIncomingException e) {
       throw new MEOutgoingException(e.getMessage(), e);
     }

@@ -37,25 +37,6 @@ public class Util {
   private static final Logger LOGGER = LoggerFactory.getLogger(Util.class);
 
   /**
-   * Check if the first bytes of <code>src</code> match <code>probe</code>
-   *
-   * @param src byte array
-   * @param probe byte array
-   * @return <code>true</code> if they match, <code>false</code> if not.
-   */
-  public static boolean matchHeader(byte[] src, byte[] probe) {
-    if (src == null || probe == null || src.length < probe.length)
-      return false;
-
-    for (int i = 0; i < probe.length; ++i) {
-      if (src[i] != probe[i])
-        return false;
-    }
-
-    return true;
-  }
-
-  /**
    * <p>Try to parse and resolve the given URL as a HOCON resource. If <code>includeSys == true</code> then
    * a System Properties are also added as fallback</p>
    *
@@ -74,41 +55,6 @@ public class Util {
     }
 
     return config.resolve();
-  }
-
-  /**
-   * Checks if the given path exists as a file, and load its input stream,
-   * if not, then tries to load it from the classpath as "/" + path if it doesn't begin with a slash already
-   * @param path
-   * @return
-   */
-  public static InputStream loadFileOrResourceStream(String path) throws FileNotFoundException {
-    ValueEnforcer.notEmpty(path, "file or resource path cannot be null");
-    if (new File(path).exists())
-      return new FileInputStream(path);
-    else {
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace("file " + path + " missing. Try classpath resource");
-      }
-      String resourcePath;
-      if (!path.startsWith("/"))
-        resourcePath = "/" + path;
-      else
-        resourcePath = path;
-
-      //never mind the classpath, just try on the current class
-      InputStream inputStream = Util.class.getResourceAsStream(resourcePath);
-
-      if (inputStream == null) {
-        //panic, not found
-        throw new FileNotFoundException("A file [" + path + "] or classpath resource [" + resourcePath + "] was not found");
-      }
-
-      if (LOGGER.isTraceEnabled()) {
-        LOGGER.trace(resourcePath + " hit");
-      }
-      return inputStream;
-    }
   }
 
   /**
@@ -150,27 +96,5 @@ public class Util {
         LOGGER.error("Failed to copy resource " + path + " to the local directroy.", ex);
       }
     }
-  }
-
-  /**
-   * <p>If the file with name <code>pathName</code> exists then its path is returned as an URL<br><br>otherwise,
-   * it tries to find the resource with name <code>pathName</code> on the classpath and load its URL and return</p>
-   * @param pathName the file or classpath resource for which an URL is be resolved.
-   * @return the resolved URL
-   */
-  public static URL getFileOrResourceAsURL(String pathName) {
-    URL url;
-
-    File file = new File(pathName);
-    if (file.exists()) {
-      try {
-        url = file.toURI().toURL();
-      } catch (MalformedURLException e) {
-        throw new IllegalArgumentException("Invalid URL \"" + pathName + "\" [MalformedURLException " + e.getMessage() + "]");
-      }
-    } else {
-      url = Util.class.getClassLoader().getResource(pathName);
-    }
-    return url;
   }
 }

@@ -48,6 +48,7 @@ public class Cli {
 
           switch (command.getMainCommand()) {
             case SimulatorCliHelper.CMD_SEND_DC_REQUEST:
+            case "sdt": //shortcut for send-dc-reqest
               CommandProcessor.processSendRequestCommand(command);
               break;
 

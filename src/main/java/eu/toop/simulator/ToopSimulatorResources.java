@@ -26,94 +26,24 @@ import java.net.URL;
  */
 public class ToopSimulatorResources {
 
-  /**
-   * The root directory for the resources
-   */
-    public static final String SIMULATOR_CONFIG_DIR = resolveFromEnvOrSystem("SIMULATOR_CONFIG_DIR", "./config");
-
-  /**
-   * The path for disovery-data.xml
-   */
-  public static final String CONFIG_DISCOVERY_DATA_XML = SIMULATOR_CONFIG_DIR + "discovery-data.xml";
-
-  /**
-   * The path for toop-simulator.conf
-   */
-  public static final String CONFIG_TOOP_SIMULATOR_CONF = SIMULATOR_CONFIG_DIR + "toop-simulator.conf";
-  private static final String DEFAULT_CONFIG_RESOURCE = "/config/toop-simulator.conf";
-  private static final String DEFAULT_DISCOVERY_DATA_RESOURCE = "/config/discovery-data.xml";
-
-
-  /**
-   * Try to get the value of the given <code>key</code> from ENV. If it doesn't exit, then System properties are
-   * tried. Finally the <code>defaultValue</code> is returned if System property also does not exist.
-   *
-   * @param key          the key to be resolved
-   * @param defaultValue the default value when the key is not found in the ENV or System properties.
-   * @return the resolved value
-   */
-  private static String resolveFromEnvOrSystem(String key, String defaultValue) {
-    String value = System.getenv(key);
-    if (value == null) {
-      value = System.getProperty(key, defaultValue);
-    }
-
-    //make sure that the path has a "/" at the end
-    if (!value.endsWith("/"))
-      value += "/";
-
-    return value;
-  }
-
+  private static final String DEFAULT_CONFIG_RESOURCE = "/toop-simulator.conf";
+  private static final String DEFAULT_DISCOVERY_DATA_RESOURCE = "/discovery-data.xml";
 
   /**
    * Returns the <code>toop-simulator.conf</code> resource URL
    * @return the <code>toop-simulator.conf</code> resource URL
    */
   public static URL getSimulatorConfResource() {
-    String fileCandidate = CONFIG_TOOP_SIMULATOR_CONF;
-    String cpResourceCandidate = DEFAULT_CONFIG_RESOURCE;
-
-    return getUrlForEither(fileCandidate, cpResourceCandidate);
+    return ToopSimulatorResources.class.getResource(DEFAULT_CONFIG_RESOURCE);
   }
-
-
 
   /**
    * Returns the <code>discovery-data.xml</code> resource URL
    * @return the <code>discovery-data.xml</code> resource URL
    */
   public static URL getDiscoveryDataResURL() {
-    String fileCandidate = CONFIG_DISCOVERY_DATA_XML;
-    String cpResourceCandidate = DEFAULT_DISCOVERY_DATA_RESOURCE;
-
-    return getUrlForEither(fileCandidate, cpResourceCandidate);
+    return ToopSimulatorResources.class.getResource(DEFAULT_DISCOVERY_DATA_RESOURCE);
   }
-
-  /**
-   * Check if the file specified with <code>fileCandidate</code> exists, and returns its URL,
-   * if the file doesn't exist, then the classpath resource <code>cpResourceCandidate</code> is loaded
-   * otherwise go for classpath resource
-   *
-   * @param fileCandidate the file that if exists will be tried first
-   * @param cpResourceCandidate if the <code>fileCandidate</code> doesn't exist then this classpath resources URL is returned
-   * @return the URL of one of the parameters
-   */
-  private static URL getUrlForEither(String fileCandidate, String cpResourceCandidate) {
-    File confFile = new File(fileCandidate);
-
-    if (confFile.exists()){
-      try {
-        return confFile.toURI().toURL();
-      } catch (MalformedURLException e) {
-        throw new IllegalStateException(); //not possible
-      }
-    }
-
-    return ToopSimulatorResources.class.getResource(cpResourceCandidate);
-  }
-
-
 
   /**
    * Copy the toop-simulator.conf and discovery-data.xml from classpath
@@ -122,11 +52,7 @@ public class ToopSimulatorResources {
    * Don't touch if they exist
    */
   public static void transferResourcesToFileSystem() {
-    Util.transferResourceToDirectory(DEFAULT_DISCOVERY_DATA_RESOURCE, SIMULATOR_CONFIG_DIR);
-    Util.transferResourceToDirectory(DEFAULT_CONFIG_RESOURCE, SIMULATOR_CONFIG_DIR);
-
     new File("data").mkdir();
-
     Util.transferResourceToDirectory("toop-request.xml", "data");
   }
 }

@@ -116,7 +116,7 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
   private DiscoveryProvider() {
     //parse the file or resource discovery-data.xml
     try (InputStream is = ToopSimulatorResources.getDiscoveryDataResURL().openStream()) {
-      serviceMetadataListType = JAXBUtil.parseURL( ToopSimulatorResources.getDiscoveryDataResURL(), ObjectFactory.class);
+      serviceMetadataListType = JAXBUtil.parseURL(ToopSimulatorResources.getDiscoveryDataResURL(), ObjectFactory.class);
     } catch (IOException e) {
       throw new IllegalStateException(e);
     }
@@ -147,7 +147,7 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
 
       countryAwareServiceMetadataType.getServiceMetadata().forEach(serviceMetadataType -> {
         DocumentIdentifierType documentIdentifier = serviceMetadataType.getServiceInformation().getDocumentIdentifier();
-        IDocumentTypeIdentifier docID = TCConfig.getIdentifierFactory ().createDocumentTypeIdentifier(documentIdentifier.getScheme(), documentIdentifier.getValue());
+        IDocumentTypeIdentifier docID = TCConfig.getIdentifierFactory().createDocumentTypeIdentifier(documentIdentifier.getScheme(), documentIdentifier.getValue());
 
 
         DIRQuery dirQuery = new DIRQuery(countrycode, docID);
@@ -162,7 +162,7 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
 
         //now add a new participant identifier to this set.
         //TODO: vulnerable, do null check
-        identifierSet.add(TCConfig.getIdentifierFactory ().createParticipantIdentifier(serviceMetadataType.getServiceInformation().getParticipantIdentifier().getScheme(),
+        identifierSet.add(TCConfig.getIdentifierFactory().createParticipantIdentifier(serviceMetadataType.getServiceInformation().getParticipantIdentifier().getScheme(),
             serviceMetadataType.getServiceInformation().getParticipantIdentifier().getValue()));
       });
     });
@@ -182,15 +182,15 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
       country.getServiceMetadata().stream().map(ServiceMetadataType::getServiceInformation).forEach(serviceInformation -> {
 
         ParticipantIdentifierType participantIdentifier = serviceInformation.getParticipantIdentifier();
-        IParticipantIdentifier participantID = TCConfig.getIdentifierFactory ().createParticipantIdentifier(participantIdentifier.getScheme(),
+        IParticipantIdentifier participantID = TCConfig.getIdentifierFactory().createParticipantIdentifier(participantIdentifier.getScheme(),
             participantIdentifier.getValue());
 
         DocumentIdentifierType documentIdentifier = serviceInformation.getDocumentIdentifier();
-        IDocumentTypeIdentifier documentTypeID = TCConfig.getIdentifierFactory ().createDocumentTypeIdentifier(documentIdentifier.getScheme(), documentIdentifier.getValue());
+        IDocumentTypeIdentifier documentTypeID = TCConfig.getIdentifierFactory().createDocumentTypeIdentifier(documentIdentifier.getScheme(), documentIdentifier.getValue());
 
         serviceInformation.getProcessList().getProcess().forEach(processType -> {
           ProcessIdentifierType processIdentifier = processType.getProcessIdentifier();
-          IProcessIdentifier procID = TCConfig.getIdentifierFactory ().createProcessIdentifier(processIdentifier.getScheme(), processIdentifier.getValue());
+          IProcessIdentifier procID = TCConfig.getIdentifierFactory().createProcessIdentifier(processIdentifier.getScheme(), processIdentifier.getValue());
           processType.getServiceEndpointList().getEndpoint().forEach(endpointType -> {
             String transportProfile = endpointType.getTransportProfile();
 
@@ -212,16 +212,9 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
                       if (file.exists()) {
                         stream = new FileInputStream(file);
                       } else {
-                        //try possibly from resource root dir
-                        file = new File(ToopSimulatorResources.SIMULATOR_CONFIG_DIR + path);
-                        if (file.exists()) {
-                          stream = new FileInputStream(file);
-                        } else {
-                          //file doesn't exist, try resource
-                          stream = DiscoveryProvider.this.getClass().getResourceAsStream("/" + path);
-                          if (stream == null) {
-                            throw new IllegalStateException("A file or a classpath resource with name " + path + " was not found");
-                          }
+                        stream = DiscoveryProvider.this.getClass().getResourceAsStream("/" + path);
+                        if (stream == null) {
+                          throw new IllegalStateException("A file or a classpath resource with name " + path + " was not found");
                         }
                       }
                       LOGGER.debug("FULL CERT PATH PARSE: " + file.getAbsolutePath());
@@ -271,12 +264,12 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
 
     smpMap.keySet().forEach(key -> {
 
-      if (key.aRecipientID.equals(aParticipantID)){
+      if (key.aRecipientID.equals(aParticipantID)) {
 
 
         //temporary
 
-        String asmr  = querySMP(aParticipantID);
+        String asmr = querySMP(aParticipantID);
 
         //for (final ServiceMetadataReferenceType aSMR : aSG.getServiceMetadataReferenceCollection ().getServiceMetadataReference ())
         //{

@@ -70,7 +70,6 @@
   </developers>
 
   <dependencies>
-
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-commons</artifactId>
@@ -171,6 +170,13 @@
       <groupId>com.helger</groupId>
       <artifactId>ph-oton-jetty</artifactId>
       <version>8.2.3</version>
+    </dependency>
+
+    <!-- exlude slf4j-simple -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <!-- JUnit 4 for testing -->
