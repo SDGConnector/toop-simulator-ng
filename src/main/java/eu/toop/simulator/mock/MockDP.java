@@ -16,22 +16,17 @@
 package eu.toop.simulator.mock;
 
 import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.mime.CMimeType;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.response.ResponseHandlerJson;
-import com.helger.json.IJson;
 import eu.toop.connector.api.me.EMEProtocol;
-import eu.toop.connector.api.me.incoming.IncomingEDMRequest;
-import eu.toop.connector.api.me.incoming.IncomingEDMResponse;
-import eu.toop.connector.api.me.incoming.MEIncomingTransportMetadata;
-import eu.toop.connector.api.me.outgoing.MEOutgoingException;
+import eu.toop.connector.api.me.incoming.*;
 import eu.toop.connector.api.rest.TCOutgoingMessage;
 import eu.toop.connector.api.rest.TCOutgoingMetadata;
 import eu.toop.connector.api.rest.TCPayload;
 import eu.toop.connector.api.rest.TCRestJAXB;
 import eu.toop.connector.app.incoming.MPTrigger;
+import eu.toop.edm.EDMErrorResponse;
 import eu.toop.edm.EDMRequest;
 import eu.toop.edm.EDMResponse;
 import eu.toop.playground.dp.DPException;
@@ -56,35 +51,35 @@ public class MockDP {
   private static final ToopDP miniDP = new ToopDP();
 
   /**
-   * Provide the message to miniDP and get back an {@link IncomingEDMResponse}
+   * Provide the message to miniDP and get back an {@link IIncomingEDMResponse}
    *
    * @param aTopLevel the request
    * @param aMetadata the metadata
    * @return the response
-   * @throws MEOutgoingException if a problem occurs
    */
-  public static IncomingEDMResponse eloniaCreateResponse(EDMRequest aTopLevel, MEIncomingTransportMetadata aMetadata) throws MEOutgoingException {
-    EDMRequest request = aTopLevel;
-    byte[] responseBytes;
-    try {
-      responseBytes = miniDP.createXMLResponseFromRequest(request.getWriter().getAsBytes());
-      if (responseBytes == null)
-        throw new IllegalStateException("Coudln't get automatic response from elonia");
-    } catch (DPException e) {
-      throw new MEOutgoingException(e.getMessage(), e);
-    }
-    EDMResponse edmResponse = EDMResponse.reader().read(responseBytes);
-    //we have a response from DP, push it back
+  public static IIncomingEDMResponse eloniaCreateResponse(EDMRequest aTopLevel, MEIncomingTransportMetadata aMetadata) {
+
     //we need to create a new metadata where the sender and receiver are switched.
     final MEIncomingTransportMetadata aMetadataInverse = new MEIncomingTransportMetadata(
-        aMetadata.getReceiverID(), aMetadata.getSenderID(),
-        aMetadata.getDocumentTypeID(), aMetadata.getProcessID());
+            aMetadata.getReceiverID(), aMetadata.getSenderID(),
+            aMetadata.getDocumentTypeID(), aMetadata.getProcessID());
 
-    return new IncomingEDMResponse(edmResponse,
-        //NOTE: attachments are empty for now
-        new CommonsArrayList<>(),
-        aMetadataInverse);
+    try {
+      EDMResponse edmResponse = miniDP.createEDMResponseFromRequest(aTopLevel);
+      //we have a response from DP, push it back
 
+      return new IncomingEDMResponse(edmResponse,
+              //NOTE: attachments are empty for now
+              new CommonsArrayList<>(),
+              aMetadataInverse);
+
+    } catch (DPException e) {
+      EDMErrorResponse edmError = e.getEdmErrorResponse();
+      //we have an error from DP, push it back
+
+      return new IncomingEDMErrorResponse(edmError,
+              aMetadataInverse);
+    }
   }
 
 
@@ -104,7 +99,7 @@ public class MockDP {
    *
    * @param response the response
    */
-  public static void buildAndSendResponse(IncomingEDMResponse response) {
+  public static void buildAndSendResponse(IIncomingEDMResponse response) {
     final TCOutgoingMessage aOM = new TCOutgoingMessage();
     {
       final TCOutgoingMetadata aMetadata = new TCOutgoingMetadata();
@@ -118,7 +113,11 @@ public class MockDP {
     }
     {
       final TCPayload aPayload = new TCPayload();
-      aPayload.setValue(response.getResponse().getWriter().getAsBytes());
+      if (response instanceof IncomingEDMResponse)
+        aPayload.setValue(((IncomingEDMResponse) response).getResponse().getWriter().getAsBytes());
+      if (response instanceof IncomingEDMErrorResponse)
+        aPayload.setValue(((IncomingEDMErrorResponse) response).getErrorResponse().getWriter().getAsBytes());
+
       aPayload.setMimeType(CMimeType.APPLICATION_XML.getAsString());
       aPayload.setContentID("mock-response@toop");
       aOM.addPayload(aPayload);
@@ -134,4 +133,5 @@ public class MockDP {
       LOGGER.error(e.getMessage(), e);
     }
   }
+
 }

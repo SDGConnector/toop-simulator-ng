@@ -84,8 +84,11 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
       if (aTopLevel instanceof EDMRequest) {
         if (SimulatorConfig.mode == SimulationMode.DP) {
           //create response and send back
-          final IncomingEDMResponse response = MockDP.eloniaCreateResponse((EDMRequest) aTopLevel, aMetadata);
-          MPTrigger.forwardMessage(response, SimulatorConfig.dcEndpoint);
+          final IIncomingEDMResponse response = MockDP.eloniaCreateResponse((EDMRequest) aTopLevel, aMetadata);
+          if(response instanceof IncomingEDMResponse)
+            MPTrigger.forwardMessage((IncomingEDMResponse) response, SimulatorConfig.dcEndpoint);
+          if(response instanceof IncomingEDMErrorResponse)
+            MPTrigger.forwardMessage((IncomingEDMErrorResponse) response, SimulatorConfig.dcEndpoint);
         } else {
           //send it to the configured /to-dp
           MockDP.sendRequestToDp((EDMRequest) aTopLevel, aMetadata);

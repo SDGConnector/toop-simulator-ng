@@ -4,6 +4,7 @@ import com.helger.commons.io.stream.StreamHelper;
 import com.helger.peppolid.simple.doctype.SimpleDocumentTypeIdentifier;
 import com.helger.peppolid.simple.participant.SimpleParticipantIdentifier;
 import com.helger.peppolid.simple.process.SimpleProcessIdentifier;
+import eu.toop.connector.api.me.incoming.IIncomingEDMResponse;
 import eu.toop.connector.api.me.incoming.IncomingEDMResponse;
 import eu.toop.connector.api.me.incoming.MEIncomingTransportMetadata;
 import eu.toop.connector.api.me.outgoing.MEOutgoingException;
@@ -62,14 +63,10 @@ public class MockDPServlet extends HttpServlet {
             new SimpleProcessIdentifier(processID.getScheme(), processID.getValue())
         );
 
-        try {
-          final IncomingEDMResponse response = MockDP.eloniaCreateResponse(edmRequest, meIncomingTransportMetadata);
-          final String sDestURL = "http://localhost:" + SimulatorConfig.connectorPort + "/api/user/submit/response";
-          LOGGER.info("MOCKDPServlet sending back response to " + sDestURL);
-          MockDP.buildAndSendResponse(response);
-        } catch (MEOutgoingException e) {
-          LOGGER.error(e.getMessage(), e);
-        }
+        final IIncomingEDMResponse response = MockDP.eloniaCreateResponse(edmRequest, meIncomingTransportMetadata);
+        final String sDestURL = "http://localhost:" + SimulatorConfig.connectorPort + "/api/user/submit/response";
+        LOGGER.info("MOCKDPServlet sending back response to " + sDestURL);
+        MockDP.buildAndSendResponse(response);
       });
     }).start();
     resp.setStatus(HttpServletResponse.SC_OK);
