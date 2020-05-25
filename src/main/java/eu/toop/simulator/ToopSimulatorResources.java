@@ -52,7 +52,7 @@ public class ToopSimulatorResources {
    * dealing with the jar file. <br>
    * Don't touch if they exist
    */
-  public static void transferResourcesToFileSystem() throws IOException {
+  public static void transferResourcesToFileSystem() {
     new File("datasets/gbm").mkdirs();
     new File("datasets/document").mkdirs();
     Util.transferResourceToDirectory("datasets/document/LP12345.yaml", "datasets/document");
