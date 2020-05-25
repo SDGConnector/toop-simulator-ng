@@ -55,7 +55,7 @@ public class CommandProcessor {
       ValueEnforcer.isEqual(fileArgs.size(), 1, "-f option needs exactly one argument");
       MockDC.sendDCRequest(fileArgs.get(0));
     } else {
-      LOGGER.debug("Using the default file data/toop-request.xml");
+      LOGGER.debug("Using the default file datasets/edm-conceptRequest-lp.xml");
       try {
         MockDC.buildAndSendDefaultRequest();
       } catch (IOException e) {

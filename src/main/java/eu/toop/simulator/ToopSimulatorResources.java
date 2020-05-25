@@ -16,6 +16,7 @@
 package eu.toop.simulator;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -51,9 +52,12 @@ public class ToopSimulatorResources {
    * dealing with the jar file. <br>
    * Don't touch if they exist
    */
-  public static void transferResourcesToFileSystem() {
-    new File("data").mkdir();
-    Util.transferResourceToDirectory("toop-request.xml", "data");
-    Util.transferAllResourcesToFileSystem("datasets");
+  public static void transferResourcesToFileSystem() throws IOException {
+    new File("datasets/gbm").mkdirs();
+    new File("datasets/document").mkdirs();
+    Util.transferResourceToDirectory("datasets/document/LP12345.yaml", "datasets/document");
+    Util.transferResourceToDirectory("datasets/gbm/LP12345.yaml", "datasets/gbm");
+    Util.transferResourceToDirectory("datasets/gbm/NP12345.yaml", "datasets/gbm");
+    Util.transferResourceToDirectory("datasets/edm-conceptRequest-lp.xml", "datasets");
   }
 }

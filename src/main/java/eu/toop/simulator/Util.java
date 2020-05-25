@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2018-2020 toop.eu
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * A class that contains utility functions
@@ -40,7 +41,7 @@ public class Util {
    * <p>Try to parse and resolve the given URL as a HOCON resource. If <code>includeSys == true</code> then
    * a System Properties are also added as fallback</p>
    *
-   * @param url the url of the config to be parsed
+   * @param url        the url of the config to be parsed
    * @param includeSys a flag to indicate whether to include the System.properties or not.
    * @return the parsed Config object
    */
@@ -79,6 +80,8 @@ public class Util {
 
     File targetDir = new File(targetDirName);
 
+    targetDir.mkdirs(); //ignore the result
+
     File targetFile = new File(targetDir, resourceName);
 
     //if a file with the same name doesn't exist in the target dir, then create one and transfer the resource
@@ -99,11 +102,48 @@ public class Util {
   }
 
   /**
+   *
+   * BOGUS. Doesnt work with jars. TODO: Visit later
    * Transfer ALL the resources residing under the provided classpath resource to the
    * filesystem with the same directory structure.
-   * @param datasets
+   *
+   * @param path
    */
-  public static void transferAllResourcesToFileSystem(String datasets) {
+  public static void transferAllResourcesToFileSystem(String path) throws IOException {
+    LOGGER.debug("Inspect " + path);
+    if (path.endsWith(".yaml") || path.endsWith(".xml")) {
+      LOGGER.debug("Transfer " + path);
 
+      String trimmedPath = path.substring(0, path.lastIndexOf('/'));
+      if (trimmedPath.startsWith("/"))
+        trimmedPath = trimmedPath.substring(1);
+
+      Util.transferResourceToDirectory(path, trimmedPath);
+      return;
+    }
+
+    final URL resource = Util.class.getResource(path);
+    if (resource == null) {
+      LOGGER.warn("NULL resource, NOOP");
+      return;
+    }
+
+    final URLConnection urlConnection = resource.openConnection();
+    if (urlConnection == null) {
+      LOGGER.warn("Cannot open connection, NOOP");
+      return;
+    }
+
+    final InputStream resourceAsStream = urlConnection.getInputStream();
+    if (urlConnection == null) {
+      LOGGER.warn("Cannot open stream, NOOP");
+      return;
+    }
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(resourceAsStream));
+    String line;
+    while ((line = br.readLine()) != null) {
+      Util.transferAllResourcesToFileSystem(path + "/" + line);
+    }
   }
 }

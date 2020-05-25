@@ -114,7 +114,7 @@ public class MockDC {
     }
     {
       final TCPayload aPayload = new TCPayload ();
-      aPayload.setValue (StreamHelper.getAllBytes (new ClassPathResource("edm-conceptRequest-lp.xml")));
+      aPayload.setValue (StreamHelper.getAllBytes (new ClassPathResource("datasets/edm-conceptRequest-lp.xml")));
       aPayload.setMimeType (CMimeType.APPLICATION_XML.getAsString ());
       aPayload.setContentID ("mock-request@toop");
       aOM.addPayload (aPayload);
