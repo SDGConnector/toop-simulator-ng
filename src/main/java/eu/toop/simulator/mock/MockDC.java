@@ -53,7 +53,7 @@ import java.nio.file.Files;
  */
 public class MockDC {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(CommandProcessor.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(MockDC.class);
 
   /**
    * Sends a request that is contained in a file with name <code>sFileName</code>

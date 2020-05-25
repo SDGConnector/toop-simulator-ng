@@ -35,8 +35,6 @@ import eu.toop.edm.EDMResponse;
 import eu.toop.edm.IEDMTopLevelObject;
 import eu.toop.edm.xml.EDMPayloadDeterminator;
 import eu.toop.kafkaclient.ToopKafkaClient;
-import eu.toop.playground.dp.DPException;
-import eu.toop.playground.dp.service.ToopDP;
 import eu.toop.simulator.SimulationMode;
 import eu.toop.simulator.SimulatorConfig;
 import org.slf4j.Logger;
@@ -56,10 +54,6 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
   public static final String ID = "mem-mockdcdp";
   private static final Logger LOGGER = LoggerFactory.getLogger(MockDCDPMessageExchange.class);
 
-  private IMEIncomingHandler m_aIncomingHandler;
-
-  private final ToopDP miniDP = new ToopDP();
-
   public MockDCDPMessageExchange() {
   }
 
@@ -72,11 +66,7 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
   @Override
   public void registerIncomingHandler(@Nonnull final ServletContext aServletContext,
                                       @Nonnull final IMEIncomingHandler aIncomingHandler) {
-    ValueEnforcer.notNull(aServletContext, "ServletContext");
-    ValueEnforcer.notNull(aIncomingHandler, "IncomingHandler");
-    if (m_aIncomingHandler != null)
-      throw new IllegalStateException("Another incoming handler was already registered!");
-    m_aIncomingHandler = aIncomingHandler;
+    LOGGER.warn("Ignoring IncomingHandler, using MPTrigger directly.");
   }
 
   @Override
@@ -86,17 +76,19 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
       final InputStream inputStream = aHead.getData().getInputStream();
       final IEDMTopLevelObject aTopLevel = EDMPayloadDeterminator.parseAndFind(inputStream);
       // TODO get metadata in here
-      // NOTE: (yerlibilgin): I got the metadata as follows:
+      // NOTE: (yerlibilgin): I got the metadata like this:
       final MEIncomingTransportMetadata aMetadata = new MEIncomingTransportMetadata(
           imeRoutingInformation.getSenderID(), imeRoutingInformation.getReceiverID(),
           imeRoutingInformation.getDocumentTypeID(), imeRoutingInformation.getProcessID());
 
       if (aTopLevel instanceof EDMRequest) {
         if (SimulatorConfig.mode == SimulationMode.DP) {
-          loopBackFromElonia((EDMRequest) aTopLevel, aMetadata);
+          //create response and send back
+          final IncomingEDMResponse response = MockDP.eloniaCreateResponse((EDMRequest) aTopLevel, aMetadata);
+          MPTrigger.forwardMessage(response, SimulatorConfig.dcEndpoint);
         } else {
           //send it to the configured /to-dp
-          sendRequestToDp((EDMRequest) aTopLevel);
+          MockDP.sendRequestToDp((EDMRequest) aTopLevel, aMetadata);
         }
       } else if (aTopLevel instanceof EDMResponse) {
         // Response, send to freedonia
@@ -104,13 +96,13 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
         for (final MEPayload aItem : meMessage.payloads())
           if (aItem != aHead)
             aAttachments.add(aItem);
-        m_aIncomingHandler.handleIncomingResponse(new IncomingEDMResponse((EDMResponse) aTopLevel,
+        MPTrigger.forwardMessage(new IncomingEDMResponse((EDMResponse) aTopLevel,
             aAttachments,
-            aMetadata));
+            aMetadata), SimulatorConfig.dcEndpoint);
       } else if (aTopLevel instanceof EDMErrorResponse) {
         // Error response
-        m_aIncomingHandler.handleIncomingErrorResponse(new IncomingEDMErrorResponse((EDMErrorResponse) aTopLevel,
-            aMetadata));
+        MPTrigger.forwardMessage(new IncomingEDMErrorResponse((EDMErrorResponse) aTopLevel,
+            aMetadata), SimulatorConfig.dcEndpoint);
       } else {
         // Unknown
         ToopKafkaClient.send(EErrorLevel.ERROR, () -> "Unsupported Message: " + aTopLevel);
@@ -120,46 +112,6 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
       throw new MEOutgoingException(ex.getMessage(), ex);
     }
   }
-
-  /**
-   * Send the request directly to the DP/to-dp
-   *
-   * @param aTopLevel
-   */
-  private void sendRequestToDp(EDMRequest aTopLevel) {
-    //TODO: send the request directly to SimulatorConfig.dpEndpoint
-  }
-
-  private void loopBackFromElonia(EDMRequest aTopLevel, MEIncomingTransportMetadata aMetadata) throws MEOutgoingException {
-    EDMRequest request = aTopLevel;
-    byte[] responseBytes;
-    try {
-      responseBytes = miniDP.createXMLResponseFromRequest(request.getWriter().getAsBytes());
-      if (responseBytes == null)
-        throw new IllegalStateException("Coudln't get automatic response from elonia");
-    } catch (DPException e) {
-      throw new MEOutgoingException(e.getMessage(), e);
-    }
-    EDMResponse edmResponse = EDMResponse.reader().read(responseBytes);
-    //we have a response from DP, push it back
-    try {
-
-      //we need to create a new metadat where the sender and receiver are switched.
-
-      final MEIncomingTransportMetadata aMetadataInverse = new MEIncomingTransportMetadata(
-          aMetadata.getReceiverID(), aMetadata.getSenderID(),
-          aMetadata.getDocumentTypeID(), aMetadata.getProcessID());
-
-      m_aIncomingHandler.handleIncomingResponse(new IncomingEDMResponse(edmResponse,
-          //NOTE: payloads are empty
-          new CommonsArrayList<>(),
-          aMetadataInverse));
-
-    } catch (MEIncomingException e) {
-      throw new MEOutgoingException(e.getMessage(), e);
-    }
-  }
-
 
   public void shutdown(@Nonnull final ServletContext aServletContext) {
   }

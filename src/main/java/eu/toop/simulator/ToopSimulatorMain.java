@@ -16,16 +16,13 @@
 package eu.toop.simulator;
 
 import com.helger.photon.jetty.JettyStarter;
-import com.typesafe.config.impl.ConfigImpl;
 import eu.toop.connector.api.TCConfig;
 import eu.toop.simulator.cli.Cli;
-import eu.toop.simulator.web.SimDCServlet;
 import org.eclipse.jetty.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import java.io.File;
 
 /**
  * The program entry point
@@ -46,9 +43,6 @@ public class ToopSimulatorMain {
 
 
     final SimulationMode simulationMode = SimulatorConfig.mode;
-
-    LOGGER.info("Overriding the toop.mem.incoming.url value  as " + SimulatorConfig.dcEndpoint);
-    TCConfig.MEM.setOverriddenMemIncomingURL(SimulatorConfig.dcEndpoint);
 
     //Start the simulator in a new thread, and get its thread so that we can wait on it.
     Thread simulatorThread = startSimulator(simulationMode);
