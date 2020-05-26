@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2018-2019 toop.eu
+# Copyright (C) 2018-2020 toop.eu
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,19 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-FROM tomcat:9-jre11
 
+FROM tomcat:8-jre8
 
-ARG VERSION="2.0.0-SNAPSHOT"
-ARG WAR_NAME=toop-simulator-ng-${VERSION}.war
+ARG VERSION="2.0.0-beta4-bundle"
+ARG JAR_NAME=toop-simulator-ng-${VERSION}-bundle.jar
 
 #create tc webapp folder
-WORKDIR $CATALINA_HOME/webapps
+WORKDIR /simulator
 
-ENV CATALINA_OPTS="$CATALINA_OPTS -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -Djava.security.egd=file:/dev/urandom"
+ENV JAVA_OPTS="$JAVA_OPTS -Djava.security.egd=file:/dev/urandom" \
+    SIMULATOR_JAR_NAME="${SIMULATOR_JAR_NAME}"
 
-COPY target/${WAR_NAME} ./
+ADD ./target/${JAR_NAME} ./
 
-RUN rm -fr manager host-manager ROOT && \
-    unzip $WAR_NAME -d ROOT  && \
-    rm -fr $WAR_NAME
+CMD ["sh", "-c", "java $JAVA_OPTS -jar ${JAR_NAME}"]

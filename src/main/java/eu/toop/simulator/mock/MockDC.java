@@ -131,4 +131,7 @@ public class MockDC {
     }
   }
 
+  public static void main(String[] args) throws IOException {
+    buildAndSendDefaultRequest();
+  }
 }
