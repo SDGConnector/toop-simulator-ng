@@ -73,7 +73,7 @@
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-commons</artifactId>
-      <version>9.4.3</version>
+      <version>9.4.4</version>
     </dependency>
 
     <dependency>
@@ -164,12 +164,12 @@
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-oton-api</artifactId>
-      <version>8.2.3</version>
+      <version>8.2.4</version>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-oton-jetty</artifactId>
-      <version>8.2.3</version>
+      <version>8.2.4</version>
     </dependency>
 
     <!-- exlude slf4j-simple -->
