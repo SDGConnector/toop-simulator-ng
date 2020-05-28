@@ -8,13 +8,13 @@ This is a web application that provides simulated DSD, SMP and MEM interfaces.
 This is a `RegRep` REST interface provided via `/rest/search`. It accepts 3 parameters as shown below
 
 
-queryId	MUST	This parameter refers to the {urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0}:QueryDefinitionType defined on the server. Its current (default) value is urn:top:dsd:ebxml-regrem:queries:DataSetRequest.
+queryId	MUST	This parameter refers to the {urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0}:QueryDefinitionType defined on the server. Its current (default) value is urn:<zero-width space>top:dsd:ebxml-regrem:queries:DataSetRequest.
 dataSetType	MUST	The dataset type id
 countryCode	OPTIONAL	Two letter country code
 
 | Parameter        | Requirement   | Description  |
 | -----------------|:--------------|:-------------|
-| queryId          | MUST          | This parameter refers to the {urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0}:QueryDefinitionType defined on the server. Its current (default) value is urn:top:dsd:ebxml-regrem:queries:DataSetRequest |
+| queryId          | MUST          | This parameter refers to the {urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0}:QueryDefinitionType defined on the server. Its current (default) value is urn:<zero-width space>top:dsd:ebxml-regrem:queries:DataSetRequest |
 | dataSetType      | MUST      |   The dataset type id |
 | countryCode | OPTIONAL | Two letter country code |
 
