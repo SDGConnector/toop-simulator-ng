@@ -34,8 +34,7 @@
   <url>http://github.com/toop4eu/toop-simulator-ng</url>
 
   <properties>
-    <toop.version>2.0.0-beta4</toop.version>
-    <ph-xsds.version>2.2.6</ph-xsds.version>
+    <toop.version>2.0.0-SNAPSHOT</toop.version>
   </properties>
 
   <inceptionYear>2020</inceptionYear>
@@ -67,76 +66,104 @@
       <email>myildiz83(at)gmail.com</email>
     </developer>
   </developers>
+  
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-commons-parent-pom</artifactId>
+        <version>9.4.4</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.helger.photon</groupId>
+        <artifactId>ph-oton-parent-pom</artifactId>
+        <version>8.2.5</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>eu.toop</groupId>
+        <artifactId>toop-commons-ng-parent-pom</artifactId>
+        <version>${toop.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>eu.toop</groupId>
+        <artifactId>data-services-directory</artifactId>
+        <version>${toop.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>eu.toop</groupId>
+        <artifactId>tc-parent-pom</artifactId>
+        <version>${toop.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-commons</artifactId>
-      <version>9.4.4</version>
     </dependency>
 
     <dependency>
       <groupId>com.sun.activation</groupId>
       <artifactId>jakarta.activation</artifactId>
-      <version>1.2.2</version>
     </dependency>
 
     <dependency>
       <groupId>eu.toop</groupId>
       <artifactId>toop-regrep</artifactId>
-      <version>${toop.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>eu.toop</groupId>
-      <artifactId>tc-web-api</artifactId>
-      <version>${toop.version}</version>
     </dependency>
 
     <dependency>
       <groupId>eu.toop</groupId>
       <artifactId>toop-edm</artifactId>
-      <version>${toop.version}</version>
     </dependency>
 
     <dependency>
       <groupId>eu.toop</groupId>
       <artifactId>toop-commons</artifactId>
-      <version>${toop.version}</version>
     </dependency>
 
     <dependency>
       <groupId>eu.toop</groupId>
       <artifactId>dsd-api</artifactId>
-      <version>${toop.version}</version>
     </dependency>
 
     <dependency>
       <groupId>eu.toop</groupId>
       <artifactId>tc-api</artifactId>
-      <version>${toop.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>eu.toop</groupId>
+      <artifactId>tc-web-api</artifactId>
     </dependency>
 
     <!-- Logging -->
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>2.13.3</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-slf4j-impl</artifactId>
-      <version>2.13.3</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-web</artifactId>
-      <version>2.13.3</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jul-to-slf4j</artifactId>
-      <version>1.7.30</version>
     </dependency>
     <dependency>
       <groupId>com.typesafe</groupId>
@@ -163,12 +190,10 @@
     <dependency>
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-api</artifactId>
-      <version>8.2.5</version>
     </dependency>
     <dependency>
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-jetty</artifactId>
-      <version>8.2.5</version>
     </dependency>
 
     <!-- exlude slf4j-simple -->
@@ -182,7 +207,6 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.13</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -263,7 +287,6 @@
         <version>1.6.0</version>
         <executions>
           <execution>
-
             <goals>
               <goal>java</goal>
             </goals>
