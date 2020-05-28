@@ -34,7 +34,7 @@
   <url>http://github.com/toop4eu/toop-simulator-ng</url>
 
   <properties>
-    <toop.version>2.0.0-beta4</toop.version>
+    <toop.version>2.0.0-SNAPSHOT</toop.version>
   </properties>
 
   <inceptionYear>2020</inceptionYear>
@@ -72,14 +72,14 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-commons-parent-pom</artifactId>
-        <version>9.4.2</version>
+        <version>9.4.4</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>com.helger.</groupId>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.2.3</version>
+        <version>8.2.5</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -189,19 +189,12 @@
     </dependency>
 
     <dependency>
-      <groupId>com.helger</groupId>
+      <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.helger</groupId>
+      <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-jetty</artifactId>
-    </dependency>
-
-    <!-- exlude slf4j-simple -->
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <scope>provided</scope>
     </dependency>
 
     <!-- JUnit 4 for testing -->
