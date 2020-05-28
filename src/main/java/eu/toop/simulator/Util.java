@@ -15,18 +15,23 @@
  */
 package eu.toop.simulator;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.io.stream.StreamHelper;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
-import org.apache.commons.io.FilenameUtils;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.io.file.FilenameHelper;
+import com.helger.commons.io.stream.StreamHelper;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 
 /**
  * A class that contains utility functions
@@ -76,7 +81,7 @@ public class Util {
     if (resource == null)
       throw new IllegalArgumentException("Couldn't find the resource " + path);
 
-    String resourceName = FilenameUtils.getName(path);
+    String resourceName = FilenameHelper.getWithoutPath (path);
 
     File targetDir = new File(targetDirName);
 

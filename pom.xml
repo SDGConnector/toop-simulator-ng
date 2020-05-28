@@ -72,14 +72,14 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-commons-parent-pom</artifactId>
-        <version>9.4.4</version>
+        <version>9.4.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>com.helger.photon</groupId>
+        <groupId>com.helger.</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.2.5</version>
+        <version>8.2.3</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -100,6 +100,13 @@
       <dependency>
         <groupId>eu.toop</groupId>
         <artifactId>tc-parent-pom</artifactId>
+        <version>${toop.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>eu.toop</groupId>
+        <artifactId>toop-playground-ng</artifactId>
         <version>${toop.version}</version>
         <type>pom</type>
         <scope>import</scope>
@@ -176,23 +183,17 @@
     </dependency>
 
     <dependency>
-      <groupId>com.ftpix</groupId>
-      <artifactId>sherdog-parser</artifactId>
-      <version>2.12</version>
-    </dependency>
-
-    <dependency>
       <groupId>eu.toop</groupId>
       <artifactId>toop-demoui-dplib</artifactId>
       <version>${toop.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>com.helger.photon</groupId>
+      <groupId>com.helger</groupId>
       <artifactId>ph-oton-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.helger.photon</groupId>
+      <groupId>com.helger</groupId>
       <artifactId>ph-oton-jetty</artifactId>
     </dependency>
 
