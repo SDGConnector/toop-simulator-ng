@@ -161,14 +161,14 @@
     </dependency>
 
     <dependency>
-      <groupId>com.helger</groupId>
+      <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-api</artifactId>
-      <version>8.2.4</version>
+      <version>8.2.5</version>
     </dependency>
     <dependency>
-      <groupId>com.helger</groupId>
+      <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-jetty</artifactId>
-      <version>8.2.4</version>
+      <version>8.2.5</version>
     </dependency>
 
     <!-- exlude slf4j-simple -->
