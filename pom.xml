@@ -34,7 +34,7 @@
   <url>http://github.com/toop4eu/toop-simulator-ng</url>
 
   <properties>
-    <toop.version>2.0.0-SNAPSHOT</toop.version>
+    <toop.version>2.0.0-beta4</toop.version>
   </properties>
 
   <inceptionYear>2020</inceptionYear>
