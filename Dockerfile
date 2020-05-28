@@ -16,14 +16,14 @@
 
 FROM tomcat:8-jre8
 
-ARG VERSION="2.0.0-beta4-bundle"
+ARG VERSION="2.0.0-beta4"
 ARG JAR_NAME=toop-simulator-ng-${VERSION}-bundle.jar
 
 #create tc webapp folder
 WORKDIR /simulator
 
 ENV JAVA_OPTS="$JAVA_OPTS -Djava.security.egd=file:/dev/urandom" \
-    SIMULATOR_JAR_NAME="${SIMULATOR_JAR_NAME}"
+    JAR_NAME="${JAR_NAME}"
 
 ADD ./target/${JAR_NAME} ./
 
