@@ -16,7 +16,7 @@
 
 FROM tomcat:8-jre8
 
-ARG VERSION="2.0.0-beta4"
+ARG VERSION="2.0.0-beta4-p1"
 ARG JAR_NAME=toop-simulator-ng-${VERSION}-bundle.jar
 
 #create tc webapp folder
