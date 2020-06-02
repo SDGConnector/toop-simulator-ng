@@ -190,7 +190,7 @@
     <dependency>
       <groupId>eu.toop</groupId>
       <artifactId>toop-demoui-dplib</artifactId>
-      <version>${toop.version}</version>
+      <version>${pg.version}</version>
     </dependency>
 
     <dependency>
