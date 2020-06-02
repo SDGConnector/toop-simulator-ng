@@ -81,7 +81,7 @@ public class Util {
     if (resource == null)
       throw new IllegalArgumentException("Couldn't find the resource " + path);
 
-    String resourceName = FilenameHelper.getWithoutPath (path);
+    String resourceName = FilenameHelper.getWithoutPath(path);
 
     File targetDir = new File(targetDirName);
 
@@ -107,7 +107,6 @@ public class Util {
   }
 
   /**
-   *
    * BOGUS. Doesnt work with jars. TODO: Visit later
    * Transfer ALL the resources residing under the provided classpath resource to the
    * filesystem with the same directory structure.

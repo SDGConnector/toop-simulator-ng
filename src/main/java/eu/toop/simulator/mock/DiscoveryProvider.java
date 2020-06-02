@@ -15,56 +15,42 @@
  */
 package eu.toop.simulator.mock;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Node;
-
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsHashSet;
-import com.helger.commons.collection.impl.CommonsTreeMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.collection.impl.ICommonsSortedMap;
-import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
-import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
-import com.helger.commons.url.SimpleURL;
-import com.helger.httpclient.HttpClientManager;
-import com.helger.httpclient.HttpClientSettings;
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.collection.impl.*;
+import com.helger.commons.io.stream.StreamHelper;
+import com.helger.commons.string.StringHelper;
+import com.helger.pd.searchapi.PDSearchAPIReader;
+import com.helger.pd.searchapi.v1.EntityType;
+import com.helger.pd.searchapi.v1.IDType;
+import com.helger.pd.searchapi.v1.MatchType;
+import com.helger.pd.searchapi.v1.ResultListType;
 import com.helger.peppolid.IDocumentTypeIdentifier;
 import com.helger.peppolid.IParticipantIdentifier;
-import com.helger.peppolid.IProcessIdentifier;
 import com.helger.xsds.bdxr.smp1.DocumentIdentifierType;
 import com.helger.xsds.bdxr.smp1.ParticipantIdentifierType;
-import com.helger.xsds.bdxr.smp1.ProcessIdentifierType;
 import com.helger.xsds.bdxr.smp1.ServiceMetadataType;
-
 import eu.toop.connector.api.TCConfig;
 import eu.toop.connector.api.dd.IDDErrorHandler;
 import eu.toop.connector.api.dd.IDDServiceGroupHrefProvider;
 import eu.toop.connector.api.dd.IDDServiceMetadataProvider;
-import eu.toop.connector.api.dsd.IDSDParticipantIDProvider;
-import eu.toop.connector.api.simulator.CountryAwareServiceMetadataListType;
-import eu.toop.connector.api.simulator.ObjectFactory;
-import eu.toop.simulator.ToopSimulatorResources;
-import eu.toop.simulator.util.JAXBUtil;
+import eu.toop.connector.api.dsd.DSDDatasetResponse;
+import eu.toop.connector.api.dsd.IDSDDatasetResponseProvider;
+import eu.toop.dsd.client.BregDCatHelper;
+import eu.toop.edm.jaxb.cv.agent.PublicOrganizationType;
+import eu.toop.edm.jaxb.dcatap.DCatAPDatasetType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.yaml.snakeyaml.Yaml;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.InputStream;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class plays the role of both a directory and an SMP server. It reads its contents
@@ -73,329 +59,215 @@ import eu.toop.simulator.util.JAXBUtil;
  *
  * @author yerlibilgin
  */
-public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServiceMetadataProvider, IDSDParticipantIDProvider {
+public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServiceMetadataProvider, IDSDDatasetResponseProvider {
 
   /**
    * The Logger instance
    */
   private static final Logger LOGGER = LoggerFactory.getLogger(DiscoveryProvider.class);
 
+  /**
+   * The Instance.
+   */
   static final DiscoveryProvider instance = new DiscoveryProvider();
+  private byte[] resultListBytes;
 
   /**
-   * The directory database
-   * The key is the query params <code>getAllParticipantIDs</code> call
+   * Gets instance.
+   *
+   * @return the instance
    */
-  Map<DIRQuery, ICommonsSet<IParticipantIdentifier>> directoryMap;
-  /**
-   * The SMP database
-   * The key is the query params <code>getEndpoints</code> call
-   */
-  Map<SMPQuery, ICommonsList<SMPEndpoint>> smpMap;
-
   public static DiscoveryProvider getInstance() {
     return instance;
   }
 
-  private final CountryAwareServiceMetadataListType serviceMetadataListType;
 
-  /*
-   * Used in case no matches are found
-   */
-  private static final CommonsHashSet<IParticipantIdentifier> EMPTY_PID_SET = new CommonsHashSet<>();
+  private LinkedHashMap<ParticipantIdentifierType, LinkedHashMap<String, String>> hrefsMap = new LinkedHashMap<>();
+  private LinkedHashMap<SMPServiceMetadataKey, ServiceMetadataType> serviceMetadataMap = new LinkedHashMap<>();
 
-  private CertificateFactory certificateFactory;
-
-  {
-    try {
-      certificateFactory = CertificateFactory.getInstance("X509");
-    } catch (CertificateException e) {
-    }
-  }
+  private static final CommonsTreeMap EMPTY_MAP = new CommonsTreeMap<>();
 
   private DiscoveryProvider() {
-    //parse the file or resource discovery-data.xml
-    try (InputStream is = ToopSimulatorResources.getDiscoveryDataResURL().openStream()) {
-      serviceMetadataListType = JAXBUtil.parseURL(ToopSimulatorResources.getDiscoveryDataResURL(), ObjectFactory.class);
-    } catch (IOException e) {
-      throw new IllegalStateException(e);
-    }
+    InputStream stream = this.getClass().getResourceAsStream("/discovery/directory.xml");
+    resultListBytes = StreamHelper.getAllBytes(stream);
 
-    //build a database for beter performance
+    Yaml yaml = new Yaml();
+    stream = this.getClass().getResourceAsStream("/discovery/endpointhrefs.yml");
+    ValueEnforcer.notNull(stream, "resource: /discovery/endpointhrefs.yml");
+    hrefsMap = yaml.load(stream);
 
-
-    //step 1. build a directory map ( CountryCode, Doctype -- > List<participant id> )
-    buildDirectoryMap();
-
-    //step 2. build an SMP map (participant,doctype,transportprofile,procid) --> r2d2ep)
-    buildSMPMap();
-  }
-
-  private void buildDirectoryMap() {
-
-    LOGGER.info("Building directory map");
-    // ok now that we have parsed the XML document and we will be serving queries with country code and doc type,
-    // then no need to hold the root type and long loop at each query.
-    // instead, we can create a mapping as [countrycode, doctype] ---> IParticipantIdentifier at once.
-    // so that the queries (getAllParticipantIDs) perform faster.
-
-    directoryMap = new HashMap<>();
-
-    serviceMetadataListType.getCountryAwareServiceMetadata().forEach(countryAwareServiceMetadataType -> {
-
-      String countrycode = countryAwareServiceMetadataType.getCountryCode();
-
-      countryAwareServiceMetadataType.getServiceMetadata().forEach(serviceMetadataType -> {
-        DocumentIdentifierType documentIdentifier = serviceMetadataType.getServiceInformation().getDocumentIdentifier();
-        IDocumentTypeIdentifier docID = TCConfig.getIdentifierFactory().createDocumentTypeIdentifier(documentIdentifier.getScheme(), documentIdentifier.getValue());
-
-
-        DIRQuery dirQuery = new DIRQuery(countrycode, docID);
-
-        ICommonsSet<IParticipantIdentifier> identifierSet;
-        if (directoryMap.containsKey(dirQuery)) {
-          identifierSet = directoryMap.get(dirQuery);
-        } else {
-          identifierSet = new CommonsHashSet<>();
-          directoryMap.put(dirQuery, identifierSet);
-        }
-
-        //now add a new participant identifier to this set.
-        //TODO: vulnerable, do null check
-        identifierSet.add(TCConfig.getIdentifierFactory().createParticipantIdentifier(serviceMetadataType.getServiceInformation().getParticipantIdentifier().getScheme(),
-            serviceMetadataType.getServiceInformation().getParticipantIdentifier().getValue()));
-      });
-    });
-  }
-
-
-  /**
-   * Build a map of SMPQuery --> List&lt;IR2D2Participant&gt;
-   */
-  private void buildSMPMap() {
-    LOGGER.info("Building SMP Map");
-
-    smpMap = new HashMap<>();
-
-    serviceMetadataListType.getCountryAwareServiceMetadata().forEach(country -> {
-
-      country.getServiceMetadata().stream().map(ServiceMetadataType::getServiceInformation).forEach(serviceInformation -> {
-
-        ParticipantIdentifierType participantIdentifier = serviceInformation.getParticipantIdentifier();
-        IParticipantIdentifier participantID = TCConfig.getIdentifierFactory().createParticipantIdentifier(participantIdentifier.getScheme(),
-            participantIdentifier.getValue());
-
-        DocumentIdentifierType documentIdentifier = serviceInformation.getDocumentIdentifier();
-        IDocumentTypeIdentifier documentTypeID = TCConfig.getIdentifierFactory().createDocumentTypeIdentifier(documentIdentifier.getScheme(), documentIdentifier.getValue());
-
-        serviceInformation.getProcessList().getProcess().forEach(processType -> {
-          ProcessIdentifierType processIdentifier = processType.getProcessIdentifier();
-          IProcessIdentifier procID = TCConfig.getIdentifierFactory().createProcessIdentifier(processIdentifier.getScheme(), processIdentifier.getValue());
-          processType.getServiceEndpointList().getEndpoint().forEach(endpointType -> {
-            String transportProfile = endpointType.getTransportProfile();
-
-            try {
-              final X509Certificate x509Certificate[] = new X509Certificate[1];
-              //check if we have an extension to set the certificate from file
-              endpointType.getExtension().forEach(extensionType -> {
-                try {
-                  if (extensionType.getAny() != null) {
-                    Node any = (Node) extensionType.getAny();
-
-                    if (any.getLocalName().equals("CertFileName")) {
-                      //this is a special case for simulator. One can want to put his retificate as
-                      //a file name, so that we can parse it from the file.
-
-                      InputStream stream;
-                      String path = any.getTextContent();
-                      File file = new File(path);
-                      if (file.exists()) {
-                        stream = new FileInputStream(file);
-                      } else {
-                        stream = DiscoveryProvider.this.getClass().getResourceAsStream("/" + path);
-                        if (stream == null) {
-                          throw new IllegalStateException("A file or a classpath resource with name " + path + " was not found");
-                        }
-                      }
-                      LOGGER.debug("FULL CERT PATH PARSE: " + file.getAbsolutePath());
-                      x509Certificate[0] = (X509Certificate) certificateFactory.generateCertificate(stream);
-                    }
-
-                  }
-                } catch (Exception ex) {
-                  throw new IllegalStateException(ex.getMessage(), ex);
-                }
-              });
-
-              //do we have a certificate ?
-              if (x509Certificate[0] == null) {
-                //no we don't, so load it form the default smp cert element
-                x509Certificate[0] = (X509Certificate) certificateFactory.generateCertificate(new NonBlockingByteArrayInputStream(endpointType.getCertificate()));
-              }
-
-              ICommonsList<SMPEndpoint> list;
-
-              SMPQuery smpQuery = new SMPQuery(participantID, documentTypeID, procID, transportProfile);
-              if (smpMap.containsKey(smpQuery)) {
-                list = smpMap.get(smpQuery);
-              } else {
-                list = new CommonsArrayList<>();
-                smpMap.put(smpQuery, list);
-              }
-
-              list.add(new SMPEndpoint(participantID, endpointType.getTransportProfile(), endpointType.getEndpointURI(),
-                  x509Certificate[0]));
-
-            } catch (Exception ex) {
-              LOGGER.error(ex.getMessage(), ex);
-            }
-          });
-        });
-      });
-
-    });
+    stream = this.getClass().getResourceAsStream("/discovery/serviceMetadataTypes.yml");
+    ValueEnforcer.notNull(stream, "resource: /discovery/serviceMetadataTypes.yml");
+    serviceMetadataMap = yaml.load(stream);
   }
 
   @Nonnull
   @Override
   public ICommonsSortedMap<String, String> getAllServiceGroupHrefs(@Nonnull IParticipantIdentifier aParticipantID) {
+    ParticipantIdentifierType pId = createParticipantId(aParticipantID);
 
-    ICommonsSortedMap<String, String> map = new CommonsTreeMap<>();
+    if (hrefsMap.containsKey(pId)) {
+      final LinkedHashMap<String, String> hrefsMapForPid = hrefsMap.get(pId);
 
-    smpMap.keySet().forEach(key -> {
+      CommonsTreeMap<String, String> ret = new CommonsTreeMap<>();
+      hrefsMapForPid.forEach((k, v) -> {
+        ret.put(k, v);
+      });
 
-      if (key.aRecipientID.equals(aParticipantID)) {
 
-
-        //temporary
-
-        String asmr = querySMP(aParticipantID);
-
-        //for (final ServiceMetadataReferenceType aSMR : aSG.getServiceMetadataReferenceCollection ().getServiceMetadataReference ())
-        //{
-        //  // Decoded href is important for unification
-        //  final String sHref = CIdentifier.createPercentDecoded (aSMR.getHref ());
-        //  if (ret.put (sHref, aSMR.getHref ()) != null)
-        //    LOGGER.warn ("[API] The ServiceGroup list contains the duplicate URL '" + sHref + "'");
-        //}
-      }
-    });
-    return map;
-  }
-
-  private String querySMP(IParticipantIdentifier aParticipantID) {
-
-    final SimpleURL aBaseURL = new SimpleURL("http://smp.helger.com/" + aParticipantID.getValue());
-
-    final HttpClientSettings aHttpClientSettings = new HttpClientSettings();
-    try (final HttpClientManager httpClient = HttpClientManager.create(aHttpClientSettings)) {
-      final HttpGet aGet = new HttpGet(aBaseURL.getAsURI());
-
-      try (final CloseableHttpResponse response = httpClient.execute(aGet)) {
-        if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-          throw new IllegalStateException("Request failed " + response.getStatusLine().getStatusCode());
-        }
-
-        try (final NonBlockingByteArrayOutputStream stream = new NonBlockingByteArrayOutputStream()) {
-          response.getEntity().writeTo(stream);
-          final byte[] s_bytes = stream.toByteArray();
-          if (LOGGER.isDebugEnabled()) {
-            final String s_result = new String(s_bytes, StandardCharsets.UTF_8);
-            LOGGER.debug("DSD result:\n" + s_result);
-          }
-          return new String(s_bytes);
-        }
-      }
-    } catch (final RuntimeException ex) {
-      throw ex;
-    } catch (final Exception ex) {
-      LOGGER.error(ex.getMessage(), ex);
-      throw new IllegalStateException(ex);
+      LOGGER.error("Service Group Hrefs size " + ret.size());
+      return ret;
     }
+
+    LOGGER.error("Service Group Hrefs Empty");
+    return EMPTY_MAP;
   }
 
   @Nullable
   @Override
   public ServiceMetadataType getServiceMetadata(@Nonnull IParticipantIdentifier aParticipantID, @Nonnull IDocumentTypeIdentifier aDocTypeID) {
-    return serviceMetadataListType.getCountryAwareServiceMetadata().get(0).getServiceMetadata().get(0);
+    SMPServiceMetadataKey key = new SMPServiceMetadataKey(createParticipantId(aParticipantID), createDocTypeId(aDocTypeID));
+
+    if (serviceMetadataMap.containsKey(key)) {
+      LOGGER.debug("Found match " + key);
+      return serviceMetadataMap.get(key);
+    } else {
+      LOGGER.debug("Not Found match " + key);
+      return null; //TODO: return null or throw?
+    }
   }
 
+  /**
+   * TODO: Most of the code is copy here. Need to write a smarter mock. Lotsa refactors needed.
+   *
+   * @param sLogPrefix    The logging prefix to be used. May not be <code>null</code>.
+   * @param sDatasetType  Dataset Type to query. May not be <code>null</code>.
+   * @param sCountryCode  Country code to use. Must be a 2-digit string. May be
+   *                      <code>null</code>.
+   * @param aErrorHandler The error handler to be used. May not be <code>null</code>.
+   * @return
+   */
   @Nonnull
-  @Override
-  public ICommonsSet<IParticipantIdentifier> getAllParticipantIDs(@Nonnull String sLogPrefix, @Nonnull String sDatasetType, @Nullable String sCountryCode, @Nonnull IDocumentTypeIdentifier aDocumentTypeID, @Nonnull IDDErrorHandler aErrorHandler) {
+  public ICommonsSet<DSDDatasetResponse> getAllDatasetResponses(@Nonnull final String sLogPrefix,
+                                                                @Nonnull final String sDatasetType,
+                                                                @Nullable final String sCountryCode,
+                                                                @Nonnull final IDDErrorHandler aErrorHandler) {
+    final ICommonsSet<DSDDatasetResponse> ret = new CommonsHashSet<>();
 
+    final ResultListType resultList = PDSearchAPIReader.resultListV1().read(resultListBytes);
 
-    LOGGER.info(sLogPrefix + "Query directory for [countryCode: " + sCountryCode +
-        ", doctype: " + aDocumentTypeID.getURIEncoded() + "]");
+    List<MatchType> directoryList = resultList.getMatch();
+    filterDirectoryResult(sDatasetType, sCountryCode, directoryList);
+    final List<Document> documents = BregDCatHelper.convertMatchTypesToDCATDocuments(sDatasetType, directoryList);
+    final List<Element> collect = documents.stream().map(doc -> doc.getDocumentElement()).collect(Collectors.toList());
+    final List<DCatAPDatasetType> dCatAPDatasetTypes = BregDCatHelper.convertElementsToDCatList(collect);
 
-    DIRQuery dirQuery = new DIRQuery(sCountryCode, aDocumentTypeID);
+    dCatAPDatasetTypes.forEach(d -> {
+      d.getDistribution().forEach(dist -> {
+        final DSDDatasetResponse resp = new DSDDatasetResponse();
+        // Access Service Conforms To
+        if (dist.getAccessService().hasConformsToEntries())
+          resp.setAccessServiceConforms(dist.getAccessService().getConformsToAtIndex(0).getValue());
 
-    if (directoryMap.containsKey(dirQuery)) {
-      return directoryMap.get(dirQuery);
-    }
+        // DP Identifier
+        final eu.toop.edm.jaxb.cv.cbc.IDType aDPID = ((PublicOrganizationType) d.getPublisherAtIndex(0)).getIdAtIndex(0);
+        resp.setDPIdentifier(TCConfig.getIdentifierFactory().createParticipantIdentifier(aDPID.getSchemeName(), aDPID.getValue()));
 
-    return EMPTY_PID_SET;
+        // Access Service Identifier, used as Document Type ID
+        final ICommonsList<String> aDTParts = StringHelper.getExploded("::", dist.getAccessService().getIdentifier(), 2);
+        if (aDTParts.size() == 2)
+          resp.setDocumentTypeIdentifier(TCConfig.getIdentifierFactory()
+              .createDocumentTypeIdentifier(aDTParts.get(0), aDTParts.get(1)));
 
+        resp.setDatasetIdentifier(d.getIdentifierAtIndex(0));
+        if (dist.hasConformsToEntries())
+          resp.setDistributionConforms(dist.getConformsToAtIndex(0).getValue());
+
+        resp.setDistributionFormat(dist.getFormat().getContentAtIndex(0).toString());
+        ret.add(resp);
+      });
+    });
+
+    LOGGER.debug("List size " + ret.size());
+    return ret;
   }
+
 
   /**
-   * A placeholder for a simple smp query, to play the KEY role in the SMP map.
+   * TODO: this is copied from matchtypewriter. Need to refactor in the
+   * next release
+   * <p>
+   * TODO: not a good code. Modifies the underlying lists as well.
+   * <p>
+   * This is a tentative approach. We filter out match types as following:<br>
+   * <pre>
+   *   for each matchtype
+   *     for each doctype of that matchtype
+   *       remote the doctype if it does not contain datasetType
+   *     if all doctypes were removed
+   *        then remove the matchtype
+   * </pre>
+   *
+   * @param s_datasetType Dataset type
+   * @param sCountryCode  country code
+   * @param matchTypes    Match types
    */
-  class SMPQuery {
-    private IParticipantIdentifier aRecipientID;
-    private IDocumentTypeIdentifier aDocumentTypeID;
-    private IProcessIdentifier aProcessID;
-    private String sTransportProfileID;
+  public static void filterDirectoryResult(String s_datasetType, String sCountryCode, List<MatchType> matchTypes) {
+    //filter
+    final Iterator<MatchType> iterator = matchTypes.iterator();
 
-    public SMPQuery(IParticipantIdentifier aRecipientID, IDocumentTypeIdentifier aDocumentTypeID, IProcessIdentifier aProcessID, String sTransportProfileID) {
-      this.aRecipientID = aRecipientID;
-      this.aDocumentTypeID = aDocumentTypeID;
-      this.aProcessID = aProcessID;
-      this.sTransportProfileID = sTransportProfileID;
-    }
+    while (iterator.hasNext()) {
+      MatchType matchType = iterator.next();
+      final Iterator<IDType> iterator1 = matchType.getDocTypeID().iterator();
+      while (iterator1.hasNext()) {
+        IDType idType = iterator1.next();
+        String concatenated = BregDCatHelper.flattenIdType(idType);
 
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      SMPQuery smpQuery = (SMPQuery) o;
-      return aRecipientID.equals(smpQuery.aRecipientID) &&
-          aDocumentTypeID.equals(smpQuery.aDocumentTypeID) &&
-          aProcessID.equals(smpQuery.aProcessID) &&
-          sTransportProfileID.equals(smpQuery.sTransportProfileID);
-    }
+        // TODO: This is temporary, for now we are removing _ (underscore) and performing a case insensitive "contains" search
 
-    @Override
-    public int hashCode() {
-      return Objects.hash(aRecipientID, aDocumentTypeID, aProcessID, sTransportProfileID);
+        //  ignore cases and underscores (CRIMINAL_RECORD = criminalRecord)
+        if (!concatenated.replaceAll("_", "").toLowerCase()
+            .contains(s_datasetType.replaceAll("_", "").toLowerCase())) {
+          iterator1.remove();
+        }
+      }
+
+      // if all doctypes have been removed then, eliminate this business card
+      if (matchType.getDocTypeID().size() == 0) {
+        iterator.remove();
+        continue;
+      }
+
+      if (sCountryCode != null) {
+        final List<EntityType> entity = matchType.getEntity();
+        final Iterator<EntityType> iterator2 = entity.iterator();
+        while (iterator2.hasNext()) {
+          EntityType entityType = iterator2.next();
+          if (!entityType.getCountryCode().equals(sCountryCode)) {
+            iterator2.remove();
+          }
+        }
+
+        if (matchType.getEntity().isEmpty()) {
+          iterator.remove();
+        }
+      }
     }
   }
 
-  /**
-   * A placeholder for a simple dir query, to play the KEY role in the directory map.
-   */
-  private class DIRQuery {
-    private String sCountryCode;
-    private IDocumentTypeIdentifier aDocumentTypeID;
 
-    public DIRQuery(String sCountryCode, IDocumentTypeIdentifier aDocumentTypeID) {
-      this.sCountryCode = sCountryCode;
-      this.aDocumentTypeID = aDocumentTypeID;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      DIRQuery dirQuery = (DIRQuery) o;
-      return sCountryCode.equals(dirQuery.sCountryCode) &&
-          aDocumentTypeID.equals(dirQuery.aDocumentTypeID);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(sCountryCode, aDocumentTypeID);
-    }
+  private ParticipantIdentifierType createParticipantId(IParticipantIdentifier aParticipantID) {
+    ParticipantIdentifierType pId = new ParticipantIdentifierType();
+    pId.setScheme(aParticipantID.getScheme());
+    pId.setValue(aParticipantID.getValue());
+    return pId;
   }
 
+
+  private DocumentIdentifierType createDocTypeId(IDocumentTypeIdentifier aDoctypeId) {
+    DocumentIdentifierType docId = new DocumentIdentifierType();
+    docId.setScheme(aDoctypeId.getScheme());
+    docId.setValue(aDoctypeId.getValue());
+    return docId;
+  }
 }

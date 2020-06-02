@@ -1,0 +1,138 @@
+/**
+ * Copyright (C) 2018-2020 toop.eu
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package eu.toop.simulator.mock;
+
+import com.helger.commons.collection.impl.ICommonsSortedMap;
+import com.helger.pd.searchapi.PDSearchAPIReader;
+import com.helger.pd.searchapi.PDSearchAPIWriter;
+import com.helger.pd.searchapi.v1.IDType;
+import com.helger.pd.searchapi.v1.ResultListType;
+import com.helger.peppolid.simple.participant.SimpleParticipantIdentifier;
+import com.helger.xsds.bdxr.smp1.DocumentIdentifierType;
+import com.helger.xsds.bdxr.smp1.ParticipantIdentifierType;
+import com.helger.xsds.bdxr.smp1.ServiceMetadataType;
+import eu.toop.connector.api.TCIdentifierFactory;
+import eu.toop.connector.app.dd.DDServiceGroupHrefProviderSMP;
+import eu.toop.connector.app.dd.DDServiceMetadataProviderSMP;
+import eu.toop.dsd.service.ToopDirClient;
+import org.yaml.snakeyaml.Yaml;
+
+import java.io.File;
+import java.io.PrintWriter;
+import java.lang.reflect.Method;
+import java.util.LinkedHashMap;
+
+/**
+ * This class contains the logic for updating the simulator cache
+ * for offline SMP and DSD mocking
+ */
+public class DiscoveryCacheUpdater {
+
+  private final DDServiceGroupHrefProviderSMP hrefProviderSMP = new DDServiceGroupHrefProviderSMP();
+
+  private final DDServiceMetadataProviderSMP serviceMetadataProviderSMP = new DDServiceMetadataProviderSMP();
+
+  /**
+   * Update the DSD cache from the TOOP Directory
+   *
+   * @return
+   */
+  public void updateDSDCache() throws Exception {
+
+    //TODO: since the beta5 release does not reveal performSearch as ResultList,
+    //  we access it via reflection. Immediately change it after release
+
+    final Method method = ToopDirClient.class.getMethod("performSearchResultsLists", String.class, String.class, String.class);
+    method.setAccessible(true);
+    String baseDir = "http://directory.acc.exchange.toop.eu";
+    final ResultListType results = (ResultListType) method.invoke(null, baseDir, null, null);
+    System.out.println(results);
+    PDSearchAPIWriter.resultListV1().setFormattedOutput(true).write(results, new File("src/main/resources/discovery/directory.xml"));
+  }
+
+  /**
+   * Update the SMP cache from the configured SMP server.
+   */
+  public void updateSMPCache() throws Exception {
+    //first read directory
+    ResultListType results = PDSearchAPIReader.resultListV1().read(new File("src/main/resources/discovery/directory.xml"));
+
+
+    LinkedHashMap<ParticipantIdentifierType, LinkedHashMap<String, String>> hrefsMap = new LinkedHashMap<>();
+    LinkedHashMap<SMPServiceMetadataKey, ServiceMetadataType> serviceMetadataMap = new LinkedHashMap<>();
+
+
+    results.getMatch().forEach(matchType -> {
+      ParticipantIdentifierType pId = createParticipantId(matchType.getParticipantID());
+      //get hrefs
+      final SimpleParticipantIdentifier pIdToQuery = TCIdentifierFactory.INSTANCE.createParticipantIdentifier(pId.getScheme(), pId.getValue());
+      final ICommonsSortedMap<String, String> hrefs = hrefProviderSMP.getAllServiceGroupHrefs(pIdToQuery);
+      LinkedHashMap<String, String> javaMap = new LinkedHashMap<>(hrefs);
+      hrefsMap.put(pId, javaMap);
+
+      //get endpoints
+
+      matchType.getDocTypeID().forEach(dId -> {
+        DocumentIdentifierType docType = createDocTypeId(dId);
+        final ServiceMetadataType serviceMetadata = serviceMetadataProviderSMP.getServiceMetadata(pIdToQuery,
+            TCIdentifierFactory.INSTANCE.createDocumentTypeIdentifier(docType.getScheme(), docType.getValue()));
+
+        serviceMetadataMap.put(new SMPServiceMetadataKey(pId, docType),
+            serviceMetadata);
+      });
+    });
+
+
+    PrintWriter hrefsWriter = new PrintWriter(new File("src/main/resources/discovery/endpointhrefs.yml"));
+    PrintWriter smdWriter = new PrintWriter(new File("src/main/resources/discovery/serviceMetadataTypes.yml"));
+
+    Yaml yaml = new Yaml();
+
+    String dump = yaml.dump(hrefsMap);
+    hrefsWriter.println(dump);
+    hrefsWriter.close();
+
+    dump = yaml.dump(serviceMetadataMap);
+    smdWriter.println(dump);
+    smdWriter.close();
+  }
+
+  private static ParticipantIdentifierType createParticipantId(IDType idType) {
+    ParticipantIdentifierType pId = new ParticipantIdentifierType();
+    pId.setScheme(idType.getScheme());
+    pId.setValue(idType.getValue());
+    return pId;
+  }
+
+
+  private static DocumentIdentifierType createDocTypeId(IDType idType) {
+    DocumentIdentifierType docId = new DocumentIdentifierType();
+    docId.setScheme(idType.getScheme());
+    docId.setValue(idType.getValue());
+    return docId;
+  }
+
+  /**
+   * Entry point
+   *
+   * @param args
+   */
+  public static void main(String[] args) throws Exception {
+    final DiscoveryCacheUpdater updater = new DiscoveryCacheUpdater();
+    updater.updateDSDCache();
+    updater.updateSMPCache();
+  }
+}

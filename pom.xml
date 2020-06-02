@@ -16,7 +16,8 @@
     limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.helger</groupId>
@@ -66,7 +67,7 @@
       <email>myildiz83(at)gmail.com</email>
     </developer>
   </developers>
-  
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -177,6 +178,7 @@
       <artifactId>config</artifactId>
       <version>1.4.0</version>
     </dependency>
+
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
@@ -197,10 +199,24 @@
       <artifactId>ph-oton-jetty</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
+      <version>1.26</version>
+    </dependency>
+
     <!-- JUnit 4 for testing -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>eu.toop</groupId>
+      <artifactId>dsd-service</artifactId>
+      <version>${project.version}</version>
+      <classifier>classes</classifier>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -262,7 +278,7 @@
               <shadedArtifactAttached>true</shadedArtifactAttached>
               <shadedClassifierName>bundle</shadedClassifierName>
               <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
                   <resource>.RSA</resource>
                   <resource>.SF</resource>

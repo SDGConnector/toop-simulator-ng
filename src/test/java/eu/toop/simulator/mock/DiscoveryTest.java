@@ -16,23 +16,35 @@
 package eu.toop.simulator.mock;
 
 import com.helger.commons.collection.impl.ICommonsSet;
+import com.helger.commons.error.level.EErrorLevel;
 import com.helger.peppolid.IParticipantIdentifier;
+import eu.toop.connector.api.dd.IDDErrorHandler;
+import eu.toop.connector.api.dsd.DSDDatasetResponse;
+import eu.toop.edm.error.IToopErrorCode;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.stream.Collectors;
 
 public class DiscoveryTest {
-  @Ignore
+
   @Test
   public void dsdTest(){
-    final DiscoveryProvider instance = DiscoveryProvider.getInstance();
+    System.out.println("true");
 
-    final DiscoveryProvider.SMPQuery smpQuery = instance.smpMap.keySet().stream().collect(Collectors.toList()).get(0);
-    final ICommonsSet<IParticipantIdentifier> allParticipantIDs = instance.getAllParticipantIDs("", "REGISTERED_ORGANIZATION", "SV", null, null);
+    DiscoveryProvider discoveryProvider = DiscoveryProvider.getInstance();
 
-    allParticipantIDs.forEach(ide -> {
-      System.out.println(ide.getScheme() + "::" + ide.getValue());
+    final ICommonsSet<DSDDatasetResponse> responses = discoveryProvider.getAllDatasetResponses("", "REGISTERED_ORGANIZATION_TYPE", "SV", new IDDErrorHandler() {
+      @Override
+      public void onMessage(@Nonnull EErrorLevel eErrorLevel, @Nonnull String sMsg, @Nullable Throwable t, @Nonnull IToopErrorCode eCode) {
+        System.err.println(sMsg);
+      }
+    });
+
+    responses.forEach(resp->{
+      System.out.println(resp.getAsJson().getAsJsonString());
     });
   }
 }
