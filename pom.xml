@@ -35,7 +35,10 @@
   <url>http://github.com/toop4eu/toop-simulator-ng</url>
 
   <properties>
-    <toop.version>2.0.0-SNAPSHOT</toop.version>
+    <toop.version>2.0.0-beta5</toop.version>
+    <tc.version>${toop.version}</tc.version>
+    <dsd.version>${toop.version}</dsd.version>
+    <pg.version>2.0.0-beta4</pg.version>
   </properties>
 
   <inceptionYear>2020</inceptionYear>
@@ -94,21 +97,21 @@
       <dependency>
         <groupId>eu.toop</groupId>
         <artifactId>data-services-directory</artifactId>
-        <version>${toop.version}</version>
+        <version>${dsd.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>eu.toop</groupId>
         <artifactId>tc-parent-pom</artifactId>
-        <version>${toop.version}</version>
+        <version>${tc.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>eu.toop</groupId>
         <artifactId>toop-playground-ng</artifactId>
-        <version>${toop.version}</version>
+        <version>${pg.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
