@@ -224,7 +224,7 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
         IDType idType = iterator1.next();
         String concatenated = BregDCatHelper.flattenIdType(idType);
 
-        DoctypeParts parts = DoctypeParts.parse(concatenated);
+        //DoctypeParts parts = DoctypeParts.parse(concatenated);
 
         // TODO: This is temporary, for now we are removing _ (underscore) and performing a case insensitive "contains" search
 
