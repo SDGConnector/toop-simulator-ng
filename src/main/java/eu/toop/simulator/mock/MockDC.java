@@ -104,8 +104,8 @@ public class MockDC {
     final TCOutgoingMessage aOM = new TCOutgoingMessage ();
     {
       final TCOutgoingMetadata aMetadata = new TCOutgoingMetadata ();
-      aMetadata.setSenderID (TCRestJAXB.createTCID ("iso6523-actorid-upis", "9914:tc-ng-test-sender"));
-      aMetadata.setReceiverID (TCRestJAXB.createTCID ("iso6523-actorid-upis", "9915:tooptest"));
+      aMetadata.setSenderID (TCRestJAXB.createTCID ("iso6523-actorid-upis", "9999:freedonia"));
+      aMetadata.setReceiverID (TCRestJAXB.createTCID ("iso6523-actorid-upis", "9999:elonia"));
       aMetadata.setDocTypeID (TCRestJAXB.createTCID ("toop-doctypeid-qns",
           "urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.registeredorganization::1.40"));
       aMetadata.setProcessID (TCRestJAXB.createTCID ("toop-procid-agreement", "urn:eu.toop.process.datarequestresponse"));

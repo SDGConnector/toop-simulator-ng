@@ -35,3 +35,4 @@ logs
 data
 config
 .tchistory
+release.properties
