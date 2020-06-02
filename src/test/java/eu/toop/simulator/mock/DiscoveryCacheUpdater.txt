@@ -20,11 +20,11 @@ import com.helger.pd.searchapi.PDSearchAPIReader;
 import com.helger.pd.searchapi.PDSearchAPIWriter;
 import com.helger.pd.searchapi.v1.IDType;
 import com.helger.pd.searchapi.v1.ResultListType;
-import com.helger.peppolid.simple.participant.SimpleParticipantIdentifier;
+import com.helger.peppolid.IParticipantIdentifier;
 import com.helger.xsds.bdxr.smp1.DocumentIdentifierType;
 import com.helger.xsds.bdxr.smp1.ParticipantIdentifierType;
 import com.helger.xsds.bdxr.smp1.ServiceMetadataType;
-import eu.toop.connector.api.TCIdentifierFactory;
+import eu.toop.connector.api.TCConfig;
 import eu.toop.connector.app.dd.DDServiceGroupHrefProviderSMP;
 import eu.toop.connector.app.dd.DDServiceMetadataProviderSMP;
 import eu.toop.dsd.service.ToopDirClient;
@@ -78,7 +78,7 @@ public class DiscoveryCacheUpdater {
     results.getMatch().forEach(matchType -> {
       ParticipantIdentifierType pId = createParticipantId(matchType.getParticipantID());
       //get hrefs
-      final SimpleParticipantIdentifier pIdToQuery = TCIdentifierFactory.INSTANCE.createParticipantIdentifier(pId.getScheme(), pId.getValue());
+      IParticipantIdentifier pIdToQuery = TCConfig.getIdentifierFactory().createParticipantIdentifier(pId.getScheme(), pId.getValue());
       final ICommonsSortedMap<String, String> hrefs = hrefProviderSMP.getAllServiceGroupHrefs(pIdToQuery);
       LinkedHashMap<String, String> javaMap = new LinkedHashMap<>(hrefs);
       hrefsMap.put(pId, javaMap);
@@ -88,7 +88,7 @@ public class DiscoveryCacheUpdater {
       matchType.getDocTypeID().forEach(dId -> {
         DocumentIdentifierType docType = createDocTypeId(dId);
         final ServiceMetadataType serviceMetadata = serviceMetadataProviderSMP.getServiceMetadata(pIdToQuery,
-            TCIdentifierFactory.INSTANCE.createDocumentTypeIdentifier(docType.getScheme(), docType.getValue()));
+            TCConfig.getIdentifierFactory().createDocumentTypeIdentifier(docType.getScheme(), docType.getValue()));
 
         serviceMetadataMap.put(new SMPServiceMetadataKey(pId, docType),
             serviceMetadata);

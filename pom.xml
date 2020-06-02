@@ -194,6 +194,7 @@
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-api</artifactId>
     </dependency>
+
     <dependency>
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-jetty</artifactId>
@@ -212,6 +213,7 @@
       <scope>test</scope>
     </dependency>
 
+    <!--
     <dependency>
       <groupId>eu.toop</groupId>
       <artifactId>dsd-service</artifactId>
@@ -219,6 +221,7 @@
       <classifier>classes</classifier>
       <scope>test</scope>
     </dependency>
+    -->
   </dependencies>
 
   <build>

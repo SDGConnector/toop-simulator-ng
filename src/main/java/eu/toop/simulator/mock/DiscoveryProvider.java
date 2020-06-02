@@ -36,6 +36,7 @@ import eu.toop.connector.api.dd.IDDServiceMetadataProvider;
 import eu.toop.connector.api.dsd.DSDDatasetResponse;
 import eu.toop.connector.api.dsd.IDSDDatasetResponseProvider;
 import eu.toop.dsd.client.BregDCatHelper;
+import eu.toop.dsd.client.types.DoctypeParts;
 import eu.toop.edm.jaxb.cv.agent.PublicOrganizationType;
 import eu.toop.edm.jaxb.dcatap.DCatAPDatasetType;
 import org.slf4j.Logger;
@@ -223,7 +224,11 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
         IDType idType = iterator1.next();
         String concatenated = BregDCatHelper.flattenIdType(idType);
 
+        DoctypeParts parts = DoctypeParts.parse(concatenated);
+
         // TODO: This is temporary, for now we are removing _ (underscore) and performing a case insensitive "contains" search
+
+        //first check for the EXACT match
 
         //  ignore cases and underscores (CRIMINAL_RECORD = criminalRecord)
         if (!concatenated.replaceAll("_", "").toLowerCase()
