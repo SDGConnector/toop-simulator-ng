@@ -27,7 +27,6 @@ import com.helger.xsds.bdxr.smp1.ServiceMetadataType;
 import eu.toop.connector.api.TCConfig;
 import eu.toop.connector.app.dd.DDServiceGroupHrefProviderSMP;
 import eu.toop.connector.app.dd.DDServiceMetadataProviderSMP;
-import eu.toop.dsd.service.ToopDirClient;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -52,13 +51,8 @@ public class DiscoveryCacheUpdater {
    */
   public void updateDSDCache() throws Exception {
 
-    //TODO: since the beta5 release does not reveal performSearch as ResultList,
-    //  we access it via reflection. Immediately change it after release
-
-    final Method method = ToopDirClient.class.getMethod("performSearchResultsLists", String.class, String.class, String.class);
-    method.setAccessible(true);
     String baseDir = "http://directory.acc.exchange.toop.eu";
-    final ResultListType results = (ResultListType) method.invoke(null, baseDir, null, null);
+    final ResultListType results = ToopDirClient.performSearchResultsLists(baseDir, null, null);
     System.out.println(results);
     PDSearchAPIWriter.resultListV1().setFormattedOutput(true).write(results, new File("src/main/resources/discovery/directory.xml"));
   }
@@ -132,7 +126,7 @@ public class DiscoveryCacheUpdater {
    */
   public static void main(String[] args) throws Exception {
     final DiscoveryCacheUpdater updater = new DiscoveryCacheUpdater();
-    updater.updateDSDCache();
+    //updater.updateDSDCache();
     updater.updateSMPCache();
   }
 }

@@ -107,8 +107,8 @@ public class MockDC {
       aMetadata.setSenderID (TCRestJAXB.createTCID ("iso6523-actorid-upis", "9999:freedonia"));
       aMetadata.setReceiverID (TCRestJAXB.createTCID ("iso6523-actorid-upis", "9999:elonia"));
       aMetadata.setDocTypeID (TCRestJAXB.createTCID ("toop-doctypeid-qns",
-          "urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.registeredorganization::1.40"));
-      aMetadata.setProcessID (TCRestJAXB.createTCID ("toop-procid-agreement", "urn:eu.toop.process.datarequestresponse"));
+          "RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0"));
+      aMetadata.setProcessID (TCRestJAXB.createTCID ("toop-procid-agreement", "urn:eu.toop.process.dataquery"));
       aMetadata.setTransportProtocol (EMEProtocol.AS4.getTransportProfileID ());
       aOM.setMetadata (aMetadata);
     }

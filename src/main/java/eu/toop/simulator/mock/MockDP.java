@@ -103,11 +103,12 @@ public class MockDP {
     final TCOutgoingMessage aOM = new TCOutgoingMessage();
     {
       final TCOutgoingMetadata aMetadata = new TCOutgoingMetadata();
-      //invert sender and receiver
-      aMetadata.setSenderID(TCRestJAXB.createTCID(response.getMetadata().getReceiverID().getScheme(), response.getMetadata().getReceiverID().getValue()));
-      aMetadata.setReceiverID(TCRestJAXB.createTCID(response.getMetadata().getSenderID().getScheme(), response.getMetadata().getSenderID().getValue()));
-      aMetadata.setDocTypeID(TCRestJAXB.createTCID(response.getMetadata().getDocumentTypeID().getScheme(), response.getMetadata().getDocumentTypeID().getValue()));
+      aMetadata.setSenderID(TCRestJAXB.createTCID(response.getMetadata().getSenderID().getScheme(), response.getMetadata().getSenderID().getValue()));
+      aMetadata.setReceiverID(TCRestJAXB.createTCID(response.getMetadata().getReceiverID().getScheme(), response.getMetadata().getReceiverID().getValue()));
+      aMetadata.setDocTypeID (TCRestJAXB.createTCID ("toop-doctypeid-qns",
+          "RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0"));
       aMetadata.setProcessID(TCRestJAXB.createTCID(response.getMetadata().getProcessID().getScheme(), response.getMetadata().getProcessID().getValue()));
+
       aMetadata.setTransportProtocol(EMEProtocol.AS4.getTransportProfileID());
       aOM.setMetadata(aMetadata);
     }

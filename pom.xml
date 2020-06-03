@@ -37,7 +37,7 @@
     <toop.version>2.0.0-beta5</toop.version>
     <tc.version>${toop.version}</tc.version>
     <dsd.version>${toop.version}</dsd.version>
-    <pg.version>2.0.0-beta4</pg.version>
+    <pg.version>${toop.version}</pg.version>
   </properties>
 
   <inceptionYear>2020</inceptionYear>
@@ -206,6 +206,13 @@
       <groupId>org.yaml</groupId>
       <artifactId>snakeyaml</artifactId>
       <version>1.26</version>
+    </dependency>
+
+    <!-- exlude slf4j-simple DONT REMOVE THID :@ -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <!-- JUnit 4 for testing -->

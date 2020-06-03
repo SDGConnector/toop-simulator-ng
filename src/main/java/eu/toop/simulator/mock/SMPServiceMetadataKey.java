@@ -70,4 +70,12 @@ public class SMPServiceMetadataKey {
   public int hashCode() {
     return Objects.hash(participantIdentifierType, documentIdentifierType);
   }
+
+  @Override
+  public String toString() {
+    return "SMPServiceMetadataKey{" +
+        "participantIdentifierType=" + participantIdentifierType +
+        ", documentIdentifierType=" + documentIdentifierType +
+        '}';
+  }
 }
