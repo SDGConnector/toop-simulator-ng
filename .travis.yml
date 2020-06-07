@@ -12,17 +12,6 @@ Nl6WDYotXuIbvvEv9Hhu5namD98TB1MzWCYjK/mpGV5uw5RHecp5By95ySQR6fwetRfA3u7br8torWL/
 iigW1aCLqV2C3tNKLoFGSgwJqSGFQsxq5N4+Sw+U+vd+3zWhGswBTuAEdrb9bkxcfWzzPz9hlmuIGWConJP/9UnttefmRGHXWn9AEcyj3xeND8hSfw7kzS1Wo50NGvlm8/dq8YRZGe
 xoN8="
 
-addons:
-  sonarcloud:
-    organization: toop4eu
-    token:
-      secure: "opxeduVELfRmE6Q12ACpEwFv2SLX1vS/b+3yoXLluSz7M73E+KupGHcls327WTT73luuCuNjjX/hlqwd9myIbvFYNWcEla+TnKwZ6Fu5nsjkiqieCFABeITOSsXjC4c
-2B+RsFjcSEihzdVAMW1LGiDm/82vY7B97XJqdr7mLfo1+gtmUXVaBgyeAgLzdHzosiCDaBd7qMzCWLcOch7kCJTehDdtwllYaljYx0RkKebW7Pz3AW4rB5Tbsi8vUdAsB3CjXoWTO+
-0VitzjSX1dbX4C0AP+jAQeBacuox+F/GFr3RbeWczG6k/R5Fjb82RArqoMFfu/DAOyVLj3UeOL/UruOK0J0vyYVPOQQ0gWqk84UkNSI83ApTIngBhqG9YwN5KvVy8flcQKmJ5tmGXm
-xuTK9k8ajKVTkT5WMOqiXzI1cpwGy36KHjGAcspeAY6GSK91qVchoK1BGLGwyAuJ9tWuta8zKM0qLW8uWUsm5VCEPFd/3kfnJkgwqEVRJYvoplvqYGUKQewjsVfhqtJ2GwJzhPaBBN
-WWZPzxxuE5m6NXqGyk7M99se0VQO/bFnDyjHraCfkUGnW6lDpY/FU1f0BhWWI5NlhNgZkLMpN8nybtxr1vprr0jYrHEyHxZj5NTdjmfmDILSs+XSLC3CTshBjZT9E7yirUY/7mDy38
-n62I="
-
 install:
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -U
 
@@ -39,7 +28,7 @@ jobs:
   - stage: test
     jdk: openjdk8
     script:
-    - mvn test -B -P coverage sonar:sonar
+    - mvn test -B -P coverage
     after_success:
     - mvn deploy --settings travis-settings.xml -DskipTests=true -B -P travis-deploy
     - bash <(curl -s https://codecov.io/bash)
