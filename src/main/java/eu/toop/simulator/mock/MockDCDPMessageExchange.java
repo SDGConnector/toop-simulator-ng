@@ -75,8 +75,6 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
       final MEPayload aHead = meMessage.payloads().getFirst();
       final InputStream inputStream = aHead.getData().getInputStream();
       final IEDMTopLevelObject aTopLevel = EDMPayloadDeterminator.parseAndFind(inputStream);
-      // TODO get metadata in here
-      // NOTE: (yerlibilgin): I got the metadata like this:
       final MEIncomingTransportMetadata aMetadata = new MEIncomingTransportMetadata(
           imeRoutingInformation.getSenderID(), imeRoutingInformation.getReceiverID(),
           imeRoutingInformation.getDocumentTypeID(), imeRoutingInformation.getProcessID());

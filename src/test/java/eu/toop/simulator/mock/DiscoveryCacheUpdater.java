@@ -27,11 +27,11 @@ import com.helger.xsds.bdxr.smp1.ServiceMetadataType;
 import eu.toop.connector.api.TCConfig;
 import eu.toop.connector.app.dd.DDServiceGroupHrefProviderSMP;
 import eu.toop.connector.app.dd.DDServiceMetadataProviderSMP;
+import eu.toop.dsd.api.ToopDirClient;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 
 /**
@@ -52,7 +52,7 @@ public class DiscoveryCacheUpdater {
   public void updateDSDCache() throws Exception {
 
     String baseDir = "http://directory.acc.exchange.toop.eu";
-    final ResultListType results = ToopDirClient.performSearchResultsLists(baseDir, null, null);
+    final ResultListType results = ToopDirClient.callSearchApi(baseDir, null, null);
     System.out.println(results);
     PDSearchAPIWriter.resultListV1().setFormattedOutput(true).write(results, new File("src/main/resources/discovery/directory.xml"));
   }
@@ -126,7 +126,7 @@ public class DiscoveryCacheUpdater {
    */
   public static void main(String[] args) throws Exception {
     final DiscoveryCacheUpdater updater = new DiscoveryCacheUpdater();
-    //updater.updateDSDCache();
+    updater.updateDSDCache();
     updater.updateSMPCache();
   }
 }

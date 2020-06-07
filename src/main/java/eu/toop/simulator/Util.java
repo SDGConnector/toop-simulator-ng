@@ -105,49 +105,4 @@ public class Util {
       }
     }
   }
-
-  /**
-   * BOGUS. Doesnt work with jars. TODO: Visit later
-   * Transfer ALL the resources residing under the provided classpath resource to the
-   * filesystem with the same directory structure.
-   *
-   * @param path
-   */
-  public static void transferAllResourcesToFileSystem(String path) throws IOException {
-    LOGGER.debug("Inspect " + path);
-    if (path.endsWith(".yaml") || path.endsWith(".xml")) {
-      LOGGER.debug("Transfer " + path);
-
-      String trimmedPath = path.substring(0, path.lastIndexOf('/'));
-      if (trimmedPath.startsWith("/"))
-        trimmedPath = trimmedPath.substring(1);
-
-      Util.transferResourceToDirectory(path, trimmedPath);
-      return;
-    }
-
-    final URL resource = Util.class.getResource(path);
-    if (resource == null) {
-      LOGGER.warn("NULL resource, NOOP");
-      return;
-    }
-
-    final URLConnection urlConnection = resource.openConnection();
-    if (urlConnection == null) {
-      LOGGER.warn("Cannot open connection, NOOP");
-      return;
-    }
-
-    final InputStream resourceAsStream = urlConnection.getInputStream();
-    if (urlConnection == null) {
-      LOGGER.warn("Cannot open stream, NOOP");
-      return;
-    }
-
-    BufferedReader br = new BufferedReader(new InputStreamReader(resourceAsStream));
-    String line;
-    while ((line = br.readLine()) != null) {
-      Util.transferAllResourcesToFileSystem(path + "/" + line);
-    }
-  }
 }

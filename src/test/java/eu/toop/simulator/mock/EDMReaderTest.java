@@ -16,11 +16,4 @@ public class EDMReaderTest {
       final IEDMTopLevelObject aTopLevel = EDMPayloadDeterminator.parseAndFind(inputStream);
     }
   }
-
-  @Ignore
-  @Test
-  public void transferResourceDirectory() throws Exception {
-    final String resourcePath = "/datasets";
-    Util.transferAllResourcesToFileSystem(resourcePath);
-  }
 }
