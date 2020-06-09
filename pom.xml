@@ -158,6 +158,11 @@
       <artifactId>tc-web-api</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>com.helger.photon</groupId>
+      <artifactId>ph-oton-core</artifactId>
+    </dependency>
+
     <!-- Logging -->
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
