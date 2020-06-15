@@ -21,7 +21,7 @@ import eu.toop.connector.api.me.incoming.IMEIncomingHandler;
 import eu.toop.connector.api.me.model.MEMessage;
 import eu.toop.connector.api.me.outgoing.IMERoutingInformation;
 import eu.toop.connector.api.me.outgoing.MEOutgoingException;
-import eu.toop.connector.mem.external.spi.DefaultMessageExchangeSPI;
+import eu.toop.connector.mem.external.spi.ExternalMessageExchangeSPI;
 import eu.toop.simulator.mock.MockDCDPMessageExchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ import javax.servlet.ServletContext;
  * If the <code>toop-simulator.mockGateway==true</code> then the gateway communication simulated
  * and an instance of {@link eu.toop.simulator.mock.MockDCDPMessageExchange} is used,
  * <br>otherwise (<code>toop-simulator.mockGateway==true</code>) then the message exchange communication
- * is not simulated and an instance of {@link eu.toop.connector.mem.external.spi.DefaultMessageExchangeSPI} is used.
+ * is not simulated and an instance of {@link eu.toop.connector.mem.external.spi.ExternalMessageExchangeSPI} is used.
  * </p>
  * <p>In the latter case, the communication with a gateway is configured with the key
  * <code>toop.mem.as4.endpoint</code> and all
@@ -61,8 +61,8 @@ public class DCDPMessageExchangeDelegate implements IMessageExchangeSPI {
       LOGGER.info("Using " + MockDCDPMessageExchange.class.getName());
       underlyingSPI = new MockDCDPMessageExchange();
     } else {
-      LOGGER.info("Using " + DefaultMessageExchangeSPI.class.getName());
-      underlyingSPI = new DefaultMessageExchangeSPI();
+      LOGGER.info("Using " + ExternalMessageExchangeSPI.class.getName());
+      underlyingSPI = new ExternalMessageExchangeSPI();
     }
   }
 
