@@ -23,15 +23,13 @@ import com.helger.commons.url.SimpleURL;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.response.ResponseHandlerJson;
 import com.helger.json.IJson;
-import com.helger.json.serialize.JsonWriter;
-import com.helger.json.serialize.JsonWriterSettings;
 import eu.toop.connector.api.me.EMEProtocol;
 import eu.toop.connector.api.rest.TCOutgoingMessage;
 import eu.toop.connector.api.rest.TCOutgoingMetadata;
 import eu.toop.connector.api.rest.TCPayload;
 import eu.toop.connector.api.rest.TCRestJAXB;
 import eu.toop.simulator.SimulatorConfig;
-import eu.toop.simulator.cli.CommandProcessor;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpPost;
@@ -42,9 +40,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import java.io.File;
-import java.io.IOException;
+import javax.annotation.Nullable;
+import java.io.*;
 import java.nio.file.Files;
+import java.util.stream.StreamSupport;
 
 /**
  * A MOCK class that generates and sends DC requests
@@ -57,81 +56,21 @@ public class MockDC {
 
   /**
    * Sends a request that is contained in a file with name <code>sFileName</code>
-   * @param sFileName the file that contains the request. May not be null
+   *
+   * @param sender    the identifier of the sender. Optional
+   * @param receiver  the identifier of the recevier. Optional
+   * @param docTypeId The doctypeid. Optional
+   * @param sFileName the file that contains the request. Optional
    */
-  public static void sendDCRequest(@Nonnull String sFileName) {
+  public static void sendDCRequest(@Nullable String sender, @Nullable String receiver, @Nullable String docTypeId, @Nullable String sFileName) {
 
-    ValueEnforcer.notNull(sFileName, "file name");
-    File file = new File(sFileName);
-    if (!file.exists()) {
-      LOGGER.error("The file with name " + sFileName + " does not exist");
-      return;
-    }
+    final String defaultResourceName = "/datasets/edm-conceptRequest-lp.xml";
+    final String connectorEndpoint = "/api/user/submit/request";
 
-    try {
-      sendRequest(file);
-    } catch (IOException e) {
-      LOGGER.error("IOException during send-dc-request " + sFileName + ": " + e.getMessage());
-    }
-  }
-
-  private static void sendRequest(File file) throws IOException {
-    // Build base URL and fetch all records per HTTP request
-    final SimpleURL aBaseURL = new SimpleURL("http://localhost:" + SimulatorConfig.connectorPort + "/api/user/submit/request");
-    LOGGER.info("Sending the request to  " + aBaseURL);
-
-    try (final CloseableHttpClient httpClient = HttpClients.createDefault()) {
-      final HttpPost aPost = new HttpPost(aBaseURL.getAsURI());
-
-      final byte[] bytes = Files.readAllBytes(file.toPath());
-      aPost.setEntity(new ByteArrayEntity(bytes));
-      aPost.setHeader("Content-type", "application/xml");
-      final HttpResponse response = httpClient.execute(aPost);
-
-      if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-        throw new IllegalStateException("Request failed " + response.getStatusLine().getStatusCode());
-      }
-
-      LOGGER.info("Request sent successfully");
-    }
-  }
-
-  /**
-   * Builds a default request and sends it the the connector
-   * @throws IOException
-   */
-  public static void buildAndSendDefaultRequest() throws IOException {
-    final TCOutgoingMessage aOM = new TCOutgoingMessage ();
-    {
-      final TCOutgoingMetadata aMetadata = new TCOutgoingMetadata ();
-      aMetadata.setSenderID (TCRestJAXB.createTCID ("iso6523-actorid-upis", "9999:freedonia"));
-      aMetadata.setReceiverID (TCRestJAXB.createTCID ("iso6523-actorid-upis", "9999:elonia"));
-      aMetadata.setDocTypeID (TCRestJAXB.createTCID ("toop-doctypeid-qns",
-          "RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0"));
-      aMetadata.setProcessID (TCRestJAXB.createTCID ("toop-procid-agreement", "urn:eu.toop.process.dataquery"));
-      aMetadata.setTransportProtocol (EMEProtocol.AS4.getTransportProfileID ());
-      aOM.setMetadata (aMetadata);
-    }
-    {
-      final TCPayload aPayload = new TCPayload ();
-      aPayload.setValue (StreamHelper.getAllBytes (new ClassPathResource("datasets/edm-conceptRequest-lp.xml")));
-      aPayload.setMimeType (CMimeType.APPLICATION_XML.getAsString ());
-      aPayload.setContentID ("mock-request@toop");
-      aOM.addPayload (aPayload);
-    }
-
-    LOGGER.info (TCRestJAXB.outgoingMessage ().getAsString (aOM));
-
-    try (HttpClientManager aHCM = new HttpClientManager ())
-    {
-      final HttpPost aPost = new HttpPost ("http://localhost:" + SimulatorConfig.connectorPort + "/api/user/submit/request");
-      aPost.setEntity (new ByteArrayEntity (TCRestJAXB.outgoingMessage ().getAsBytes (aOM)));
-      final IJson aJson = aHCM.execute (aPost, new ResponseHandlerJson());
-      //LOGGER.info (new JsonWriter(new JsonWriterSettings().setIndentEnabled (true)).writeAsString (aJson));
-    }
+    DCDPUtil.sendTCOutgoingMessage(sender, receiver, docTypeId, sFileName, defaultResourceName, connectorEndpoint);
   }
 
   public static void main(String[] args) throws IOException {
-    buildAndSendDefaultRequest();
+    //buildAndSendDefaultRequest(sender, receiver, docType);
   }
 }

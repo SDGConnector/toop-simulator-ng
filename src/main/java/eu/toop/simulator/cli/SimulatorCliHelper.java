@@ -28,6 +28,7 @@ import java.util.List;
 public class SimulatorCliHelper {
   public static final String CMD_HELP = "help";
   public static final String CMD_SEND_DC_REQUEST = "send-dc-request";
+  public static final String CMD_SEND_DP_RESPONSE = "send-dp-response";
   public static final String CMD_QUIT = "quit";
   /**
    * Read lines from the console, with input editing.

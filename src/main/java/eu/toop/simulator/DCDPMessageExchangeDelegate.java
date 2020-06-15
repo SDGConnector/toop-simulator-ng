@@ -57,7 +57,7 @@ public class DCDPMessageExchangeDelegate implements IMessageExchangeSPI {
    * mock or use the default SPI for the IMessageExchangeSPI.
    */
   public DCDPMessageExchangeDelegate() {
-    if (SimulatorConfig.mockGateway) {
+    if (SimulatorConfig.isMockGateway()) {
       LOGGER.info("Using " + MockDCDPMessageExchange.class.getName());
       underlyingSPI = new MockDCDPMessageExchange();
     } else {

@@ -16,11 +16,11 @@
     limitations under the License.
 
 -->
-<Configuration status="debug" strict="true">
+<Configuration status="warn" strict="true">
   <Appenders>
     <Console name="STDOUT" target="SYSTEM_OUT">
       <!-- Location may be an issue when async logging is used! -->
-      <PatternLayout pattern="[TOOP TS][%date{ISO8601}] [%-5level]  %msg -- %location%n"/>
+      <PatternLayout pattern="[TOOP TS][%date{ISO8601}] [%-5level] %c{1.}:%L %msg%n"/>
     </Console>
   </Appenders>
   <Loggers>

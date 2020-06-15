@@ -16,7 +16,6 @@
 package eu.toop.simulator.mock;
 
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.CommonsArrayList;
@@ -80,16 +79,21 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
           imeRoutingInformation.getDocumentTypeID(), imeRoutingInformation.getProcessID());
 
       if (aTopLevel instanceof EDMRequest) {
-        if (SimulatorConfig.mode == SimulationMode.DP) {
-          //create response and send back
-          final IIncomingEDMResponse response = MockDP.eloniaCreateResponse((EDMRequest) aTopLevel, aMetadata);
-          if(response instanceof IncomingEDMResponse)
-            MPTrigger.forwardMessage((IncomingEDMResponse) response, SimulatorConfig.dcEndpoint);
-          if(response instanceof IncomingEDMErrorResponse)
-            MPTrigger.forwardMessage((IncomingEDMErrorResponse) response, SimulatorConfig.dcEndpoint);
+        if (SimulatorConfig.getMode() == SimulationMode.DP) {
+          if (SimulatorConfig.isDpResponseAuto()) {
+            LOGGER.debug("Automatic response will be created and sent");
+            //create response and send back
+            final IIncomingEDMResponse response = MockDP.eloniaCreateResponse((EDMRequest) aTopLevel, aMetadata);
+            if (response instanceof IncomingEDMResponse)
+              MPTrigger.forwardMessage((IncomingEDMResponse) response, SimulatorConfig.getDcEndpoint());
+            if (response instanceof IncomingEDMErrorResponse)
+              MPTrigger.forwardMessage((IncomingEDMErrorResponse) response, SimulatorConfig.getDcEndpoint());
+          } else {
+            LOGGER.debug("Automatic response is disabled. Having a rest");
+          }
         } else {
           //send it to the configured /to-dp
-          MockDP.sendRequestToDp((EDMRequest) aTopLevel, aMetadata);
+          MockDP.deliverRequestToDP((EDMRequest) aTopLevel, aMetadata);
         }
       } else if (aTopLevel instanceof EDMResponse) {
         // Response, send to freedonia
@@ -99,11 +103,11 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
             aAttachments.add(aItem);
         MPTrigger.forwardMessage(new IncomingEDMResponse((EDMResponse) aTopLevel,
             aAttachments,
-            aMetadata), SimulatorConfig.dcEndpoint);
+            aMetadata), SimulatorConfig.getDcEndpoint());
       } else if (aTopLevel instanceof EDMErrorResponse) {
         // Error response
         MPTrigger.forwardMessage(new IncomingEDMErrorResponse((EDMErrorResponse) aTopLevel,
-            aMetadata), SimulatorConfig.dcEndpoint);
+            aMetadata), SimulatorConfig.getDcEndpoint());
       } else {
         // Unknown
         ToopKafkaClient.send(EErrorLevel.ERROR, () -> "Unsupported Message: " + aTopLevel);

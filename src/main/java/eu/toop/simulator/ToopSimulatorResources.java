@@ -59,5 +59,6 @@ public class ToopSimulatorResources {
     Util.transferResourceToDirectory("datasets/gbm/LP12345.yaml", "datasets/gbm");
     Util.transferResourceToDirectory("datasets/gbm/NP12345.yaml", "datasets/gbm");
     Util.transferResourceToDirectory("datasets/edm-conceptRequest-lp.xml", "datasets");
+    Util.transferResourceToDirectory("datasets/edm-conceptResponse-lp.xml", "datasets");
   }
 }

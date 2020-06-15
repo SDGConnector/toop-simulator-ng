@@ -16,9 +16,13 @@
 package eu.toop.simulator.mock;
 
 import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.mime.CMimeType;
+import com.helger.commons.url.SimpleURL;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.response.ResponseHandlerJson;
+import com.helger.json.IJson;
 import eu.toop.connector.api.me.EMEProtocol;
 import eu.toop.connector.api.me.incoming.*;
 import eu.toop.connector.api.rest.TCOutgoingMessage;
@@ -32,12 +36,19 @@ import eu.toop.edm.EDMResponse;
 import eu.toop.playground.dp.DPException;
 import eu.toop.playground.dp.service.ToopDP;
 import eu.toop.simulator.SimulatorConfig;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nullable;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 /**
  * A MOCK class that generates and sends DP responses
@@ -61,24 +72,24 @@ public class MockDP {
 
     //we need to create a new metadata where the sender and receiver are switched.
     final MEIncomingTransportMetadata aMetadataInverse = new MEIncomingTransportMetadata(
-            aMetadata.getReceiverID(), aMetadata.getSenderID(),
-            aMetadata.getDocumentTypeID(), aMetadata.getProcessID());
+        aMetadata.getReceiverID(), aMetadata.getSenderID(),
+        aMetadata.getDocumentTypeID(), aMetadata.getProcessID());
 
     try {
       EDMResponse edmResponse = miniDP.createEDMResponseFromRequest(aTopLevel);
       //we have a response from DP, push it back
 
       return new IncomingEDMResponse(edmResponse,
-              //NOTE: attachments are empty for now
-              new CommonsArrayList<>(),
-              aMetadataInverse);
+          //NOTE: attachments are empty for now
+          new CommonsArrayList<>(),
+          aMetadataInverse);
 
     } catch (DPException e) {
       EDMErrorResponse edmError = e.getEdmErrorResponse();
       //we have an error from DP, push it back
 
       return new IncomingEDMErrorResponse(edmError,
-              aMetadataInverse);
+          aMetadataInverse);
     }
   }
 
@@ -89,10 +100,28 @@ public class MockDP {
    * @param edmRequest
    * @param aMetadata
    */
-  public static void sendRequestToDp(EDMRequest edmRequest, MEIncomingTransportMetadata aMetadata) {
+  public static void deliverRequestToDP(EDMRequest edmRequest, MEIncomingTransportMetadata aMetadata) {
     MPTrigger.forwardMessage(new IncomingEDMRequest(edmRequest,
-        aMetadata), SimulatorConfig.dpEndpoint);
+        aMetadata), SimulatorConfig.getDpEndpoint());
   }
+
+  /**
+   * Sends a request that is contained in a file with name <code>sFileName</code>
+   *
+   * @param sender    the identifier of the sender. Optional
+   * @param receiver  the identifier of the recevier. Optional
+   * @param docTypeId The doctypeid. Optional
+   * @param sFileName the file that contains the request. Optional
+   */
+  public static void sendDPResponse(@Nullable String sender, @Nullable String receiver, @Nullable String docTypeId,
+                                   @Nullable String sFileName) {
+
+    final String defaultResourceName = "/datasets/edm-conceptResponse-lp.xml";
+    final String connectorEndpoint = "/api/user/submit/response";
+
+    DCDPUtil.sendTCOutgoingMessage(sender, receiver, docTypeId, sFileName, defaultResourceName, connectorEndpoint);
+  }
+
 
   /**
    * Build a TCOutgoingMessage from the response and send it to the connector
@@ -127,12 +156,11 @@ public class MockDP {
     LOGGER.info(TCRestJAXB.outgoingMessage().getAsString(aOM));
 
     try (HttpClientManager aHCM = new HttpClientManager()) {
-      final HttpPost aPost = new HttpPost("http://localhost:" + SimulatorConfig.connectorPort + "/api/user/submit/response");
+      final HttpPost aPost = new HttpPost("http://localhost:" + SimulatorConfig.getConnectorPort() + "/api/user/submit/response");
       aPost.setEntity(new ByteArrayEntity(TCRestJAXB.outgoingMessage().getAsBytes(aOM)));
       aHCM.execute(aPost, new ResponseHandlerJson());
     } catch (IOException e) {
       LOGGER.error(e.getMessage(), e);
     }
   }
-
 }
