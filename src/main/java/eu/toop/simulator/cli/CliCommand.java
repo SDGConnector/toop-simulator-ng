@@ -73,7 +73,7 @@ public class CliCommand
    *        the option
    * @return the parameter list or null (if the map is empty or key doesn't hit)
    */
-  public List <String> getArguments (final String key)
+  public List <String> getOption(final String key)
   {
     if (options == null || options.size () == 0)
       return null;
@@ -131,10 +131,16 @@ public class CliCommand
         final String current = words.get (i);
         if (current.startsWith ("-"))
         {
+          //if it is a NUMBER, then it is a value of the current option
           // skip dash
-          currentKey = current.substring (1);
-          currentList = new ArrayList <> ();
-          options.put (currentKey, currentList);
+          String val = current.substring (1);
+
+          if(val.matches("\\d+")){
+            currentList.add (current);
+          } else {
+            currentList = new ArrayList<>();
+            options.put(val, currentList);
+          }
         }
         else
         {
@@ -160,7 +166,7 @@ public class CliCommand
    */
   public List <String> getEmptyParameters ()
   {
-    return getArguments ("");
+    return getOption("");
   }
 
   /**

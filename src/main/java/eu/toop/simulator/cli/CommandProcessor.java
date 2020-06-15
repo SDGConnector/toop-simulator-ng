@@ -17,8 +17,11 @@ package eu.toop.simulator.cli;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.stream.StreamHelper;
+import eu.toop.simulator.SimulationMode;
+import eu.toop.simulator.SimulatorConfig;
 import eu.toop.simulator.ToopSimulatorMain;
 import eu.toop.simulator.mock.MockDC;
+import eu.toop.simulator.mock.MockDP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,27 +43,80 @@ public class CommandProcessor {
    */
   private static String helpMessage;
 
+  private static final String dcPredefinedDoctypes[] = new String[]{
+      "RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0",
+      "FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0",
+      "urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.crewcertificate-list::1.40",
+      "urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.crewcertificate::1.40",
+      "urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.registeredorganization::1.40",
+      "urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.shipcertificate-list::1.40",
+      "urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.shipcertificate::1.40",
+  };
+
+
+  private static final String dpPredefinedDoctypes[] = new String[]{
+      "RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0",
+      "FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0",
+      "urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.crewcertificate-list::1.40",
+      "urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.crewcertificate::1.40",
+      "urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.registeredorganization::1.40",
+      "urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.shipcertificate-list::1.40",
+      "urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.shipcertificate::1.40",
+      "urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.evidence::1.40",
+  };
+
   /**
    * Process the send-dc-request command
    *
    * @param command the input command
    */
-  public static void processSendRequestCommand(CliCommand command) {
+  public static void processCommand(CliCommand command) {
+    final String[] dcPredefinedDoctypes = CommandProcessor.dcPredefinedDoctypes;
+
     ValueEnforcer.notNull(command, "Empty command list");
 
-    boolean hasFileOption = command.hasOption("f");
+    //[-f edm response] [-s sender] [-r receiver] [-d doctype | -pd predefinedDocType]
 
-    if (hasFileOption) {
-      List<String> fileArgs = command.getArguments("f");
-      ValueEnforcer.isEqual(fileArgs.size(), 1, "-f option needs exactly one argument");
-      MockDC.sendDCRequest(fileArgs.get(0));
+    String sender = SimulatorConfig.getSender();
+    if (command.hasOption("s")) {
+      sender = command.getOption("s").get(0);
+    }
+    String receiver = SimulatorConfig.getReceiver();
+    if (command.hasOption("r")) {
+      receiver = command.getOption("r").get(0);
+    }
+
+    String docType = "RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0";
+
+    if (command.hasOption("d")) {
+      docType = command.getOption("d").get(0);
     } else {
-      LOGGER.debug("Using the default file datasets/edm-conceptRequest-lp.xml");
-      try {
-        MockDC.buildAndSendDefaultRequest();
-      } catch (IOException e) {
-        LOGGER.error("Error sending request " + e.getMessage());
+      if (command.hasOption("pd")) {
+        int index = Integer.parseInt(command.getOption("pd").get(0));
+        index = index-1; //counting starts from 1.
+        if (index < 0 || index >= dcPredefinedDoctypes.length) {
+          throw new IllegalArgumentException("invalid predefined doctype index");
+        }
+
+        docType = dcPredefinedDoctypes[index];
       }
+    }
+
+    LOGGER.debug("Creating a message as " + sender + " --> " + receiver + " ");
+    LOGGER.debug(" and doctype " + docType);
+
+    String file = null;
+
+    if (command.hasOption("f")) {
+      List<String> fileArgs = command.getOption("f");
+      ValueEnforcer.isEqual(fileArgs.size(), 1, "-f option needs exactly one argument");
+      file = fileArgs.get(0);
+    }
+
+    if (command.getMainCommand().equals(SimulatorCliHelper.CMD_SEND_DC_REQUEST)) {
+      MockDC.sendDCRequest(sender, receiver, docType, file);
+    } else if (command.getMainCommand().equals(SimulatorCliHelper.CMD_SEND_DP_RESPONSE)) {
+      MockDP.sendDPResponse(sender, receiver, docType, file);
     }
   }
 

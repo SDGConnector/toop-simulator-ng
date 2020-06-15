@@ -15,6 +15,8 @@
  */
 package eu.toop.simulator.cli;
 
+import eu.toop.simulator.SimulationMode;
+import eu.toop.simulator.SimulatorConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,10 +49,24 @@ public class Cli {
           CliCommand command = CliCommand.parse(simulatorCliHelper.getWords(), true);
 
           switch (command.getMainCommand()) {
-            case SimulatorCliHelper.CMD_SEND_DC_REQUEST:
-            case "sdt": //shortcut for send-dc-reqest
-              CommandProcessor.processSendRequestCommand(command);
+            case SimulatorCliHelper.CMD_SEND_DC_REQUEST: {
+              if (SimulatorConfig.getMode() == SimulationMode.DC) {
+                CommandProcessor.processCommand(command);
+              } else {
+                System.out.println("Ignoring command in nonDC mode");
+              }
               break;
+            }
+
+
+            case SimulatorCliHelper.CMD_SEND_DP_RESPONSE: {
+              if (SimulatorConfig.getMode() == SimulationMode.DP) {
+                CommandProcessor.processCommand(command);
+              } else {
+                System.out.println("Ignoring command in nonDP mode");
+              }
+              break;
+            }
 
             case SimulatorCliHelper.CMD_QUIT:
               System.exit(0);

@@ -1,9 +1,50 @@
 Commands:
-  help                         print help message
+  help                 print help message
 
-  send-dc-request              Send the default request (freedonia to elonia)
+  send-dc-request   [-f edm request] [-s sender] [-r receiver] [-d doctype | -pd predefinedDocType]
+                       This command is only available in DC mode
+                       Send a request (freedonia to elonia).
+                       -f: Optional, a file that contains an EDM Request
+                       -s: Optional, 'sender id' (e.g 9999:freedonia).
+                       -r: Optional, 'receiver id' (e.g. 9999:elonia).
+                       -d: Optional, 'doctype id without the scheme' (e.g.
+                       RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0).
+                       -pd: Optional, 'a predefined doctype for lazy people'.
+                            Enter the corresponding number below:
+                          1-  RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0
+                          2-  FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0
+                          3-  urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.crewcertificate-list::1.40
+                          4-  urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.crewcertificate::1.40
+                          5-  urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.registeredorganization::1.40
+                          6-  urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.shipcertificate-list::1.40
+                          7-  urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.shipcertificate::1.40
+                          (Doctypes 4 and above are deprecated and not recommended)
+                         If both `-d` and `-pd` are provided, the value of `-d` will be chosen
+                         The default doctype is
+                         `RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0`
 
-  send-dc-request   -f <request file>
-                               Send the request  file (Toop Request) to the connectors /users/send endpoint
+  send-dp-response   [-f edm response] [-s sender] [-r receiver] [-d doctype | -pd predefinedDocType]
+                         This command is only available in DC mode
+                         Send a request (freedonia to elonia).
+                         -f: Optional, a file that contains an EDM Response
+                         -s: Optional, 'sender id' (e.g 9999:elonia).
+                         -r: Optional, 'receiver id' (e.g. 9999:freedonia).
+                         -d: Optional, 'doctype id without the scheme' (e.g.
+                         RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0).
+                         -pd: Optional, 'a predefined doctype for lazy people'.
+                              Enter the corresponding number below:
+                            1- RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0
+                            2- FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0
+                            3- urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.crewcertificate-list::1.40
+                            4- urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.crewcertificate::1.40
+                            5- urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.registeredorganization::1.40
+                            6- urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.shipcertificate-list::1.40
+                            7- urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.shipcertificate::1.40
+                            8- urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.evidence::1.40
+                            (Doctypes 4 and above are deprecated and not recommended)
+                         If both `-d` and `-pd` are provided, the value of `-d` will be chosen
+                         The default doctype is
+                         `RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0`
 
-  quit                         exit simulator
+  quit
+                       exit simulator

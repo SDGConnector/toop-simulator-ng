@@ -16,14 +16,10 @@
 package eu.toop.simulator;
 
 import com.helger.photon.jetty.JettyStarter;
-import eu.toop.connector.api.TCConfig;
 import eu.toop.connector.webapi.TCAPIConfig;
 import eu.toop.simulator.cli.Cli;
 import eu.toop.simulator.mock.DiscoveryProvider;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.util.resource.JarFileResource;
-import org.eclipse.jetty.util.resource.Resource;
-import org.eclipse.jetty.util.resource.URLResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +43,7 @@ public class ToopSimulatorMain {
     prepareMocks();
 
 
-    final SimulationMode simulationMode = SimulatorConfig.mode;
+    final SimulationMode simulationMode = SimulatorConfig.getMode();
 
     //Start the simulator in a new thread, and get its thread so that we can wait on it.
     Thread simulatorThread = startSimulator(simulationMode);
@@ -66,7 +62,7 @@ public class ToopSimulatorMain {
     final Object serverLock = new Object();
 
     //start jetty
-    Thread simulatorThread = runJetty(serverLock, SimulatorConfig.connectorPort);
+    Thread simulatorThread = runJetty(serverLock, SimulatorConfig.getConnectorPort());
 
     synchronized (serverLock) {
       //wait for the server to come up
