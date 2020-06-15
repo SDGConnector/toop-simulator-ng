@@ -25,8 +25,8 @@ import com.helger.xsds.bdxr.smp1.DocumentIdentifierType;
 import com.helger.xsds.bdxr.smp1.ParticipantIdentifierType;
 import com.helger.xsds.bdxr.smp1.ServiceMetadataType;
 import eu.toop.connector.api.TCConfig;
-import eu.toop.connector.app.dd.DDServiceGroupHrefProviderSMP;
-import eu.toop.connector.app.dd.DDServiceMetadataProviderSMP;
+import eu.toop.connector.app.smp.DDServiceGroupHrefProviderSMP;
+import eu.toop.connector.app.smp.DDServiceMetadataProviderSMP;
 import eu.toop.dsd.api.ToopDirClient;
 import org.yaml.snakeyaml.Yaml;
 
