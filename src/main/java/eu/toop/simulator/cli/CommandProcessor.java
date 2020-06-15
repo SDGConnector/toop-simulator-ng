@@ -71,6 +71,15 @@ public class CommandProcessor {
    * @param command the input command
    */
   public static void processCommand(CliCommand command) {
+
+    String[] predefinedTypes = CommandProcessor.dcPredefinedDoctypes;
+
+    if (command.getMainCommand().equals(SimulatorCliHelper.CMD_SEND_DC_REQUEST)) {
+      predefinedTypes = CommandProcessor.dcPredefinedDoctypes;
+    } else if (command.getMainCommand().equals(SimulatorCliHelper.CMD_SEND_DP_RESPONSE)) {
+      predefinedTypes = CommandProcessor.dpPredefinedDoctypes;
+    }
+
     final String[] dcPredefinedDoctypes = CommandProcessor.dcPredefinedDoctypes;
 
     ValueEnforcer.notNull(command, "Empty command list");
@@ -94,11 +103,11 @@ public class CommandProcessor {
       if (command.hasOption("pd")) {
         int index = Integer.parseInt(command.getOption("pd").get(0));
         index = index-1; //counting starts from 1.
-        if (index < 0 || index >= dcPredefinedDoctypes.length) {
+        if (index < 0 || index >= predefinedTypes.length) {
           throw new IllegalArgumentException("invalid predefined doctype index");
         }
 
-        docType = dcPredefinedDoctypes[index];
+        docType = predefinedTypes[index];
       }
     }
 
