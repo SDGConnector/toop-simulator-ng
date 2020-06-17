@@ -50,7 +50,7 @@
     <rim:Slot name="NaturalPerson">
       <rim:SlotValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="rim:AnyValueType">
         <cva:CorePerson xmlns:cvb="http://www.w3.org/ns/corevocabulary/BasicComponents" xmlns:cva="http://www.w3.org/ns/corevocabulary/AggregateComponents">
-          <cvb:PersonID schemeID="EIDAS">12345</cvb:PersonID>
+          <cvb:PersonID schemeID="EIDAS">NP12345</cvb:PersonID>
           <cvb:PersonFamilyName>Jane</cvb:PersonFamilyName>
           <cvb:PersonGivenName>Mary</cvb:PersonGivenName>
           <cvb:PersonGenderCode>F</cvb:PersonGenderCode>
