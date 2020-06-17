@@ -55,9 +55,12 @@ public class ToopSimulatorResources {
   public static void transferResourcesToFileSystem() {
     new File("datasets/gbm").mkdirs();
     new File("datasets/document").mkdirs();
-    Util.transferResourceToDirectory("datasets/document/LP12345.yaml", "datasets/document");
-    Util.transferResourceToDirectory("datasets/gbm/LP12345.yaml", "datasets/gbm");
-    Util.transferResourceToDirectory("datasets/gbm/NP12345.yaml", "datasets/gbm");
+    Util.transferResourceToDirectory("datasets/document/example.yaml", "datasets/document");
+    Util.transferResourceToDirectory("datasets/document/example_LP.yaml", "datasets/document");
+    Util.transferResourceToDirectory("datasets/document/example_LP_JPEG.yaml", "datasets/document");
+    Util.transferResourceToDirectory("datasets/gbm/example_LP.yaml", "datasets/gbm");
+    Util.transferResourceToDirectory("datasets/gbm/example_LP_LR.yaml", "datasets/gbm");
+    Util.transferResourceToDirectory("datasets/gbm/example_NP.yaml", "datasets/gbm");
     Util.transferResourceToDirectory("datasets/edm-conceptRequest-lp.xml", "datasets");
     Util.transferResourceToDirectory("datasets/edm-conceptResponse-lp.xml", "datasets");
   }

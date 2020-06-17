@@ -1,4 +1,4 @@
-naturalPersonID: 12345
+legalPersonID: LP12345
 concepts:
    - name : RegisteredOrganization
      concepts :
@@ -9,7 +9,7 @@ concepts:
         - name: CompanyType
           textValue: Limited
         - name: CompanyName
-          textValue: Zizi mat
+          textValue: Zizi mat LP
         - name: LegalStatus
           textValue: Active
         - name: LegalStatusEffectiveDate
@@ -36,12 +36,6 @@ concepts:
           textValue: true
         - name: Person
           textValue: Mary Jane Parker
-        - name: LegalRepresentativeGivenName
-          textValue: Mary
-        - name: LegalRepresentativeFamilyName
-          textValue: Jane
-        - name: LegalRepresentativeBirthDate
-          textValue: 1994-05-15
         - name: CountryName
           textValue: Elonia
         - name: PostalCode

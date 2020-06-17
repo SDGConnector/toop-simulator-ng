@@ -1,4 +1,5 @@
-legalPersonID: DE/GB/02735442Z
+legalPersonID: LP12345
+legalRepresentativeID: LR12345
 concepts:
    - name : RegisteredOrganization
      concepts :
@@ -9,11 +10,11 @@ concepts:
         - name: CompanyType
           textValue: Limited
         - name: CompanyName
-          textValue: Zizi mat
+          textValue: Zizi mat LP + LR
         - name: LegalStatus
           textValue: Active
         - name: LegalStatusEffectiveDate
-          dateValue: 2012-01-12
+          textValue: 2012-01-12
         - name: NaceCode
           textValue: C27.9
         - name: RegistrationAuthority
