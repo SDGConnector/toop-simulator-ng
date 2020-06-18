@@ -18,8 +18,9 @@ package eu.toop.simulator.mock;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.peppolid.IParticipantIdentifier;
-import eu.toop.connector.api.dd.IDDErrorHandler;
+
 import eu.toop.connector.api.dsd.DSDDatasetResponse;
+import eu.toop.connector.api.error.ITCErrorHandler;
 import eu.toop.edm.error.IToopErrorCode;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -36,7 +37,7 @@ public class DiscoveryTest {
 
     DiscoveryProvider discoveryProvider = DiscoveryProvider.getInstance();
 
-    final ICommonsSet<DSDDatasetResponse> responses = discoveryProvider.getAllDatasetResponses("", "REGISTERED_ORGANIZATION_TYPE", "SV", new IDDErrorHandler() {
+    final ICommonsSet<DSDDatasetResponse> responses = discoveryProvider.getAllDatasetResponses("", "REGISTERED_ORGANIZATION_TYPE", "SV", new ITCErrorHandler() {
       @Override
       public void onMessage(@Nonnull EErrorLevel eErrorLevel, @Nonnull String sMsg, @Nullable Throwable t, @Nonnull IToopErrorCode eCode) {
         System.err.println(sMsg);

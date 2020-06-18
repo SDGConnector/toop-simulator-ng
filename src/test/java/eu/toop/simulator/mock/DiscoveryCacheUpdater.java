@@ -15,6 +15,12 @@
  */
 package eu.toop.simulator.mock;
 
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.LinkedHashMap;
+
+import org.yaml.snakeyaml.Yaml;
+
 import com.helger.commons.collection.impl.ICommonsSortedMap;
 import com.helger.pd.searchapi.PDSearchAPIReader;
 import com.helger.pd.searchapi.PDSearchAPIWriter;
@@ -24,15 +30,12 @@ import com.helger.peppolid.IParticipantIdentifier;
 import com.helger.xsds.bdxr.smp1.DocumentIdentifierType;
 import com.helger.xsds.bdxr.smp1.ParticipantIdentifierType;
 import com.helger.xsds.bdxr.smp1.ServiceMetadataType;
+
 import eu.toop.connector.api.TCConfig;
+import eu.toop.connector.api.error.LoggingTCErrorHandler;
 import eu.toop.connector.app.smp.DDServiceGroupHrefProviderSMP;
 import eu.toop.connector.app.smp.DDServiceMetadataProviderSMP;
 import eu.toop.dsd.api.ToopDirClient;
-import org.yaml.snakeyaml.Yaml;
-
-import java.io.File;
-import java.io.PrintWriter;
-import java.util.LinkedHashMap;
 
 /**
  * This class contains the logic for updating the simulator cache
@@ -68,12 +71,11 @@ public class DiscoveryCacheUpdater {
     LinkedHashMap<ParticipantIdentifierType, LinkedHashMap<String, String>> hrefsMap = new LinkedHashMap<>();
     LinkedHashMap<SMPServiceMetadataKey, ServiceMetadataType> serviceMetadataMap = new LinkedHashMap<>();
 
-
     results.getMatch().forEach(matchType -> {
       ParticipantIdentifierType pId = createParticipantId(matchType.getParticipantID());
       //get hrefs
       IParticipantIdentifier pIdToQuery = TCConfig.getIdentifierFactory().createParticipantIdentifier(pId.getScheme(), pId.getValue());
-      final ICommonsSortedMap<String, String> hrefs = hrefProviderSMP.getAllServiceGroupHrefs(pIdToQuery);
+      final ICommonsSortedMap<String, String> hrefs = hrefProviderSMP.getAllServiceGroupHrefs(pIdToQuery, LoggingTCErrorHandler.INSTANCE);
       LinkedHashMap<String, String> javaMap = new LinkedHashMap<>(hrefs);
       hrefsMap.put(pId, javaMap);
 
