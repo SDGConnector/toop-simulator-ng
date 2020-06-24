@@ -20,6 +20,8 @@ import com.helger.commons.mime.CMimeType;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.response.ResponseHandlerJson;
 import com.helger.json.IJson;
+import com.helger.json.serialize.JsonWriter;
+import com.helger.json.serialize.JsonWriterSettings;
 import eu.toop.connector.api.me.EMEProtocol;
 import eu.toop.connector.api.rest.TCOutgoingMessage;
 import eu.toop.connector.api.rest.TCOutgoingMetadata;
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.xml.bind.DatatypeConverter;
 import java.io.*;
 
 /**
@@ -112,9 +115,11 @@ public class DCDPUtil {
 
     try (HttpClientManager aHCM = new HttpClientManager()) {
       final HttpPost aPost = new HttpPost("http://localhost:" + SimulatorConfig.getConnectorPort() + connectorEndpoint);
-      aPost.setEntity(new ByteArrayEntity(TCRestJAXB.outgoingMessage().getAsBytes(aOM)));
+      final byte[] asBytes = TCRestJAXB.outgoingMessage().getAsBytes(aOM);
+      LOGGER.info(new String(asBytes));
+      aPost.setEntity(new ByteArrayEntity(asBytes));
       final IJson aJson = aHCM.execute(aPost, new ResponseHandlerJson());
-      //LOGGER.info (new JsonWriter(new JsonWriterSettings().setIndentEnabled (true)).writeAsString (aJson));
+      LOGGER.info (new JsonWriter(new JsonWriterSettings().setIndentEnabled (true)).writeAsString (aJson));
     }
   }
 }
