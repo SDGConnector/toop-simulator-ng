@@ -1,18 +1,4 @@
 ? !!com.helger.xsds.bdxr.smp1.ParticipantIdentifierType {scheme: iso6523-actorid-upis,
-  value: '9999:elonia'}
-: {? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0'
-  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3ARegisteredOrganization%3A%3AREGISTERED_ORGANIZATION_TYPE%3A%3ACONCEPT%23%23CCCEV%3A%3Atoop-edm%3Av2.0',
-  ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.crewcertificate-list::1.40'
-  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3Aurn%3Aeu%3Atoop%3Ans%3Adataexchange-1p40%3A%3ARequest%23%23urn%3Aeu.toop.request.crewcertificate-list%3A%3A1.40',
-  ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.crewcertificate::1.40'
-  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3Aurn%3Aeu%3Atoop%3Ans%3Adataexchange-1p40%3A%3ARequest%23%23urn%3Aeu.toop.request.crewcertificate%3A%3A1.40',
-  ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.registeredorganization::1.40'
-  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3Aurn%3Aeu%3Atoop%3Ans%3Adataexchange-1p40%3A%3ARequest%23%23urn%3Aeu.toop.request.registeredorganization%3A%3A1.40',
-  ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.shipcertificate-list::1.40'
-  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3Aurn%3Aeu%3Atoop%3Ans%3Adataexchange-1p40%3A%3ARequest%23%23urn%3Aeu.toop.request.shipcertificate-list%3A%3A1.40',
-  ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.shipcertificate::1.40'
-  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3Aurn%3Aeu%3Atoop%3Ans%3Adataexchange-1p40%3A%3ARequest%23%23urn%3Aeu.toop.request.shipcertificate%3A%3A1.40'}
-? !!com.helger.xsds.bdxr.smp1.ParticipantIdentifierType {scheme: iso6523-actorid-upis,
   value: '9999:freedonia'}
 : {? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:freedonia/services/toop-doctypeid-qns::QueryResponse::toop-edm:v2.0'
   : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Afreedonia/services/toop-doctypeid-qns%3A%3AQueryResponse%3A%3Atoop-edm%3Av2.0',
@@ -32,4 +18,20 @@
   : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Afreedonia/services/toop-doctypeid-qns%3A%3Aurn%3Aeu%3Atoop%3Ans%3Adataexchange-1p40%3A%3AResponse%23%23urn%3Aeu.toop.response.shipcertificate-list%3A%3A1.40',
   ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:freedonia/services/toop-doctypeid-qns::urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.shipcertificate::1.40'
   : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Afreedonia/services/toop-doctypeid-qns%3A%3Aurn%3Aeu%3Atoop%3Ans%3Adataexchange-1p40%3A%3AResponse%23%23urn%3Aeu.toop.response.shipcertificate%3A%3A1.40'}
+? !!com.helger.xsds.bdxr.smp1.ParticipantIdentifierType {scheme: iso6523-actorid-upis,
+  value: '9999:elonia'}
+: {? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0'
+  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3AFinancialRatioDocument%3A%3AFINANCIAL_RECORD_TYPE%3A%3AUNSTRUCTURED%3A%3Atoop-edm%3Av2.0',
+  ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0'
+  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3ARegisteredOrganization%3A%3AREGISTERED_ORGANIZATION_TYPE%3A%3ACONCEPT%23%23CCCEV%3A%3Atoop-edm%3Av2.0',
+  ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.crewcertificate-list::1.40'
+  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3Aurn%3Aeu%3Atoop%3Ans%3Adataexchange-1p40%3A%3ARequest%23%23urn%3Aeu.toop.request.crewcertificate-list%3A%3A1.40',
+  ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.crewcertificate::1.40'
+  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3Aurn%3Aeu%3Atoop%3Ans%3Adataexchange-1p40%3A%3ARequest%23%23urn%3Aeu.toop.request.crewcertificate%3A%3A1.40',
+  ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.registeredorganization::1.40'
+  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3Aurn%3Aeu%3Atoop%3Ans%3Adataexchange-1p40%3A%3ARequest%23%23urn%3Aeu.toop.request.registeredorganization%3A%3A1.40',
+  ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.shipcertificate-list::1.40'
+  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3Aurn%3Aeu%3Atoop%3Ans%3Adataexchange-1p40%3A%3ARequest%23%23urn%3Aeu.toop.request.shipcertificate-list%3A%3A1.40',
+  ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.shipcertificate::1.40'
+  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3Aurn%3Aeu%3Atoop%3Ans%3Adataexchange-1p40%3A%3ARequest%23%23urn%3Aeu.toop.request.shipcertificate%3A%3A1.40'}
 
