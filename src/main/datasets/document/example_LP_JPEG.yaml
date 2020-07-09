@@ -2,10 +2,12 @@ naturalPersonID: 123456
 legalRepresentativeID: 55555
 description: A small description with various words.
 title: An example document
+attachmentLocation: datasets/document/attachments/dummy.jpg
+attachmentCid: jpg-cid-example
 distribution:
-  documentURI: www.example.com/document.jpg
+  documentURI: "cid:jpg-cid-example"
   documentDescription: Example JPEG
-  documentType: JPEG
+  documentType: image/jpg
   localeCode: EN
 ids:
   - 077SM/16
@@ -16,7 +18,7 @@ lastModified: 2020-03-02T03:03
 validFrom: 2020-03-02T03:03
 validTo: 2021-03-02T03:03
 repositoryItemRef:
-  link: www.example.com/document.jpg
+  link: "cid:jpg-cid-example"
   title: Example JPEG
 creator:
   id: 1234

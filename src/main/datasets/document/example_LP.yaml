@@ -2,10 +2,12 @@ naturalPersonID: 123456
 legalRepresentativeID: 55555
 description: A small description with various words.
 title: An example document
+attachmentLocation: datasets/document/attachments/dummy.pdf
+attachmentCid: pdf-cid-example
 distribution:
-  documentURI: www.example.com/document.pdf
+  documentURI: "cid:pdf-cid-example"
   documentDescription: Example PDF
-  documentType: PDF
+  documentType: application/pdf
   localeCode: EN
 ids:
   - 077SM/15
@@ -16,7 +18,7 @@ lastModified: 2020-03-02T03:03
 validFrom: 2020-03-02T03:03
 validTo: 2021-03-02T03:03
 repositoryItemRef:
-  link: www.example.com/document.pdf
+  link: "cid:pdf-cid-example"
   title: Example PDF
 creator:
   id: 1234

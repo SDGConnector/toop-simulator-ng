@@ -101,12 +101,12 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
         for (final MEPayload aItem : meMessage.payloads())
           if (aItem != aHead)
             aAttachments.add(aItem);
-        MPTrigger.forwardMessage(new IncomingEDMResponse((EDMResponse) aTopLevel,
+        MPTrigger.forwardMessage(new IncomingEDMResponse((EDMResponse) aTopLevel,"mock@toop",
             aAttachments,
             aMetadata), SimulatorConfig.getDcEndpoint());
       } else if (aTopLevel instanceof EDMErrorResponse) {
         // Error response
-        MPTrigger.forwardMessage(new IncomingEDMErrorResponse((EDMErrorResponse) aTopLevel,
+        MPTrigger.forwardMessage(new IncomingEDMErrorResponse((EDMErrorResponse) aTopLevel,"mock@toop",
             aMetadata), SimulatorConfig.getDcEndpoint());
       } else {
         // Unknown

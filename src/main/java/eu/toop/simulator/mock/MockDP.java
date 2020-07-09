@@ -19,12 +19,14 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.mime.CMimeType;
+import com.helger.commons.mime.MimeTypeDeterminator;
 import com.helger.commons.url.SimpleURL;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.response.ResponseHandlerJson;
 import com.helger.json.IJson;
 import eu.toop.connector.api.me.EMEProtocol;
 import eu.toop.connector.api.me.incoming.*;
+import eu.toop.connector.api.me.model.MEPayload;
 import eu.toop.connector.api.rest.TCOutgoingMessage;
 import eu.toop.connector.api.rest.TCOutgoingMetadata;
 import eu.toop.connector.api.rest.TCPayload;
@@ -34,6 +36,8 @@ import eu.toop.edm.EDMErrorResponse;
 import eu.toop.edm.EDMRequest;
 import eu.toop.edm.EDMResponse;
 import eu.toop.playground.dp.DPException;
+import eu.toop.playground.dp.model.Attachment;
+import eu.toop.playground.dp.model.EDMResponseWithAttachment;
 import eu.toop.playground.dp.service.ToopDP;
 import eu.toop.simulator.SimulatorConfig;
 import org.apache.http.HttpResponse;
@@ -49,6 +53,9 @@ import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A MOCK class that generates and sends DP responses
@@ -76,20 +83,31 @@ public class MockDP {
         aMetadata.getDocumentTypeID(), aMetadata.getProcessID());
 
     try {
-      EDMResponse edmResponse = miniDP.createEDMResponseFromRequest(aTopLevel);
+      EDMResponseWithAttachment edmResponse = miniDP.createEDMResponseWithAttachmentsFromRequest(aTopLevel);
       //we have a response from DP, push it back
-
-      return new IncomingEDMResponse(edmResponse,
-          //NOTE: attachments are empty for now
-          new CommonsArrayList<>(),
+      List<MEPayload> payloadList = new ArrayList<>();
+      if(edmResponse.getAttachment().isPresent()) {
+        Attachment attachment = edmResponse.getAttachment().get();
+        byte[] fileBytes = Files.readAllBytes(attachment.getAttachedFile().toPath());
+        payloadList.add(MEPayload.builder()
+                                .data(fileBytes)
+                                .mimeType(MimeTypeDeterminator.getInstance().getMimeTypeFromBytes(fileBytes))
+                                .contentID(attachment.getAttachedFileCid()).build());
+      }
+      return new IncomingEDMResponse(edmResponse.getEdmResponse(),"mock@toop",
+          payloadList,
           aMetadataInverse);
 
     } catch (DPException e) {
       EDMErrorResponse edmError = e.getEdmErrorResponse();
       //we have an error from DP, push it back
 
-      return new IncomingEDMErrorResponse(edmError,
+      return new IncomingEDMErrorResponse(edmError,"mock@toop",
           aMetadataInverse);
+    } catch (IOException e){
+      LOGGER.error("Error while reading attachment: {}", e.getMessage());
+
+      return null;
     }
   }
 
@@ -101,7 +119,7 @@ public class MockDP {
    * @param aMetadata
    */
   public static void deliverRequestToDP(EDMRequest edmRequest, MEIncomingTransportMetadata aMetadata) {
-    MPTrigger.forwardMessage(new IncomingEDMRequest(edmRequest,
+    MPTrigger.forwardMessage(new IncomingEDMRequest(edmRequest,"mock@toop",
         aMetadata), SimulatorConfig.getDpEndpoint());
   }
 
@@ -134,31 +152,60 @@ public class MockDP {
       final TCOutgoingMetadata aMetadata = new TCOutgoingMetadata();
       aMetadata.setSenderID(TCRestJAXB.createTCID(response.getMetadata().getSenderID().getScheme(), response.getMetadata().getSenderID().getValue()));
       aMetadata.setReceiverID(TCRestJAXB.createTCID(response.getMetadata().getReceiverID().getScheme(), response.getMetadata().getReceiverID().getValue()));
-      aMetadata.setDocTypeID (TCRestJAXB.createTCID ("toop-doctypeid-qns",
-          "RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0"));
+      aMetadata.setDocTypeID(
+              TCRestJAXB.createTCID("toop-doctypeid-qns", "QueryResponse::toop-edm:v2.0"));
       aMetadata.setProcessID(TCRestJAXB.createTCID(response.getMetadata().getProcessID().getScheme(), response.getMetadata().getProcessID().getValue()));
 
       aMetadata.setTransportProtocol(EMEProtocol.AS4.getTransportProfileID());
       aOM.setMetadata(aMetadata);
     }
     {
-      final TCPayload aPayload = new TCPayload();
-      if (response instanceof IncomingEDMResponse)
-        aPayload.setValue(((IncomingEDMResponse) response).getResponse().getWriter().getAsBytes());
-      if (response instanceof IncomingEDMErrorResponse)
-        aPayload.setValue(((IncomingEDMErrorResponse) response).getErrorResponse().getWriter().getAsBytes());
 
+      final TCPayload aPayload = new TCPayload();
+      TCPayload filePayload = null;
+      byte[] payload = null;
+      String payloadType;
+
+      if (response instanceof IncomingEDMResponse) {
+        payload = ((IncomingEDMResponse) response).getResponse().getWriter().getAsBytes();
+
+        if(((IncomingEDMResponse) response).attachments().size()>0) {
+          filePayload = new TCPayload();
+          MEPayload attachedFile = ((IncomingEDMResponse) response).attachments().getLastValue();
+          filePayload.setContentID(attachedFile.getContentID()+"@elonia-dev");
+          filePayload.setMimeType(attachedFile.getMimeTypeString());
+          filePayload.setValue(attachedFile.getData().bytes());
+        }
+        aPayload.setContentID(((IncomingEDMResponse) response).getResponse().getRequestID()+"@elonia");
+      }
+      if (response instanceof IncomingEDMErrorResponse) {
+        payload =
+                ((IncomingEDMErrorResponse) response)
+                        .getErrorResponse()
+                        .getWriter()
+                        .getAsBytes();
+        aPayload.setContentID(((IncomingEDMErrorResponse) response).getErrorResponse().getRequestID()+"@elonia");
+
+      }
+
+      aPayload.setValue(payload);
       aPayload.setMimeType(CMimeType.APPLICATION_XML.getAsString());
-      aPayload.setContentID("mock-response@toop");
       aOM.addPayload(aPayload);
+      if(filePayload != null){
+        aOM.addPayload(filePayload);
+      }
     }
 
     LOGGER.info(TCRestJAXB.outgoingMessage().getAsString(aOM));
 
     try (HttpClientManager aHCM = new HttpClientManager()) {
-      final HttpPost aPost = new HttpPost("http://localhost:" + SimulatorConfig.getConnectorPort() + "/api/user/submit/response");
-      aPost.setEntity(new ByteArrayEntity(TCRestJAXB.outgoingMessage().getAsBytes(aOM)));
-      aHCM.execute(aPost, new ResponseHandlerJson());
+      HttpPost post;
+      if (response instanceof IncomingEDMResponse)
+        post = new HttpPost("http://localhost:" + SimulatorConfig.getConnectorPort() + "/api/user/submit/error");
+      else
+        post = new HttpPost("http://localhost:" + SimulatorConfig.getConnectorPort() + "/api/user/submit/response");
+      post.setEntity(new ByteArrayEntity(TCRestJAXB.outgoingMessage().getAsBytes(aOM)));
+      aHCM.execute(post, new ResponseHandlerJson());
     } catch (IOException e) {
       LOGGER.error(e.getMessage(), e);
     }

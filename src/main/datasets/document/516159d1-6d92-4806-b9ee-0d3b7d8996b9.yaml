@@ -1,0 +1,31 @@
+legalPersonID: 1665469009
+legalRepresentativeID: MirkoSchmitz
+description: eProcurement pilot test PDF.
+title: Eigenerklärung über Insolvenz, Liquidation, Zuverlässigkeit
+attachmentLocation: datasets/document/attachments/516159d1-6d92-4806-b9ee-0d3b7d8996b9.pdf
+attachmentCid: 516159d1-6d92-4806-b9ee-0d3b7d8996b9
+distribution:
+  documentURI: "https://www.poyry-pq.eu/pq-stelle-web-test/app/espdDocumentAccess?url=dataExchange/showDocument/F056445A6BC0010E"
+  documentDescription: Eigenerklärung über Insolvenz, Liquidation, Zuverlässigkeit
+  documentType: application/pdf
+  localeCode: DE
+ids:
+  - 516159d1-6d92-4806-b9ee-0d3b7d8996b9
+  - F056445A6BC0010E
+issued: 2018-03-23T03:03
+language: DE
+lastModified: 2018-03-23T03:03
+validFrom: 2018-03-23T03:03
+validTo: 2019-04-23T03:03
+repositoryItemRef:
+  link: "cid:516159d1-6d92-4806-b9ee-0d3b7d8996b9"
+  title: Eigenerklärung über Insolvenz, Liquidation, Zuverlässigkeit
+creator:
+  id: DE1665469009
+  idScheme: DE167064991
+  name: Kessler Gerüstbau GbR
+  postName: ElonianPostName
+qualifiedRelation:
+  - description: Legal Description
+    title: Legal title
+    id: qwerty
