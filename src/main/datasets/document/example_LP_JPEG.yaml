@@ -3,14 +3,14 @@ legalRepresentativeID: 55555
 description: A small description with various words.
 title: An example document
 attachmentLocation: datasets/document/attachments/dummy.jpg
-attachmentCid: jpg-cid-example
+attachmentCid: f44f1971-5e92-4704-acf7-16668709af4f
 distribution:
-  documentURI: "cid:jpg-cid-example"
+  documentURI: "cid:f44f1971-5e92-4704-acf7-16668709af4f@elonia"
   documentDescription: Example JPEG
-  documentType: image/jpg
+  documentType: image/jpeg
   localeCode: EN
 ids:
-  - 077SM/16
+  - f44f1971-5e92-4704-acf7-16668709af4f
   - DOC-555
 issued: 2020-03-02T03:03
 language: EN
@@ -18,7 +18,7 @@ lastModified: 2020-03-02T03:03
 validFrom: 2020-03-02T03:03
 validTo: 2021-03-02T03:03
 repositoryItemRef:
-  link: "cid:jpg-cid-example"
+  link: "cid:f44f1971-5e92-4704-acf7-16668709af4f@elonia"
   title: Example JPEG
 creator:
   id: 1234

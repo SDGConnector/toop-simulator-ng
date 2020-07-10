@@ -5,12 +5,12 @@ title: An example document
 attachmentLocation: datasets/document/attachments/dummy.pdf
 attachmentCid: pdf-cid-example
 distribution:
-  documentURI: "cid:pdf-cid-example"
+  documentURI: "cid:f55f1971-5e92-4704-acf7-16668709af5f@elonia"
   documentDescription: Example PDF
   documentType: application/pdf
   localeCode: EN
 ids:
-  - 077SM/15
+  - f55f1971-5e92-4704-acf7-16668709af5f
   - DOC-556
 issued: 2020-03-02T03:03
 language: EN
@@ -18,7 +18,7 @@ lastModified: 2020-03-02T03:03
 validFrom: 2020-03-02T03:03
 validTo: 2021-03-02T03:03
 repositoryItemRef:
-  link: "cid:pdf-cid-example"
+  link: "cid:f55f1971-5e92-4704-acf7-16668709af5f@elonia"
   title: Example PDF
 creator:
   id: 1234

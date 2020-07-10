@@ -2,14 +2,14 @@ legalPersonID: LP12345
 description: A small description with various words.
 title: An example document
 attachmentLocation: datasets/document/attachments/dummy.pdf
-attachmentCid: pdf-cid-example
+attachmentCid: f55f1971-5e92-5804-acf7-16668709af5f
 distribution:
   documentURI: www.example.com/document.pdf
   documentDescription: Example PDF
   documentType: application/pdf
   localeCode: EN
 ids:
-  - 077SM/10
+  - f55f1971-5e92-5804-acf7-16668709af5f
   - DOC-550
 issued: 2020-03-02T03:03
 language: EN
