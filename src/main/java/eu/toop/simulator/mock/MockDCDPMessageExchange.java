@@ -16,13 +16,26 @@
 package eu.toop.simulator.mock;
 
 
+import java.io.InputStream;
+
+import javax.annotation.Nonnull;
+import javax.servlet.ServletContext;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.error.level.EErrorLevel;
+
 import eu.toop.connector.api.me.IMessageExchangeSPI;
-import eu.toop.connector.api.me.incoming.*;
+import eu.toop.connector.api.me.incoming.IIncomingEDMResponse;
+import eu.toop.connector.api.me.incoming.IMEIncomingHandler;
+import eu.toop.connector.api.me.incoming.IncomingEDMErrorResponse;
+import eu.toop.connector.api.me.incoming.IncomingEDMResponse;
+import eu.toop.connector.api.me.incoming.MEIncomingTransportMetadata;
 import eu.toop.connector.api.me.model.MEMessage;
 import eu.toop.connector.api.me.model.MEPayload;
 import eu.toop.connector.api.me.outgoing.IMERoutingInformation;
@@ -36,12 +49,6 @@ import eu.toop.edm.xml.EDMPayloadDeterminator;
 import eu.toop.kafkaclient.ToopKafkaClient;
 import eu.toop.simulator.SimulationMode;
 import eu.toop.simulator.SimulatorConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
-import javax.servlet.ServletContext;
-import java.io.InputStream;
 
 /**
  * TOOP {@link eu.toop.connector.api.me.IMessageExchangeSPI} implementation using ph-as4.
