@@ -51,8 +51,8 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git@github.com:toop4eu/toop-simulator-ng.git</connection>
-    <developerConnection>scm:git:git@github.com:toop4eu/toop-simulator-ng.git</developerConnection>
+    <connection>scm:git:https://github.com/TOOP4EU/toop-simulator-ng.git</connection>
+    <developerConnection>scm:git:https://github.com/TOOP4EU/toop-simulator-ng.git</developerConnection>
     <url>http://github.com/toop4eu/toop-simulator-ng</url>
     <tag>toop-simulator-ng-2.0.0-rc3</tag>
   </scm>
