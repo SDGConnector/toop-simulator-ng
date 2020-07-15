@@ -102,3 +102,117 @@ Example:
           
           
 
+
+
+## Configuration Parameters
+
+Below is given the table of parameters, their default values and descriptions. All parameters can be either provided as JVM args (i.e. -DXYZ) or ENV variables.
+
+| Parameter  | Default Value | Description |
+|-------|:---|:---|
+| SIM_MODE | DP | The simulation mode, one of DP, SOLE and DC |
+| CONNECTOR_PORT | 8081 | The port that the toop-connector and toop-simulator HTTP endpoints will be published on. |
+| DC_ENDPOINT | http://localhost:${CONNECTOR_PORT}/to-dc | Data Consumer /to-dc endpoint |
+| DP_ENDPOINT | http://localhost:${CONNECTOR_PORT}/to-dp |	Data Provider /to-dp endpoint |
+| DP_RESPONSE_AUTO | TRUE | Determines whether the DP side should respond automatically (or not) to an incoming request |
+
+
+When using docker images, these parameters can be provided by -e flag:
+docker run --rm --name mysim -it \
+     -e DP_ENDPOINT="http://some.dp/to-dp" \
+     -e DC_ENDPOINT="http://some.dc/to-dc" \
+     -e SIM_MODE=SOLE \
+     -e CONNECTOR_PORT=9876 \
+     -p 8080:9876 toop/toop-simulator-ng
+
+## Simulation Modes
+
+Toop simulator supports three working modes; namely DC, SOLE and DP (default). In all modes, a command line interface is also provided to the user.
+
+### DC Mode
+
+    As JVM ARG: -DSIM_MODE=DC
+    As ENV variable: export SIM_MODE=DC
+    
+In DC mode, toop-simulator simulates a DC with a TOOP Connector and a real DP is being tested.  You may provide a URL for an external DP via the DP_ENDPOINT parameter. The default value for DP_ENDPOINT is given in the TOOP Simulator v2.0.0#Parameters section.
+
+To launch the simulator in DC mode, run either of the following commands
+
+      # using JVM ARGS
+      java -DSIM_MODE=DC \
+            -DDP_ENDPOINT="http://some.dp/to-dp" \
+                -jar toop-simulator-2.0.0-rc3-bundle.jar
+    
+      # using ENV variables
+      export SIM_MODE=DC
+      export DP_ENDPOINT="http://some.dp/to-dp"
+      java -jar toop-simulator-2.0.0-rc3-bundle.jar
+
+
+      # via docker
+      docker run --rm -it \
+          -e SIM_MODE=DC \
+          -e DP_ENDPOINT="http://some.dp/to-dp" \
+          -p 8081:8081 \
+          toop/toop-simulator-ng
+
+
+### DP Mode
+
+    As JVM ARG: -DSIM_MODE=DP
+    As ENV variable: export SIM_MODE=DP
+
+In DP mode, toop-simulator simulates a DP with a TOOP Connector and a real DC is being tested.  The requests received from the DC are automatically responded by the embedded DP simulator. You may provide a URL for an external DC via the DC_ENDPOINT variable. The default value for DC_ENDPOINT is given in the TOOP Simulator v2.0.0#Parameters section.
+
+      # using JVM ARGS
+      java -DSIM_MODE=DP \
+          -DDC_ENDPOINT="http://some.dc/to-dc" \
+                -jar toop-simulator-2.0.0-rc3-bundle.jar
+      
+      # using ENV variables
+      export SIM_MODE=DP
+      export DC_ENDPOINT="http://some.dc/to-dc"
+      java -jar toop-simulator-2.0.0-rc3-bundle.jar
+
+
+      # via docker
+      docker run --rm -it \
+            -e SIM_MODE=DP \
+            -e DC_ENDPOINT="http://some.dp/to-dp" \
+            -p 8081:8081 \
+            toop/toop-simulator-ng
+
+
+### SOLE Mode
+
+    As JVM ARG: -DSIM_MODE=SOLE
+    As ENV variable: export SIM_MODE=SOLE
+
+In SOLE mode, toop-simulator runs a TOOP Connector and a real DC and a real DP are being tested.  The requests received from the DC are sent to the DP, and responses received from the DP are sent to the DC. You may provide a URL for the DC and DP via the DC_ENDPOINT and DP_ENDPOINT variables respectively. The default values for these parameters are provided in the TOOP Simulator v2.0.0#Parameters section.
+
+To launch the simulator in SOLE mode, run one of the following commands
+
+      #using JVM ARGS
+      java -DSIM_MODE=SOLE \
+          -DDC_ENDPOINT="http://some.dc/to-dc" \
+                -DDP_ENDPOINT="http://some.dp/to-dp" \
+                -jar toop-simulator-2.0.0-rc3-bundle.jar
+      
+      #using ENV variables
+      export SIM_MODE=SOLE
+      export  DC_ENDPOINT="http://some.dc/to-dc"
+      export DP_ENDPOINT="http://some.dp/to-dp"
+      java -jar toop-simulator-2.0.0-rc3-bundle.jar
+
+
+      #via docker
+      docker run --rm -it \
+          -e SIM_MODE=SOLE \
+          -e DC_ENDPOINT="http://some.dc/to-dc" \
+          -e DP_ENDPOINT="http://some.dp/to-dp" \
+          -p 8081:8081 \
+          toop/toop-simulator-ng
+
+## Command Line Interface
+
+    TODO
