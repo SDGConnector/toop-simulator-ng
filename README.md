@@ -1,6 +1,6 @@
 # TOOP Simulator Next Generation
 
-[![Build Status](https://api.travis-ci.org/TOOP4EU/toop-simulator-ng.svg?branch=master)](https://travis-ci.org/TOOP4EU/toop-simulator-ng)
+[![Build Status](https://api.travis-ci.com/TOOP4EU/toop-simulator-ng.svg?branch=master)](https://travis-ci.com/TOOP4EU/toop-simulator-ng)
 
 **Latest Release:** [2.0.0-rc3](https://repo1.maven.org/maven2/eu/toop/toop-simulator-ng/2.0.0-rc3/)
 
