@@ -37,8 +37,8 @@ The Simulator has the ability to only discover and submit messages to the Elonia
 |-------|:-----|:-------|:------|:------|:-------|
 | EDM Concept Request	| Elonia DP	| iso6523-actorid-upis::9999:elonia	| toop-doctypeid-qns::RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0 | toop-procid-agreement::urn:eu.toop.process.dataquery | bdxr-transport-ebms3-as4-v1p0 |
 | EDM Document Request	| Elonia DP	| iso6523-actorid-upis::9999:elonia| 	toop-doctypeid-qns::FinancialRecord::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0	| toop-procid-agreement::urn:eu.toop.process.documentquery |	bdxr-transport-ebms3-as4-v1p0| 
-| EDM Response (Concept)	| Freedonia DC	| iso6523-actorid-upis::9999:freedonia | toop-doctypeid-qns::QueryResponse::toop-edm:v2.0	toop-procid-agreement::urn:eu.toop.process.dataquery	| bdxr-transport-ebms3-as4-v1p0| 
-| EDM Response (Document)	|  Freedonia DC	| iso6523-actorid-upis::9999:freedonia | 	toop-doctypeid-qns::QueryResponse::toop-edm:v2.0| bdxr-transport-ebms3-as4-v1p0 |
+| EDM Response (Concept)	| Freedonia DC	| iso6523-actorid-upis::9999:freedonia | toop-doctypeid-qns::QueryResponse::toop-edm:v2.0	| toop-procid-agreement::urn:eu.toop.process.dataquery	| bdxr-transport-ebms3-as4-v1p0 | 
+| EDM Response (Document)	|  Freedonia DC	| iso6523-actorid-upis::9999:freedonia | 	toop-doctypeid-qns::QueryResponse::toop-edm:v2.0 | toop-procid-agreement::urn:eu.toop.process.documentquery | bdxr-transport-ebms3-as4-v1p0 |
 
 ## Deployment and Users Guide
 
