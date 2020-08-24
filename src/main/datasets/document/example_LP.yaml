@@ -3,7 +3,7 @@ legalRepresentativeID: 55555
 description: A small description with various words.
 title: An example document
 attachmentLocation: datasets/document/attachments/dummy.pdf
-attachmentCid: pdf-cid-example
+attachmentCid: f55f1971-5e92-4704-acf7-16668709af5f
 distribution:
   documentURI: "cid:f55f1971-5e92-4704-acf7-16668709af5f@elonia"
   documentDescription: Example PDF
