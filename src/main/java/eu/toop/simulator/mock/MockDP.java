@@ -16,6 +16,7 @@
 package eu.toop.simulator.mock;
 
 import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.mime.CMimeType;
@@ -35,6 +36,7 @@ import eu.toop.connector.app.incoming.MPTrigger;
 import eu.toop.edm.EDMErrorResponse;
 import eu.toop.edm.EDMRequest;
 import eu.toop.edm.EDMResponse;
+import eu.toop.kafkaclient.ToopKafkaClient;
 import eu.toop.playground.dp.DPException;
 import eu.toop.playground.dp.model.Attachment;
 import eu.toop.playground.dp.model.EDMResponseWithAttachment;
@@ -56,6 +58,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A MOCK class that generates and sends DP responses
@@ -85,17 +88,31 @@ public class MockDP {
     try {
       EDMResponseWithAttachment edmResponse = miniDP.createEDMResponseWithAttachmentsFromRequest(aTopLevel);
       //we have a response from DP, push it back
-      List<MEPayload> payloadList = new ArrayList<>();
-      if(edmResponse.getAttachment().isPresent()) {
-        Attachment attachment = edmResponse.getAttachment().get();
-        byte[] fileBytes = Files.readAllBytes(attachment.getAttachedFile().toPath());
-        payloadList.add(MEPayload.builder()
-                                .data(fileBytes)
-                                .mimeType(MimeTypeDeterminator.getInstance().getMimeTypeFromBytes(fileBytes))
-                                .contentID(attachment.getAttachedFileCid()).build());
+      List<MEPayload> attachments = new ArrayList<>();
+      if (!edmResponse.getAllAttachments().isEmpty()) {
+        attachments =
+                edmResponse.getAllAttachments().stream()
+                        .map(
+                                attachment -> {
+                                  byte[] fileBytes = new byte[0];
+                                  try {
+                                    fileBytes = Files.readAllBytes(attachment.getAttachedFile().toPath());
+                                  } catch (IOException e) {
+                                    LOGGER.error("DP encountered an error while attaching the documents: {}", e.getMessage());
+                                  }
+
+                                  return MEPayload.builder()
+                                          .data(fileBytes)
+                                          .mimeType(
+                                                  MimeTypeDeterminator.getInstance()
+                                                          .getMimeTypeFromBytes(fileBytes))
+                                          .contentID(attachment.getAttachedFileCid())
+                                          .build();
+                                })
+                        .collect(Collectors.toList());
       }
       return new IncomingEDMResponse(edmResponse.getEdmResponse(),"mock@toop",
-          payloadList,
+          attachments,
           aMetadataInverse);
 
     } catch (DPException e) {
@@ -104,10 +121,6 @@ public class MockDP {
 
       return new IncomingEDMErrorResponse(edmError,"mock@toop",
           aMetadataInverse);
-    } catch (IOException e){
-      LOGGER.error("Error while reading attachment: {}", e.getMessage());
-
-      return null;
     }
   }
 
@@ -162,21 +175,27 @@ public class MockDP {
     {
 
       final TCPayload aPayload = new TCPayload();
-      TCPayload filePayload = null;
+      final List<TCPayload> filePayloads = new ArrayList<>();
       byte[] payload = null;
-      String payloadType;
 
       if (response instanceof IncomingEDMResponse) {
         payload = ((IncomingEDMResponse) response).getResponse().getWriter().getAsBytes();
 
-        if(((IncomingEDMResponse) response).attachments().size()>0) {
-          filePayload = new TCPayload();
-          MEPayload attachedFile = ((IncomingEDMResponse) response).attachments().getLastValue();
-          filePayload.setContentID(attachedFile.getContentID()+"@elonia-dev");
-          filePayload.setMimeType(attachedFile.getMimeTypeString());
-          filePayload.setValue(attachedFile.getData().bytes());
-        }
-        aPayload.setContentID(((IncomingEDMResponse) response).getResponse().getRequestID()+"@elonia");
+        filePayloads.addAll(
+                ((IncomingEDMResponse) response)
+                        .attachments().values().stream()
+                        .map(
+                                m -> {
+                                  TCPayload attachedFilePayload = new TCPayload();
+                                  attachedFilePayload.setContentID(m.getContentID());
+                                  attachedFilePayload.setMimeType(m.getMimeTypeString());
+                                  attachedFilePayload.setValue(m.getData().bytes());
+                                  return attachedFilePayload;
+                                })
+                        .collect(Collectors.toList()));
+
+        aPayload.setContentID(
+                ((IncomingEDMResponse) response).getResponse().getRequestID() + "@elonia-dev");
       }
       if (response instanceof IncomingEDMErrorResponse) {
         payload =
@@ -191,8 +210,8 @@ public class MockDP {
       aPayload.setValue(payload);
       aPayload.setMimeType(CMimeType.APPLICATION_XML.getAsString());
       aOM.addPayload(aPayload);
-      if(filePayload != null){
-        aOM.addPayload(filePayload);
+      if(!filePayloads.isEmpty()){
+        filePayloads.forEach(aOM::addPayload);
       }
     }
 

@@ -37,7 +37,7 @@
     <toop.version>2.0.0-rc3</toop.version>
     <tc.version>${toop.version}</tc.version>
     <dsd.version>${toop.version}</dsd.version>
-    <pg.version>${toop.version}</pg.version>
+    <pg.version>2.0.0-SNAPSHOT</pg.version>
   </properties>
 
   <inceptionYear>2020</inceptionYear>
@@ -110,7 +110,7 @@
       <dependency>
         <groupId>eu.toop</groupId>
         <artifactId>toop-playground-ng</artifactId>
-        <version>${toop.version}</version>
+        <version>${pg.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
