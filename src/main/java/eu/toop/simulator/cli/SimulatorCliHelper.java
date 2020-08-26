@@ -74,6 +74,10 @@ public class SimulatorCliHelper {
    */
   public List<String> getWords() {
     //TODO: this does not consider parameters in quotes "
+    if (lastLine == null){
+      throw new NullPointerException("Command line empty. Probably no terminal");
+    }
+
     return Arrays.asList(lastLine.split("\\s"));
   }
 }

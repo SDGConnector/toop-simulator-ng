@@ -40,7 +40,7 @@ import eu.toop.connector.api.me.model.MEMessage;
 import eu.toop.connector.api.me.model.MEPayload;
 import eu.toop.connector.api.me.outgoing.IMERoutingInformation;
 import eu.toop.connector.api.me.outgoing.MEOutgoingException;
-import eu.toop.connector.app.incoming.MPTrigger;
+import eu.toop.connector.app.incoming.DC_DP_TriggerViaHttp;
 import eu.toop.edm.EDMErrorResponse;
 import eu.toop.edm.EDMRequest;
 import eu.toop.edm.EDMResponse;
@@ -92,9 +92,9 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
             //create response and send back
             final IIncomingEDMResponse response = MockDP.eloniaCreateResponse((EDMRequest) aTopLevel, aMetadata);
             if (response instanceof IncomingEDMResponse)
-              MPTrigger.forwardMessage((IncomingEDMResponse) response, SimulatorConfig.getDcEndpoint());
+              DC_DP_TriggerViaHttp.forwardMessage((IncomingEDMResponse) response, SimulatorConfig.getDcEndpoint());
             if (response instanceof IncomingEDMErrorResponse)
-              MPTrigger.forwardMessage((IncomingEDMErrorResponse) response, SimulatorConfig.getDcEndpoint());
+              DC_DP_TriggerViaHttp.forwardMessage((IncomingEDMErrorResponse) response, SimulatorConfig.getDcEndpoint());
           } else {
             LOGGER.debug("Automatic response is disabled. Having a rest");
           }
@@ -108,12 +108,12 @@ public class MockDCDPMessageExchange implements IMessageExchangeSPI {
         for (final MEPayload aItem : meMessage.payloads())
           if (aItem != aHead)
             aAttachments.add(aItem);
-        MPTrigger.forwardMessage(new IncomingEDMResponse((EDMResponse) aTopLevel,"mock@toop",
+        DC_DP_TriggerViaHttp.forwardMessage(new IncomingEDMResponse((EDMResponse) aTopLevel,"mock@toop",
             aAttachments,
             aMetadata), SimulatorConfig.getDcEndpoint());
       } else if (aTopLevel instanceof EDMErrorResponse) {
         // Error response
-        MPTrigger.forwardMessage(new IncomingEDMErrorResponse((EDMErrorResponse) aTopLevel,"mock@toop",
+        DC_DP_TriggerViaHttp.forwardMessage(new IncomingEDMErrorResponse((EDMErrorResponse) aTopLevel,"mock@toop",
             aMetadata), SimulatorConfig.getDcEndpoint());
       } else {
         // Unknown

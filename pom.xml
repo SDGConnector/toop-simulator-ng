@@ -16,7 +16,8 @@
     limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.helger</groupId>
@@ -34,10 +35,10 @@
   <url>http://github.com/toop4eu/toop-simulator-ng</url>
 
   <properties>
-    <toop.version>2.0.0-rc3</toop.version>
+    <toop.version>2.0.0-SNAPSHOT</toop.version>
     <tc.version>${toop.version}</tc.version>
     <dsd.version>${toop.version}</dsd.version>
-    <pg.version>2.0.0-SNAPSHOT</pg.version>
+    <pg.version>${toop.version}</pg.version>
   </properties>
 
   <inceptionYear>2020</inceptionYear>
@@ -215,6 +216,13 @@
     </dependency>
 
     <dependency>
+      <groupId>com.helger.peppol</groupId>
+      <artifactId>peppol-smp-client</artifactId>
+      <version>8.1.6</version>
+    </dependency>
+
+
+    <dependency>
       <groupId>org.yaml</groupId>
       <artifactId>snakeyaml</artifactId>
       <version>1.26</version>
@@ -302,7 +310,7 @@
               <shadedArtifactAttached>true</shadedArtifactAttached>
               <shadedClassifierName>bundle</shadedClassifierName>
               <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.DontIncludeResourceTransformer">
                   <resource>.RSA</resource>
                   <resource>.SF</resource>

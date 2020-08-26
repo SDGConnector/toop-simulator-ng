@@ -16,7 +16,7 @@
 package eu.toop.simulator;
 
 import com.helger.photon.jetty.JettyStarter;
-import eu.toop.connector.webapi.TCAPIConfig;
+import eu.toop.connector.app.api.TCAPIConfig;
 import eu.toop.simulator.cli.Cli;
 import eu.toop.simulator.mock.DiscoveryProvider;
 import org.eclipse.jetty.server.Server;

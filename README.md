@@ -178,7 +178,7 @@ In DP mode, toop-simulator simulates a DP with a TOOP Connector and a real DC is
       # via docker
       docker run --rm -it \
             -e SIM_MODE=DP \
-            -e DC_ENDPOINT="http://some.dp/to-dp" \
+            -e DC_ENDPOINT="http://some.dc/to-dc" \
             -p 8081:8081 \
             toop/toop-simulator-ng
 

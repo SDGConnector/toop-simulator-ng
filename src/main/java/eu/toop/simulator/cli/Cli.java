@@ -41,50 +41,49 @@ public class Cli {
     //check if the logs directory exists, otherwise create it (used for saving the last_response.xml
     new File("logs").mkdirs();
     LOGGER.info("Entering CLI mode");
-    try {
-      SimulatorCliHelper simulatorCliHelper = new SimulatorCliHelper();
-      while (simulatorCliHelper.readLine()) {
-        try {
+    SimulatorCliHelper simulatorCliHelper = new SimulatorCliHelper();
+    while (simulatorCliHelper.readLine()) {
+      try {
 
-          CliCommand command = CliCommand.parse(simulatorCliHelper.getWords(), true);
+        CliCommand command = CliCommand.parse(simulatorCliHelper.getWords(), true);
 
-          switch (command.getMainCommand()) {
-            case SimulatorCliHelper.CMD_SEND_DC_REQUEST: {
-              if (SimulatorConfig.getMode() == SimulationMode.DC) {
-                CommandProcessor.processCommand(command);
-              } else {
-                System.out.println("Ignoring command in nonDC mode");
-              }
-              break;
+        switch (command.getMainCommand()) {
+          case SimulatorCliHelper.CMD_SEND_DC_REQUEST: {
+            if (SimulatorConfig.getMode() == SimulationMode.DC) {
+              CommandProcessor.processCommand(command);
+            } else {
+              System.out.println("Ignoring command in nonDC mode");
             }
-
-
-            case SimulatorCliHelper.CMD_SEND_DP_RESPONSE: {
-              if (SimulatorConfig.getMode() == SimulationMode.DP) {
-                CommandProcessor.processCommand(command);
-              } else {
-                System.out.println("Ignoring command in nonDP mode");
-              }
-              break;
-            }
-
-            case SimulatorCliHelper.CMD_QUIT:
-              System.exit(0);
-              break;
-
-            case SimulatorCliHelper.CMD_HELP:
-            default:
-              CommandProcessor.printHelpMessage();
-              break;
+            break;
           }
-        } catch (Exception ex) {
-          LOGGER.error(ex.getMessage(), ex);
-        } finally {
-          Thread.sleep(100);
+
+
+          case SimulatorCliHelper.CMD_SEND_DP_RESPONSE: {
+            if (SimulatorConfig.getMode() == SimulationMode.DP) {
+              CommandProcessor.processCommand(command);
+            } else {
+              System.out.println("Ignoring command in nonDP mode");
+            }
+            break;
+          }
+
+          case SimulatorCliHelper.CMD_QUIT:
+            System.exit(0);
+            break;
+
+          case SimulatorCliHelper.CMD_HELP:
+          default:
+            CommandProcessor.printHelpMessage();
+            break;
         }
+      } catch (NullPointerException ex) {
+        LOGGER.error(ex.getMessage(), ex);
+        break;
+      } catch (Exception ex) {
+        LOGGER.error(ex.getMessage(), ex);
+      } finally {
+        Thread.sleep(100);
       }
-    } catch (Exception ex) {
-      ex.printStackTrace();
     }
   }
 }

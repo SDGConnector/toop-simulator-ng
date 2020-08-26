@@ -15,16 +15,10 @@
  */
 package eu.toop.simulator.mock;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.error.level.EErrorLevel;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.MimeTypeDeterminator;
-import com.helger.commons.url.SimpleURL;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.response.ResponseHandlerJson;
-import com.helger.json.IJson;
 import eu.toop.connector.api.me.EMEProtocol;
 import eu.toop.connector.api.me.incoming.*;
 import eu.toop.connector.api.me.model.MEPayload;
@@ -32,31 +26,22 @@ import eu.toop.connector.api.rest.TCOutgoingMessage;
 import eu.toop.connector.api.rest.TCOutgoingMetadata;
 import eu.toop.connector.api.rest.TCPayload;
 import eu.toop.connector.api.rest.TCRestJAXB;
-import eu.toop.connector.app.incoming.MPTrigger;
+import eu.toop.connector.app.incoming.DC_DP_TriggerViaHttp;
 import eu.toop.edm.EDMErrorResponse;
 import eu.toop.edm.EDMRequest;
-import eu.toop.edm.EDMResponse;
-import eu.toop.kafkaclient.ToopKafkaClient;
 import eu.toop.playground.dp.DPException;
-import eu.toop.playground.dp.model.Attachment;
 import eu.toop.playground.dp.model.EDMResponseWithAttachment;
 import eu.toop.playground.dp.service.ToopDP;
 import eu.toop.simulator.SimulatorConfig;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -132,7 +117,7 @@ public class MockDP {
    * @param aMetadata
    */
   public static void deliverRequestToDP(EDMRequest edmRequest, MEIncomingTransportMetadata aMetadata) {
-    MPTrigger.forwardMessage(new IncomingEDMRequest(edmRequest,"mock@toop",
+    DC_DP_TriggerViaHttp.forwardMessage(new IncomingEDMRequest(edmRequest,"mock@toop",
         aMetadata), SimulatorConfig.getDpEndpoint());
   }
 
