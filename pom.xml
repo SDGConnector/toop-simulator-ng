@@ -83,7 +83,7 @@
       <dependency>
         <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.2.5</version>
+        <version>8.2.6</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -218,7 +218,6 @@
     <dependency>
       <groupId>com.helger.peppol</groupId>
       <artifactId>peppol-smp-client</artifactId>
-      <version>8.1.6</version>
     </dependency>
 
 
