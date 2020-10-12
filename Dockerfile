@@ -16,7 +16,7 @@
 
 FROM tomcat:8-jre8
 
-ARG VERSION="2.0.0-SNAPSHOT"
+ARG VERSION="2.1.0-SNAPSHOT"
 ARG JAR_NAME=toop-simulator-ng-${VERSION}-bundle.jar
 
 #create tc webapp folder
@@ -25,6 +25,11 @@ WORKDIR /simulator
 ENV JAVA_OPTS="$JAVA_OPTS -Djava.security.egd=file:/dev/urandom" \
     JAR_NAME="${JAR_NAME}"
 
-ADD ./target/${JAR_NAME} ./
+#ADD ./target/${JAR_NAME} ./
+
+#RUN echo "Downloading $JAR_NAME" && \
+#    curl https://oss.sonatype.org/service/local/repositories/releases/content/eu/toop/toop-simulator-ng/${VERSION}/${JAR_NAME} -o
+#${JAR_NAME}
+
 
 CMD ["sh", "-c", "java $JAVA_OPTS -jar ${JAR_NAME}"]

@@ -84,6 +84,7 @@ public class SimulatorConfig {
    * when in DP mode
    */
   private static boolean dpResponseAuto = true;
+  private static String gatewayEndpoint = "http://gw-freedonia.dev.exchange.toop.eu:9082/holodeckb2b/as4";
 
   static {
     Config conf = Util.resolveConfiguration(ToopSimulatorResources.getSimulatorConfResource(), true);
@@ -105,7 +106,8 @@ public class SimulatorConfig {
 
     dpResponseAuto = conf.getBoolean("toop-simulator.dpResponseAuto");
 
-    mockGateway = conf.getBoolean("toop-simulator.mockGateway");
+    mockGateway = conf.getBoolean("toop-simulator.MEM.mockGateway");
+    gatewayEndpoint = conf.getString("toop-simulator.MEM.gatewayEndpoint");
 
     LOGGER.debug("mode: " + mode);
     LOGGER.debug("dcEndpoint: " + dcEndpoint);
@@ -298,5 +300,9 @@ public class SimulatorConfig {
    */
   public static void setReceiverScheme(String receiverScheme) {
     SimulatorConfig.receiverScheme = receiverScheme;
+  }
+
+  public static String getGatewayEndpoint() {
+    return gatewayEndpoint;
   }
 }

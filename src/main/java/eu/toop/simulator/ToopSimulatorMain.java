@@ -16,6 +16,7 @@
 package eu.toop.simulator;
 
 import com.helger.photon.jetty.JettyStarter;
+import eu.toop.connector.api.TCConfig;
 import eu.toop.connector.app.api.TCAPIConfig;
 import eu.toop.simulator.cli.Cli;
 import eu.toop.simulator.mock.DiscoveryProvider;
@@ -119,6 +120,11 @@ public class ToopSimulatorMain {
    * @throws Exception
    */
   private static void prepareMocks() {
+    //if gateway is not simulated, then check the gateway endpoint to set
+    if (!SimulatorConfig.isMockGateway()){
+      System.setProperty("toop.mem.as4.endpoint", SimulatorConfig.getGatewayEndpoint());
+    }
+
     TCAPIConfig.setDDServiceGroupHrefProvider(DiscoveryProvider.getInstance());
     TCAPIConfig.setDDServiceMetadataProvider(DiscoveryProvider.getInstance());
     TCAPIConfig.setDSDDatasetResponseProvider(DiscoveryProvider.getInstance());

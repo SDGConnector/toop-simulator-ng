@@ -15,43 +15,36 @@
  */
 package eu.toop.simulator.mock;
 
-import java.io.InputStream;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.yaml.snakeyaml.Yaml;
-
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.CommonsTreeMap;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.collection.impl.ICommonsSortedMap;
 import com.helger.commons.io.stream.StreamHelper;
-import com.helger.pd.searchapi.PDSearchAPIReader;
-import com.helger.pd.searchapi.v1.MatchType;
-import com.helger.pd.searchapi.v1.ResultListType;
 import com.helger.peppolid.IDocumentTypeIdentifier;
 import com.helger.peppolid.IParticipantIdentifier;
 import com.helger.xsds.bdxr.smp1.DocumentIdentifierType;
 import com.helger.xsds.bdxr.smp1.ParticipantIdentifierType;
 import com.helger.xsds.bdxr.smp1.ServiceMetadataType;
-
 import eu.toop.connector.api.dd.IDDServiceGroupHrefProvider;
 import eu.toop.connector.api.dd.IDDServiceMetadataProvider;
 import eu.toop.connector.api.dsd.DSDDatasetHelper;
 import eu.toop.connector.api.dsd.DSDDatasetResponse;
 import eu.toop.connector.api.dsd.IDSDDatasetResponseProvider;
 import eu.toop.connector.api.error.ITCErrorHandler;
-import eu.toop.dsd.api.DSDTypesManipulator;
+import eu.toop.dsd.api.DsdDataConverter;
 import eu.toop.edm.error.EToopErrorCode;
 import eu.toop.edm.jaxb.dcatap.DCatAPDatasetType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.Yaml;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.xml.transform.TransformerException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * This class plays the role of both a directory and an SMP server. It reads its contents
@@ -133,7 +126,7 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
       LOGGER.debug("Found match " + key);
       return serviceMetadataMap.get(key);
     } else {
-      LOGGER.error ("No service metadata found for participant: " + aParticipantID.getScheme() + "::" + aParticipantID.getValue() +
+      LOGGER.error("No service metadata found for participant: " + aParticipantID.getScheme() + "::" + aParticipantID.getValue() +
           "    and doctypeid: " + aDocTypeID.getScheme() + "::" + aDocTypeID.getValue(), EToopErrorCode.GEN);
       return null;
     }
@@ -152,17 +145,18 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
                                                                 @Nonnull final String sDatasetType,
                                                                 @Nullable final String sCountryCode,
                                                                 @Nonnull final ITCErrorHandler aErrorHandler) {
-    final ResultListType resultList = PDSearchAPIReader.resultListV1().read(resultListBytes);
 
-    List<MatchType> directoryList = resultList.getMatch();
-    DSDTypesManipulator.filterDirectoryResults(sDatasetType, sCountryCode, directoryList);
-    final List<Document> documents = DSDTypesManipulator.convertMatchTypesToDCATDocuments(sDatasetType, directoryList);
-    final List<Element> collect = documents.stream().map(doc -> doc.getDocumentElement()).collect(Collectors.toList());
-    final List<DCatAPDatasetType> dCatAPDatasetTypes = DSDTypesManipulator.convertElementsToDCatList(collect);
+    String resultListXml = new String(resultListBytes, StandardCharsets.UTF_8);
+    try {
+      final String dsdXml = DsdDataConverter.convertDIRToDSDWithCountryCode(resultListXml, sDatasetType, sCountryCode);
+      final List<DCatAPDatasetType> datasetTypes = DsdDataConverter.parseDataset(dsdXml);
+      final ICommonsSet<DSDDatasetResponse> set = DSDDatasetHelper.buildDSDResponseSet(datasetTypes);
+      LOGGER.debug("Size of dsd dataset response set " + set.size());
+      return set;
+    } catch (TransformerException e) {
+      throw new IllegalStateException(e.getMessage(), e);
+    }
 
-    final ICommonsSet<DSDDatasetResponse> set = DSDDatasetHelper.buildDSDResponseSet(dCatAPDatasetTypes);
-    LOGGER.debug("Size of dsd dataset response set " + set.size());
-    return set;
   }
 
 

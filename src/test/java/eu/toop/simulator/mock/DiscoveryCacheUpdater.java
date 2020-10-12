@@ -55,7 +55,8 @@ public class DiscoveryCacheUpdater {
   public void updateDSDCache() throws Exception {
 
     String baseDir = "http://directory.acc.exchange.toop.eu";
-    final ResultListType results = ToopDirClient.callSearchApi(baseDir, null, null);
+    final String s = ToopDirClient.callSearchApiWithCountryCode(baseDir, null);
+    final ResultListType results = PDSearchAPIReader.resultListV1().read(s);
     System.out.println(results);
     PDSearchAPIWriter.resultListV1().setFormattedOutput(true).write(results, new File("src/main/resources/discovery/directory.xml"));
   }
