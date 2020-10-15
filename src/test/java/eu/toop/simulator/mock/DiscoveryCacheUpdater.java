@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.LinkedHashMap;
 
+import oasis.names.specification.ubl.schema.xsd.qualifieddatatypes_23.CountryIdentificationCodeType;
 import org.yaml.snakeyaml.Yaml;
 
 import com.helger.commons.collection.impl.ICommonsSortedMap;
@@ -55,8 +56,14 @@ public class DiscoveryCacheUpdater {
   public void updateDSDCache() throws Exception {
 
     String baseDir = "http://directory.acc.exchange.toop.eu";
-    final String s = ToopDirClient.callSearchApiWithCountryCode(baseDir, null);
-    final ResultListType results = PDSearchAPIReader.resultListV1().read(s);
+    final String sSV = ToopDirClient.callSearchApiWithCountryCode(baseDir,"SV");
+    final String sGQ = ToopDirClient.callSearchApiWithCountryCode(baseDir,"GQ");
+    final String sPF = ToopDirClient.callSearchApiWithCountryCode(baseDir,"PF");
+    final String sGF = ToopDirClient.callSearchApiWithCountryCode(baseDir,"GF");
+    final ResultListType results = PDSearchAPIReader.resultListV1().read(sSV);
+    results.getMatch().addAll(PDSearchAPIReader.resultListV1().read(sGQ).getMatch());
+    results.getMatch().addAll(PDSearchAPIReader.resultListV1().read(sPF).getMatch());
+    results.getMatch().addAll(PDSearchAPIReader.resultListV1().read(sGF).getMatch());
     System.out.println(results);
     PDSearchAPIWriter.resultListV1().setFormattedOutput(true).write(results, new File("src/main/resources/discovery/directory.xml"));
   }
