@@ -7,7 +7,6 @@ distribution:
   documentURI: www.example.com/document.pdf
   documentDescription: Example PDF
   documentType: application/pdf
-  localeCode: EN
 ids:
   - f55f1971-5e92-5804-acf7-16668709af5f
   - DOC-550

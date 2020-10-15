@@ -8,7 +8,6 @@ distribution:
   documentURI: "https://www.poyry-pq.eu/pq-stelle-web-test/app/espdDocumentAccess?url=dataExchange/showDocument/F056445A6BC0010E"
   documentDescription: Eigenerklärung über Insolvenz, Liquidation, Zuverlässigkeit
   documentType: application/pdf
-  localeCode: DE
 ids:
   - 516159d1-6d92-4806-b9ee-0d3b7d8996b9
   - F056445A6BC0010E

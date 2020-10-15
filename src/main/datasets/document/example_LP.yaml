@@ -8,7 +8,6 @@ distribution:
   documentURI: "cid:f55f1971-5e92-4704-acf7-16668709af5f@elonia"
   documentDescription: Example PDF
   documentType: application/pdf
-  localeCode: EN
 ids:
   - f55f1971-5e92-4704-acf7-16668709af5f
   - DOC-556

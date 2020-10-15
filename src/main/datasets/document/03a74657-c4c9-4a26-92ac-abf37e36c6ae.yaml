@@ -8,7 +8,6 @@ distribution:
   documentURI: "https://www.gbd-test.online/quality-platform/app/dataExchange/showDocument/E48F08BA18D4DBB7"
   documentDescription: Eintragung in das Berufsregister
   documentType: application/pdf
-  localeCode: DE
 ids:
   - 03a74657-c4c9-4a26-92ac-abf37e36c6ae
   - E48F08BA18D4DBB7

@@ -8,7 +8,6 @@ distribution:
   documentURI: "https://www.gbd-test.online/quality-platform/app/dataExchange/showDocument/00E06B79D588E5BC"
   documentDescription: Bescheinigung in Steuersachen
   documentType: application/pdf
-  localeCode: DE
 ids:
   - a852053e-ba86-4690-86cf-7190a2f5d915
   - 00E06B79D588E5BC
@@ -18,7 +17,7 @@ lastModified: 2018-09-25T03:03
 validFrom: 2018-09-25T03:03
 validTo: 2019-09-25T03:03
 repositoryItemRef:
-  link: "cid:a852053e-ba86-4690-86cf-7190a2f5d9152"
+  link: "cid:a852053e-ba86-4690-86cf-7190a2f5d915"
   title: Bescheinigung in Steuersachen
 creator:
   id: DE1665468040

@@ -8,7 +8,6 @@ distribution:
   documentURI: "https://www.gbd-test.online/quality-platform/app/dataExchange/showDocument/B506CD21D5B63E8E"
   documentDescription: Unbedenklichkeitsbescheinigung der BG mit Angabe der Lohnsummen
   documentType: application/pdf
-  localeCode: DE
 ids:
   - 622de68c-11a8-4006-adbf-4520f40693d0
   - B506CD21D5B63E8E

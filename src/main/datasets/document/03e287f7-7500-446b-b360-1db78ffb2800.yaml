@@ -8,7 +8,6 @@ distribution:
   documentURI: "https://www.gbd-test.online/quality-platform/app/dataExchange/showDocument/45485BD5493B9654"
   documentDescription: Freistellungsbescheinigung gem. §48b Abs. 1 des EStG
   documentType: application/pdf
-  localeCode: DE
 ids:
   - 03e287f7-7500-446b-b360-1db78ffb2800
   - 45485BD5493B9654
