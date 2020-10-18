@@ -1,0 +1,30 @@
+legalPersonID: 1665469009
+legalRepresentativeID: MirkoSchmitz
+description: eProcurement pilot test PDF.
+title: Eintragung in das Berufsregister
+attachmentLocation: datasets/document/attachments/03a74657-c4c9-4a26-92ac-abf37e36c6ae.pdf
+attachmentCid: 03a74657-c4c9-4a26-92ac-abf37e36c6ae
+distribution:
+  documentURI: "https://www.gbd-test.online/quality-platform/app/dataExchange/showDocument/E48F08BA18D4DBB7"
+  documentDescription: Eintragung in das Berufsregister
+  documentType: application/pdf
+ids:
+  - 03a74657-c4c9-4a26-92ac-abf37e36c6ae
+  - E48F08BA18D4DBB7
+issued: 2018-07-19T03:03
+language: DE
+lastModified: 2018-07-19T03:03
+validFrom: 2018-07-19T03:03
+validTo: 2019-08-19T03:03
+repositoryItemRef:
+  link: "cid:03a74657-c4c9-4a26-92ac-abf37e36c6ae"
+  title: Eintragung in das Berufsregister
+creator:
+  id: DE1665468040
+  idScheme: DE167064991
+  name: FG Baulogistik GmbH
+  postName: ElonianPostName
+qualifiedRelation:
+  - description: Legal Description
+    title: Legal title
+    id: qwerty

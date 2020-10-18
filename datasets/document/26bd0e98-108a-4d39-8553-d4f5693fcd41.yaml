@@ -1,0 +1,30 @@
+legalPersonID: 1665469009
+legalRepresentativeID: MirkoSchmitz
+description: eProcurement pilot test PDF.
+title: Auszug aus dem Handelsregister
+attachmentLocation: datasets/document/attachments/26bd0e98-108a-4d39-8553-d4f5693fcd41.pdf
+attachmentCid: 26bd0e98-108a-4d39-8553-d4f5693fcd41
+distribution:
+  documentURI: "https://www.gbd-test.online/quality-platform/app/dataExchange/showDocument/75369A70C2C67504"
+  documentDescription: Auszug aus dem Handelsregister
+  documentType: application/pdf
+ids:
+  - 26bd0e98-108a-4d39-8553-d4f5693fcd41
+  - 75369A70C2C67504
+issued: 2018-09-06T03:03
+language: DE
+lastModified: 2018-09-06T03:03
+validFrom: 2018-09-06T03:03
+validTo: 2019-10-06T03:03
+repositoryItemRef:
+  link: "cid:26bd0e98-108a-4d39-8553-d4f5693fcd41"
+  title: Auszug aus dem Handelsregister
+creator:
+  id: DE1665468040
+  idScheme: DE167064991
+  name: FG Baulogistik GmbH
+  postName: ElonianPostName
+qualifiedRelation:
+  - description: Legal Description
+    title: Legal title
+    id: qwerty

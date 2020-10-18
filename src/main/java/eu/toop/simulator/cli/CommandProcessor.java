@@ -70,19 +70,10 @@ public class CommandProcessor {
    *
    * @param command the input command
    */
-  public static void processCommand(CliCommand command) {
+  public static void processSendDCRequest(CliCommand command) {
+    ValueEnforcer.notNull(command, "Empty command list");
 
     String[] predefinedTypes = CommandProcessor.dcPredefinedDoctypes;
-
-    if (command.getMainCommand().equals(SimulatorCliHelper.CMD_SEND_DC_REQUEST)) {
-      predefinedTypes = CommandProcessor.dcPredefinedDoctypes;
-    } else if (command.getMainCommand().equals(SimulatorCliHelper.CMD_SEND_DP_RESPONSE)) {
-      predefinedTypes = CommandProcessor.dpPredefinedDoctypes;
-    }
-
-    final String[] dcPredefinedDoctypes = CommandProcessor.dcPredefinedDoctypes;
-
-    ValueEnforcer.notNull(command, "Empty command list");
 
     //[-f edm response] [-s sender] [-r receiver] [-d doctype | -pd predefinedDocType]
 
@@ -102,7 +93,7 @@ public class CommandProcessor {
     } else {
       if (command.hasOption("pd")) {
         int index = Integer.parseInt(command.getOption("pd").get(0));
-        index = index-1; //counting starts from 1.
+        index = index - 1; //counting starts from 1.
         if (index < 0 || index >= predefinedTypes.length) {
           throw new IllegalArgumentException("invalid predefined doctype index");
         }
@@ -122,11 +113,60 @@ public class CommandProcessor {
       file = fileArgs.get(0);
     }
 
-    if (command.getMainCommand().equals(SimulatorCliHelper.CMD_SEND_DC_REQUEST)) {
-      MockDC.sendDCRequest(sender, receiver, docType, file);
-    } else if (command.getMainCommand().equals(SimulatorCliHelper.CMD_SEND_DP_RESPONSE)) {
-      MockDP.sendDPResponse(sender, receiver, docType, file);
+    MockDC.sendDCRequest(sender, receiver, docType, file);
+  }
+
+
+
+  /**
+   * Process the send-dc-request command
+   *
+   * @param command the input command
+   */
+  public static void processSendDPResponse(CliCommand command) {
+    ValueEnforcer.notNull(command, "Empty command list");
+
+    String[] predefinedTypes = CommandProcessor.dpPredefinedDoctypes;
+
+    //[-f edm response] [-s sender] [-r receiver] [-d doctype | -pd predefinedDocType]
+
+    String sender = SimulatorConfig.getSender();
+    if (command.hasOption("s")) {
+      sender = command.getOption("s").get(0);
     }
+    String receiver = SimulatorConfig.getReceiver();
+    if (command.hasOption("r")) {
+      receiver = command.getOption("r").get(0);
+    }
+
+    String docType = "QueryResponse::toop-edm:v2.0";
+
+    if (command.hasOption("d")) {
+      docType = command.getOption("d").get(0);
+    } else {
+      if (command.hasOption("pd")) {
+        int index = Integer.parseInt(command.getOption("pd").get(0));
+        index = index - 1; //counting starts from 1.
+        if (index < 0 || index >= predefinedTypes.length) {
+          throw new IllegalArgumentException("invalid predefined doctype index");
+        }
+
+        docType = predefinedTypes[index];
+      }
+    }
+
+    LOGGER.debug("Creating a message as " + sender + " --> " + receiver + " ");
+    LOGGER.debug(" and doctype " + docType);
+
+    String file = null;
+
+    if (command.hasOption("f")) {
+      List<String> fileArgs = command.getOption("f");
+      ValueEnforcer.isEqual(fileArgs.size(), 1, "-f option needs exactly one argument");
+      file = fileArgs.get(0);
+    }
+
+    MockDP.sendDPResponse(sender, receiver, docType, file);
   }
 
   /**

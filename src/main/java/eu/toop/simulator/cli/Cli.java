@@ -50,7 +50,7 @@ public class Cli {
         switch (command.getMainCommand()) {
           case SimulatorCliHelper.CMD_SEND_DC_REQUEST: {
             if (SimulatorConfig.getMode() == SimulationMode.DC) {
-              CommandProcessor.processCommand(command);
+              CommandProcessor.processSendDCRequest(command);
             } else {
               System.out.println("Ignoring command in nonDC mode");
             }
@@ -60,7 +60,7 @@ public class Cli {
 
           case SimulatorCliHelper.CMD_SEND_DP_RESPONSE: {
             if (SimulatorConfig.getMode() == SimulationMode.DP) {
-              CommandProcessor.processCommand(command);
+              CommandProcessor.processSendDPResponse(command);
             } else {
               System.out.println("Ignoring command in nonDP mode");
             }

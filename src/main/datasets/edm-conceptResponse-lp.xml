@@ -1,74 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<query:QueryResponse xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:4.0" xmlns:spi="urn:oasis:names:tc:ebxml-regrep:xsd:spi:4.0" xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success" requestId="8ad2f89a-f566-4c91-9b4d-9b40f095a78c">
+<!--
+
+    Copyright (C) 2018-2020 toop.eu
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+
+<query:QueryResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0"
+                     xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0"
+                     xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0"
+                     xsi:schemaLocation="
+    urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0                        ../../../../xsd/regrep/query.xsd
+    urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0                          ../../../../xsd/regrep/rim.xsd
+    urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0                           ../../../../xsd/regrep/rs.xsd
+    https://semic.org/sa/cv/cagv/agent-2.0.0# ../../../../xsd/cagv/2.0.0/xml/xsd/CV-Agent.xsd"
+
+                     requestId="c4369c4d-740e-4b64-80f0-7b209a66d629"
+                     status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success">
+
+  <!-- SPECIFICATION IDENTIFIER -->
   <rim:Slot name="SpecificationIdentifier">
-    <rim:SlotValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="rim:StringValueType">
+    <rim:SlotValue xsi:type="rim:StringValueType">
       <rim:Value>toop-edm:v2.0</rim:Value>
     </rim:SlotValue>
   </rim:Slot>
+
+  <!-- ISSUE DATE / TIME  -->
   <rim:Slot name="IssueDateTime">
-    <rim:SlotValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="rim:DateTimeValueType">
-      <rim:Value>2020-06-15T11:13:28.557</rim:Value>
+    <rim:SlotValue xsi:type="rim:DateTimeValueType">
+      <rim:Value>2020-02-14T19:20:30+01:00</rim:Value>
     </rim:SlotValue>
   </rim:Slot>
+
+  <!--   Data Provider Metadata  -->
   <rim:Slot name="DataProvider">
-    <rim:SlotValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="rim:AnyValueType">
-      <cagv:Agent xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:regorg="http://www.w3.org/ns/regorg#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:org="http://www.w3.org/ns/org#" xmlns:locn="http://www.w3.org/ns/locn#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:csdt="https://semic.org/sa/cv/common/dataTypes-2.0.0#" xmlns:csbc="https://semic.org/sa/cv/common/cbc-2.0.0#" xmlns:csac="https://semic.org/sa/cv/common/cac-2.0.0#" xmlns:cagv="https://semic.org/sa/cv/cagv/agent-2.0.0#">
-        <csbc:id schemeID="VAT">1234</csbc:id>
-        <csbc:name>Elonia Business Register</csbc:name>
-        <cagv:location>
-          <locn:address xsi:type="csac:AddressType">
-            <locn:fullAddress>EloniaStreet 1, 12345, EloniaCity, SV</locn:fullAddress>
-            <locn:thoroughfare>EloniaStreet</locn:thoroughfare>
-            <locn:locatorDesignator>1</locn:locatorDesignator>
-            <locn:postName>EloniaCity</locn:postName>
-            <locn:adminUnitLevel1>SV</locn:adminUnitLevel1>
-            <locn:postCode>12345</locn:postCode>
-          </locn:address>
-        </cagv:location>
+    <rim:SlotValue xsi:type="rim:AnyValueType">
+      <!--   Expression of DP information using Agent class of CAGV   -->
+      <cagv:Agent xmlns:cagv="https://semic.org/sa/cv/cagv/agent-2.0.0#"
+                  xmlns:cbc="https://data.europe.eu/semanticassets/ns/cv/common/cbc_v2.0.0#"
+                  xmlns:locn="http://www.w3.org/ns/locn#">
+        <cbc:id schemeID="VAT">12345678</cbc:id>
+        <cbc:name>DPName</cbc:name>
       </cagv:Agent>
     </rim:SlotValue>
   </rim:Slot>
+
   <rim:RegistryObjectList>
-    <rim:RegistryObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="rim:ExtrinsicObjectType" id="250dc803-bcaf-4cec-bd67-549ddc06fc57">
+    <rim:RegistryObject id="341341341-740e-4b64-80f0-3153513529">
       <rim:Slot name="ConceptValues">
-        <rim:SlotValue xsi:type="rim:CollectionValueType" collectionType="urn:oasis:names:tc:ebxml-regrep:CollectionType:Set">
+        <rim:SlotValue xsi:type="rim:CollectionValueType"
+                       collectionType="urn:oasis:names:tc:ebxml-regrep:CollectionType:Set">
           <rim:Element xsi:type="rim:AnyValueType">
-            <cccev:concept xmlns:spdx="spdx:xsd::1.0" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:regorg="http://www.w3.org/ns/regorg#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:odrl="http://www.w3.org/ns/odrl/2/" xmlns:locn="http://www.w3.org/ns/locn#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:dcat="http://data.europa.eu/r5r/" xmlns:csbc="https://semic.org/sa/cv/common/cbc-2.0.0#" xmlns:csac="https://semic.org/sa/cv/common/cac-2.0.0#" xmlns:cagv="https://semic.org/sa/cv/cagv/agent-2.0.0#" xmlns:adms="http://www.w3.org/ns/adms#" xmlns:cccev="https://semic.org/sa/cv/cccev-2.0.0#">
-              <csbc:id>ff33b507-95c9-45bf-ae46-0448f431abfc</csbc:id>
-              <csbc:QName xmlns="http://toop.eu/registered-organization">RegisteredOrganization</csbc:QName>
+            <cccev:concept xmlns:cccev = "https://data.europe.eu/semanticassets/ns/cv/cccev_v2.0.0#"
+                           xmlns:cbc="https://data.europe.eu/semanticassets/ns/cv/common/cbc_v2.0.0#"
+                           xmlns:toop="http://toop.eu/registered-organization"
+                           xsi:schemaLocation="https://data.europe.eu/semanticassets/ns/cv/cccev_v2.0.0# ../../../../xsd/cccev/2.0.0/xml/xsd/cccev-2.0.0.xsd">
+              <cbc:id>ConceptID-1</cbc:id>
+              <cbc:qName>toop:CompanyData</cbc:qName>
               <cccev:concept>
-                <csbc:id>0ce08c21-48b0-47d5-9184-b3c4cbd402b3</csbc:id>
-                <csbc:QName xmlns="http://toop.eu/registered-organization">CompanyName</csbc:QName>
+                <cbc:id>ConceptID-2</cbc:id>
+                <cbc:qName>toop:Concept-Name-2</cbc:qName>
                 <cccev:value>
-                  <cccev:textValue>Zizi mat</cccev:textValue>
+                  <cccev:amountValue currencyID="EUR">1000001</cccev:amountValue>
                 </cccev:value>
               </cccev:concept>
               <cccev:concept>
-                <csbc:id>737fcd65-a80a-4caa-a5d1-c08412c1d19c</csbc:id>
-                <csbc:QName xmlns="http://toop.eu/registered-organization">LegalRepresentativeBirthDate</csbc:QName>
+                <cbc:id>ConceptID-3</cbc:id>
+                <cbc:qName>toop:Concept-Name-3</cbc:qName>
                 <cccev:value>
-                  <cccev:textValue>1994-05-15</cccev:textValue>
+                  <cccev:textValue>ConceptID-3 Value</cccev:textValue>
                 </cccev:value>
               </cccev:concept>
               <cccev:concept>
-                <csbc:id>102d41d8-cf7e-4a6b-854e-f8d6fb0565ca</csbc:id>
-                <csbc:QName xmlns="http://toop.eu/registered-organization">CompanyType</csbc:QName>
+                <cbc:id>ConceptID-4</cbc:id>
+                <cbc:qName>toop:Concept-Name-4</cbc:qName>
                 <cccev:value>
-                  <cccev:textValue>Limited</cccev:textValue>
+                  <cccev:codeValue>code</cccev:codeValue>
                 </cccev:value>
               </cccev:concept>
               <cccev:concept>
-                <csbc:id>57936a13-9e72-443a-93fd-a049c78fca76</csbc:id>
-                <csbc:QName xmlns="http://toop.eu/registered-organization">CompanyCode</csbc:QName>
+                <cbc:id>ConceptID-5</cbc:id>
+                <cbc:qName>toop:Concept-Name-5</cbc:qName>
                 <cccev:value>
-                  <cccev:textValue>JF 234556-6213</cccev:textValue>
+                  <cccev:indicatorValue>true</cccev:indicatorValue>
                 </cccev:value>
               </cccev:concept>
               <cccev:concept>
-                <csbc:id>18a15ef2-5019-461e-835f-6dbdc4a2dba0</csbc:id>
-                <csbc:QName xmlns="http://toop.eu/registered-organization">CapitalType</csbc:QName>
+                <cbc:id>ConceptID-6</cbc:id>
+                <cbc:qName>toop:Concept-Name-6</cbc:qName>
                 <cccev:value>
-                  <cccev:textValue>Equity</cccev:textValue>
+                  <cccev:periodValue>
+                    <cbc:startDate>2020-01-02</cbc:startDate>
+                    <cbc:endDate>2022-05-05</cbc:endDate>
+                  </cccev:periodValue>
+                </cccev:value>
+              </cccev:concept>
+              <cccev:concept>
+                <cbc:id>ConceptID-7</cbc:id>
+                <cbc:qName>toop:Concept-Name-7</cbc:qName>
+                <cccev:value>
+                  <cccev:dateValue>2020-05-05</cccev:dateValue>
+                </cccev:value>
+              </cccev:concept>
+              <cccev:concept>
+                <cbc:id>ConceptID-8</cbc:id>
+                <cbc:qName>toop:Concept-Name-8</cbc:qName>
+                <cccev:value>
+                  <cccev:numericValue>55</cccev:numericValue>
+                </cccev:value>
+              </cccev:concept>
+              <!--  example of concept error: DP_ELE_001 (not found) -->
+              <cccev:concept>
+                <cbc:id>ConceptID-9</cbc:id>
+                <cbc:qName>toop:Concept-Name-9</cbc:qName>
+                <cccev:value>
+                  <cccev:error>DP_ELE_001</cccev:error>
                 </cccev:value>
               </cccev:concept>
             </cccev:concept>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query:QueryResponse xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:4.0" xmlns:spi="urn:oasis:names:tc:ebxml-regrep:xsd:spi:4.0" xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success" requestId="8ad2f89a-f566-4c91-9b4d-9b40f095a78c">
+  <rim:Slot name="SpecificationIdentifier">
+    <rim:SlotValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="rim:StringValueType">
+      <rim:Value>toop-edm:v2.0</rim:Value>
+    </rim:SlotValue>
+  </rim:Slot>
+  <rim:Slot name="IssueDateTime">
+    <rim:SlotValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="rim:DateTimeValueType">
+      <rim:Value>2020-06-15T11:13:28.557</rim:Value>
+    </rim:SlotValue>
+  </rim:Slot>
+  <rim:Slot name="DataProvider">
+    <rim:SlotValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="rim:AnyValueType">
+      <cagv:Agent xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:regorg="http://www.w3.org/ns/regorg#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:org="http://www.w3.org/ns/org#" xmlns:locn="http://www.w3.org/ns/locn#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:csdt="https://semic.org/sa/cv/common/dataTypes-2.0.0#" xmlns:csbc="https://semic.org/sa/cv/common/cbc-2.0.0#" xmlns:csac="https://semic.org/sa/cv/common/cac-2.0.0#" xmlns:cagv="https://semic.org/sa/cv/cagv/agent-2.0.0#">
+        <csbc:id schemeID="VAT">1234</csbc:id>
+        <csbc:name>Elonia Business Register</csbc:name>
+        <cagv:location>
+          <locn:address xsi:type="csac:AddressType">
+            <locn:fullAddress>EloniaStreet 1, 12345, EloniaCity, SV</locn:fullAddress>
+            <locn:thoroughfare>EloniaStreet</locn:thoroughfare>
+            <locn:locatorDesignator>1</locn:locatorDesignator>
+            <locn:postName>EloniaCity</locn:postName>
+            <locn:adminUnitLevel1>SV</locn:adminUnitLevel1>
+            <locn:postCode>12345</locn:postCode>
+          </locn:address>
+        </cagv:location>
+      </cagv:Agent>
+    </rim:SlotValue>
+  </rim:Slot>
+  <rim:RegistryObjectList>
+    <rim:RegistryObject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="rim:ExtrinsicObjectType" id="250dc803-bcaf-4cec-bd67-549ddc06fc57">
+      <rim:Slot name="ConceptValues">
+        <rim:SlotValue xsi:type="rim:CollectionValueType" collectionType="urn:oasis:names:tc:ebxml-regrep:CollectionType:Set">
+          <rim:Element xsi:type="rim:AnyValueType">
+            <cccev:concept xmlns:spdx="spdx:xsd::1.0" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:regorg="http://www.w3.org/ns/regorg#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:odrl="http://www.w3.org/ns/odrl/2/" xmlns:locn="http://www.w3.org/ns/locn#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:dcat="http://data.europa.eu/r5r/" xmlns:csbc="https://semic.org/sa/cv/common/cbc-2.0.0#" xmlns:csac="https://semic.org/sa/cv/common/cac-2.0.0#" xmlns:cagv="https://semic.org/sa/cv/cagv/agent-2.0.0#" xmlns:adms="http://www.w3.org/ns/adms#" xmlns:cccev="https://semic.org/sa/cv/cccev-2.0.0#">
+              <csbc:id>ff33b507-95c9-45bf-ae46-0448f431abfc</csbc:id>
+              <csbc:QName xmlns="http://toop.eu/registered-organization">RegisteredOrganization</csbc:QName>
+              <cccev:concept>
+                <csbc:id>0ce08c21-48b0-47d5-9184-b3c4cbd402b3</csbc:id>
+                <csbc:QName xmlns="http://toop.eu/registered-organization">CompanyName</csbc:QName>
+                <cccev:value>
+                  <cccev:textValue>Zizi mat</cccev:textValue>
+                </cccev:value>
+              </cccev:concept>
+              <cccev:concept>
+                <csbc:id>737fcd65-a80a-4caa-a5d1-c08412c1d19c</csbc:id>
+                <csbc:QName xmlns="http://toop.eu/registered-organization">LegalRepresentativeBirthDate</csbc:QName>
+                <cccev:value>
+                  <cccev:textValue>1994-05-15</cccev:textValue>
+                </cccev:value>
+              </cccev:concept>
+              <cccev:concept>
+                <csbc:id>102d41d8-cf7e-4a6b-854e-f8d6fb0565ca</csbc:id>
+                <csbc:QName xmlns="http://toop.eu/registered-organization">CompanyType</csbc:QName>
+                <cccev:value>
+                  <cccev:textValue>Limited</cccev:textValue>
+                </cccev:value>
+              </cccev:concept>
+              <cccev:concept>
+                <csbc:id>57936a13-9e72-443a-93fd-a049c78fca76</csbc:id>
+                <csbc:QName xmlns="http://toop.eu/registered-organization">CompanyCode</csbc:QName>
+                <cccev:value>
+                  <cccev:textValue>JF 234556-6213</cccev:textValue>
+                </cccev:value>
+              </cccev:concept>
+              <cccev:concept>
+                <csbc:id>18a15ef2-5019-461e-835f-6dbdc4a2dba0</csbc:id>
+                <csbc:QName xmlns="http://toop.eu/registered-organization">CapitalType</csbc:QName>
+                <cccev:value>
+                  <cccev:textValue>Equity</cccev:textValue>
+                </cccev:value>
+              </cccev:concept>
+            </cccev:concept>
+          </rim:Element>
+        </rim:SlotValue>
+      </rim:Slot>
+    </rim:RegistryObject>
+  </rim:RegistryObjectList>
+</query:QueryResponse>

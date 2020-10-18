@@ -1,0 +1,52 @@
+legalPersonID: LP12345
+concepts:
+   - name : RegisteredOrganization
+     concepts :
+        - name: ActivityDescription
+          textValue: Manufacture of other electrical equipment
+        - name: CompanyCode
+          textValue: JF 234556-6213
+        - name: CompanyType
+          textValue: Limited
+        - name: CompanyName
+          textValue: Zizi mat LP
+        - name: LegalStatus
+          textValue: Active
+        - name: LegalStatusEffectiveDate
+          textValue: 2012-01-12
+        - name: NaceCode
+          textValue: C27.9
+        - name: RegistrationAuthority
+          textValue: Elonia Tax Agency
+        - name: RegistrationDate
+          textValue: 2012-01-12
+        - name: RegistrationNumber
+          textValue: 11325
+        - name: SSNumber
+          textValue: SSN-5458221514699
+        - name: StreetAddress
+          textValue: Gamlavegen 234, 321 44, Velma, Elonia
+        - name: VATNumber
+          textValue: GF11325528514A01
+        - name: CapitalType
+          textValue: Equity
+        - name: FoundationDate
+          textValue: 2012-01-11
+        - name: HasLegalRepresentative
+          textValue: true
+        - name: Person
+          textValue: Mary Jane Parker
+        - name: CountryName
+          textValue: Elonia
+        - name: PostalCode
+          textValue: 5055
+        - name: Locality
+          textValue: Elonianwood
+        - name: Region
+          textValue: North Elonia
+        - name: EmailAddress
+          textValue: maryjames@elonia.com
+        - name: FaxNumber
+          textValue: 5553346561
+        - name: TelephoneNumber
+          textValue: 5553346561

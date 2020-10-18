@@ -1,0 +1,30 @@
+legalPersonID: 1665469009
+legalRepresentativeID: MirkoSchmitz
+description: eProcurement pilot test PDF.
+title: Bescheinigung in Steuersachen
+attachmentLocation: datasets/document/attachments/a852053e-ba86-4690-86cf-7190a2f5d915.pdf
+attachmentCid: a852053e-ba86-4690-86cf-7190a2f5d915
+distribution:
+  documentURI: "https://www.gbd-test.online/quality-platform/app/dataExchange/showDocument/00E06B79D588E5BC"
+  documentDescription: Bescheinigung in Steuersachen
+  documentType: application/pdf
+ids:
+  - a852053e-ba86-4690-86cf-7190a2f5d915
+  - 00E06B79D588E5BC
+issued: 2018-09-25T03:03
+language: DE
+lastModified: 2018-09-25T03:03
+validFrom: 2018-09-25T03:03
+validTo: 2019-09-25T03:03
+repositoryItemRef:
+  link: "cid:a852053e-ba86-4690-86cf-7190a2f5d915"
+  title: Bescheinigung in Steuersachen
+creator:
+  id: DE1665468040
+  idScheme: DE167064991
+  name: FG Baulogistik GmbH
+  postName: ElonianPostName
+qualifiedRelation:
+  - description: Legal Description
+    title: Legal title
+    id: qwerty
