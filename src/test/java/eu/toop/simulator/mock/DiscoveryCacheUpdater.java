@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.LinkedHashMap;
 
-import oasis.names.specification.ubl.schema.xsd.qualifieddatatypes_23.CountryIdentificationCodeType;
 import org.yaml.snakeyaml.Yaml;
 
 import com.helger.commons.collection.impl.ICommonsSortedMap;
@@ -27,6 +26,7 @@ import com.helger.pd.searchapi.PDSearchAPIReader;
 import com.helger.pd.searchapi.PDSearchAPIWriter;
 import com.helger.pd.searchapi.v1.IDType;
 import com.helger.pd.searchapi.v1.ResultListType;
+import com.helger.peppol.smp.ESMPTransportProfile;
 import com.helger.peppolid.IParticipantIdentifier;
 import com.helger.xsds.bdxr.smp1.DocumentIdentifierType;
 import com.helger.xsds.bdxr.smp1.ParticipantIdentifierType;
@@ -92,7 +92,9 @@ public class DiscoveryCacheUpdater {
       matchType.getDocTypeID().forEach(dId -> {
         DocumentIdentifierType docType = createDocTypeId(dId);
         final ServiceMetadataType serviceMetadata = serviceMetadataProviderSMP.getServiceMetadata(pIdToQuery,
-            TCConfig.getIdentifierFactory().createDocumentTypeIdentifier(docType.getScheme(), docType.getValue()));
+            TCConfig.getIdentifierFactory().createDocumentTypeIdentifier(docType.getScheme(), docType.getValue()),
+            TCConfig.getIdentifierFactory().createProcessIdentifier ("dummy-procid", "procid-dummy"),
+            ESMPTransportProfile.TRANSPORT_PROFILE_BDXR_AS4.getID ());
 
         serviceMetadataMap.put(new SMPServiceMetadataKey(pId, docType),
             serviceMetadata);

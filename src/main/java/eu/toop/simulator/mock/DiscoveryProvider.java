@@ -15,6 +15,19 @@
  */
 package eu.toop.simulator.mock;
 
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.xml.transform.TransformerException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.Yaml;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.CommonsTreeMap;
 import com.helger.commons.collection.impl.ICommonsSet;
@@ -22,9 +35,11 @@ import com.helger.commons.collection.impl.ICommonsSortedMap;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.peppolid.IDocumentTypeIdentifier;
 import com.helger.peppolid.IParticipantIdentifier;
+import com.helger.peppolid.IProcessIdentifier;
 import com.helger.xsds.bdxr.smp1.DocumentIdentifierType;
 import com.helger.xsds.bdxr.smp1.ParticipantIdentifierType;
 import com.helger.xsds.bdxr.smp1.ServiceMetadataType;
+
 import eu.toop.connector.api.dd.IDDServiceGroupHrefProvider;
 import eu.toop.connector.api.dd.IDDServiceMetadataProvider;
 import eu.toop.connector.api.dsd.DSDDatasetHelper;
@@ -34,17 +49,6 @@ import eu.toop.connector.api.error.ITCErrorHandler;
 import eu.toop.dsd.api.DsdDataConverter;
 import eu.toop.edm.error.EToopErrorCode;
 import eu.toop.edm.jaxb.dcatap.DCatAPDatasetType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.yaml.snakeyaml.Yaml;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.xml.transform.TransformerException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 /**
  * This class plays the role of both a directory and an SMP server. It reads its contents
@@ -119,7 +123,7 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
 
   @Nullable
   @Override
-  public ServiceMetadataType getServiceMetadata(@Nonnull IParticipantIdentifier aParticipantID, @Nonnull IDocumentTypeIdentifier aDocTypeID) {
+  public ServiceMetadataType getServiceMetadata(@Nonnull IParticipantIdentifier aParticipantID, @Nonnull IDocumentTypeIdentifier aDocTypeID, @Nonnull IProcessIdentifier aProcessID, @Nonnull String sTransportProfile) {
     SMPServiceMetadataKey key = new SMPServiceMetadataKey(createParticipantId(aParticipantID), createDocTypeId(aDocTypeID));
 
     if (serviceMetadataMap.containsKey(key)) {
