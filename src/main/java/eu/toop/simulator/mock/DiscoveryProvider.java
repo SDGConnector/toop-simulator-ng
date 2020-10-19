@@ -22,7 +22,9 @@ import com.helger.commons.collection.impl.ICommonsSortedMap;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.peppolid.IDocumentTypeIdentifier;
 import com.helger.peppolid.IParticipantIdentifier;
+import com.helger.peppolid.IProcessIdentifier;
 import com.helger.xsds.bdxr.smp1.DocumentIdentifierType;
+import com.helger.xsds.bdxr.smp1.EndpointType;
 import com.helger.xsds.bdxr.smp1.ParticipantIdentifierType;
 import com.helger.xsds.bdxr.smp1.ServiceMetadataType;
 import eu.toop.connector.api.dd.IDDServiceGroupHrefProvider;
@@ -119,7 +121,7 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
 
   @Nullable
   @Override
-  public ServiceMetadataType getServiceMetadata(@Nonnull IParticipantIdentifier aParticipantID, @Nonnull IDocumentTypeIdentifier aDocTypeID) {
+  public ServiceMetadataType getServiceMetadata(@Nonnull IParticipantIdentifier aParticipantID, @Nonnull IDocumentTypeIdentifier aDocTypeID, @Nonnull IProcessIdentifier aProcessID, @Nonnull String sTransportProfile) {
     SMPServiceMetadataKey key = new SMPServiceMetadataKey(createParticipantId(aParticipantID), createDocTypeId(aDocTypeID));
 
     if (serviceMetadataMap.containsKey(key)) {

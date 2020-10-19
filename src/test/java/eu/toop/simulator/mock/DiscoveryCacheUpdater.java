@@ -19,6 +19,8 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.LinkedHashMap;
 
+import com.helger.peppolid.IDocumentTypeIdentifier;
+import com.helger.peppolid.IProcessIdentifier;
 import oasis.names.specification.ubl.schema.xsd.qualifieddatatypes_23.CountryIdentificationCodeType;
 import org.yaml.snakeyaml.Yaml;
 
@@ -56,10 +58,10 @@ public class DiscoveryCacheUpdater {
   public void updateDSDCache() throws Exception {
 
     String baseDir = "http://directory.acc.exchange.toop.eu";
-    final String sSV = ToopDirClient.callSearchApiWithCountryCode(baseDir,"SV");
-    final String sGQ = ToopDirClient.callSearchApiWithCountryCode(baseDir,"GQ");
-    final String sPF = ToopDirClient.callSearchApiWithCountryCode(baseDir,"PF");
-    final String sGF = ToopDirClient.callSearchApiWithCountryCode(baseDir,"GF");
+    final String sSV = ToopDirClient.callSearchApiWithCountryCode(baseDir, "SV");
+    final String sGQ = ToopDirClient.callSearchApiWithCountryCode(baseDir, "GQ");
+    final String sPF = ToopDirClient.callSearchApiWithCountryCode(baseDir, "PF");
+    final String sGF = ToopDirClient.callSearchApiWithCountryCode(baseDir, "GF");
     final ResultListType results = PDSearchAPIReader.resultListV1().read(sSV);
     results.getMatch().addAll(PDSearchAPIReader.resultListV1().read(sGQ).getMatch());
     results.getMatch().addAll(PDSearchAPIReader.resultListV1().read(sPF).getMatch());
@@ -91,8 +93,11 @@ public class DiscoveryCacheUpdater {
 
       matchType.getDocTypeID().forEach(dId -> {
         DocumentIdentifierType docType = createDocTypeId(dId);
+        final IDocumentTypeIdentifier docTypeID = TCConfig.getIdentifierFactory().createDocumentTypeIdentifier(docType.getScheme(), docType.getValue());
         final ServiceMetadataType serviceMetadata = serviceMetadataProviderSMP.getServiceMetadata(pIdToQuery,
-            TCConfig.getIdentifierFactory().createDocumentTypeIdentifier(docType.getScheme(), docType.getValue()));
+            docTypeID,
+            null,
+            null);
 
         serviceMetadataMap.put(new SMPServiceMetadataKey(pId, docType),
             serviceMetadata);
