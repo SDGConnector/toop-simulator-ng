@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.LinkedHashMap;
 
+import com.helger.peppolid.IDocumentTypeIdentifier;
 import org.yaml.snakeyaml.Yaml;
 
 import com.helger.commons.collection.impl.ICommonsSortedMap;
