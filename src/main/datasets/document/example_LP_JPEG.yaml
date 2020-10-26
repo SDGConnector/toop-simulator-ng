@@ -21,7 +21,7 @@ repositoryItemRef:
   title: Example JPEG
 creator:
   id: 1234
-  idScheme: VAT
+  idScheme: VATRegistration
   name: Elonian Authority
   postName: ElonianPostName
 qualifiedRelation:

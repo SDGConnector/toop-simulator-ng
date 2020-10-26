@@ -1,6 +1,10 @@
 ? !!com.helger.xsds.bdxr.smp1.ParticipantIdentifierType {scheme: iso6523-actorid-upis,
   value: '9999:elonia'}
-: {? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0'
+: {? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::CriminalParticipationDocument::095c30f1-f629-4cea-b6da-668ef3efc29a::UNSTRUCTURED::toop-edm:v2.0'
+  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3ACriminalParticipationDocument%3A%3A095c30f1-f629-4cea-b6da-668ef3efc29a%3A%3AUNSTRUCTURED%3A%3Atoop-edm%3Av2.0',
+  ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::CriminalParticipationDocument::79d6a2ef-8342-42e6-94bc-350a53297792::UNSTRUCTURED::toop-edm:v2.0'
+  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3ACriminalParticipationDocument%3A%3A79d6a2ef-8342-42e6-94bc-350a53297792%3A%3AUNSTRUCTURED%3A%3Atoop-edm%3Av2.0',
+  ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0'
   : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3AFinancialRatioDocument%3A%3AFINANCIAL_RECORD_TYPE%3A%3AUNSTRUCTURED%3A%3Atoop-edm%3Av2.0',
   ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia/services/toop-doctypeid-qns::RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0'
   : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3ARegisteredOrganization%3A%3AREGISTERED_ORGANIZATION_TYPE%3A%3ACONCEPT%23%23CCCEV%3A%3Atoop-edm%3Av2.0',
@@ -16,7 +20,11 @@
   : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia/services/toop-doctypeid-qns%3A%3Aurn%3Aeu%3Atoop%3Ans%3Adataexchange-1p40%3A%3ARequest%23%23urn%3Aeu.toop.request.shipcertificate%3A%3A1.40'}
 ? !!com.helger.xsds.bdxr.smp1.ParticipantIdentifierType {scheme: iso6523-actorid-upis,
   value: '9999:elonia-dev'}
-: {? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia-dev/services/toop-doctypeid-qns::FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0'
+: {? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia-dev/services/toop-doctypeid-qns::CriminalParticipationDocument::095c30f1-f629-4cea-b6da-668ef3efc29a::UNSTRUCTURED::toop-edm:v2.0'
+  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia-dev/services/toop-doctypeid-qns%3A%3ACriminalParticipationDocument%3A%3A095c30f1-f629-4cea-b6da-668ef3efc29a%3A%3AUNSTRUCTURED%3A%3Atoop-edm%3Av2.0',
+  ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia-dev/services/toop-doctypeid-qns::CriminalParticipationDocument::79d6a2ef-8342-42e6-94bc-350a53297792::UNSTRUCTURED::toop-edm:v2.0'
+  : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia-dev/services/toop-doctypeid-qns%3A%3ACriminalParticipationDocument%3A%3A79d6a2ef-8342-42e6-94bc-350a53297792%3A%3AUNSTRUCTURED%3A%3Atoop-edm%3Av2.0',
+  ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia-dev/services/toop-doctypeid-qns::FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0'
   : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia-dev/services/toop-doctypeid-qns%3A%3AFinancialRatioDocument%3A%3AFINANCIAL_RECORD_TYPE%3A%3AUNSTRUCTURED%3A%3Atoop-edm%3Av2.0',
   ? 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis::9999:elonia-dev/services/toop-doctypeid-qns::RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0'
   : 'http://smp.acc.exchange.toop.eu/iso6523-actorid-upis%3A%3A9999%3Aelonia-dev/services/toop-doctypeid-qns%3A%3ARegisteredOrganization%3A%3AREGISTERED_ORGANIZATION_TYPE%3A%3ACONCEPT%23%23CCCEV%3A%3Atoop-edm%3Av2.0',

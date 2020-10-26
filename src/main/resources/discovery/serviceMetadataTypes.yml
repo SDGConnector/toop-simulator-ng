@@ -77,6 +77,32 @@
             technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
+  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::095c30f1-f629-4cea-b6da-668ef3efc29a::UNSTRUCTURED::toop-edm:v2.0'}
+  participantIdentifierType: *id001
+: !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
+  redirect: null
+  serviceInformation:
+    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::095c30f1-f629-4cea-b6da-668ef3efc29a::UNSTRUCTURED::toop-edm:v2.0'}
+    extension: []
+    participantIdentifier: {scheme: iso6523-actorid-upis, value: '9999:elonia'}
+    processList:
+      process:
+      - extension: []
+        processIdentifier: {scheme: toop-procid-agreement, value: 'urn:eu.toop.process.documentquery'}
+        serviceEndpointList:
+          endpoint:
+          - certificate: !!binary |-
+              MIIEvTCCAqWgAwIBAgICEBEwDQYJKoZIhvcNAQELBQAwVzELMAkGA1UEBhMCRVUxDTALBgNVBAoMBFRPT1AxDTALBgNVBAsMBENDVEYxKjAoBgNVBAMMIVRPT1AgUElMT1RTIFRFU1QgQUNDRVNTIFBPSU5UUyBDQTAeFw0xOTA0MjQxODMyMzBaFw0yMTA0MjMxODMyMzBaMEwxCzAJBgNVBAYTAkVVMQ0wCwYDVQQKDARUT09QMQ0wCwYDVQQLDARDQ1RGMR8wHQYDVQQDDBZnYXRld2F5LmVsb25pYS50b29wLmV1MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzBbWuqRILiMKRxJkHxYiZFYw1pRGplx4HtlTY1+RxjHT/mTQDv1cQ4PZ8RbPSLUl3dHzeddMBURX8ssGIz+UvCaA8bChCBvReFVtEWU0CZTb+eWqyYzgByTXdu5fEFsDiw55SHixo/c0zvqLMU9Qcatroa9wy4IUV+YCSiRudjSdNqKh3uoAixKSgPf7XRA6GLXQBxb/QJZQ5gIMRAN5Ql3YwsAai0ZQtrTHJ07sDq6061uYL/JU4WOuXRDomZsIDH0lUakChdHf0UdPPWT6bDauq8T4d499oo33NqRyPneuijvEwZrV/cEgpWSFWKETRFxqJdCZMFpuONJ4V3aZWwIDAQABo4GdMIGaMAkGA1UdEwQCMAAwEQYJYIZIAYb4QgEBBAQDAgQwMCoGCWCGSAGG+EIBDQQdFhtUT09QIFBpbG90IFRlc3QgQ2VydGlmaWNhdGUwDgYDVR0PAQH/BAQDAgXgMB0GA1UdDgQWBBRp1HcAq76F4SH3JzmS8Nzenk1sYzAfBgNVHSMEGDAWgBQVzruhPMDANGRod8/RFMMvwVGnwTANBgkqhkiG9w0BAQsFAAOCAgEARQPqia+/iULw07a9P59WWxmGqX+8OWJdN4cQNODNW3xL6z7RQkBGvQNPFnyTLAy9wjr8/ZmLxYoD754UTXQOXqHl+6pPGZarVpyCpP3CIAxkDUkehrYznmdYHgtcNHvX9L2Nx4s10HWidR+RLdzbH74Re2XoB7EFs0SKdPg5KAhEU5yiKUTrg/82ltyJuagnBjrS7nJguXlGmLPXc4n9WE38MS2tnDs/1hSpiUkM60G0Ut773hFHeT4ld3O3gU1/g6sra3tsy+cpBIe41mdNBiCVlwA7TwD1Tto9sq7DUXjsSzUoRylydEED1ulRN54aCKflDV9HMZpn71Ylv2z7frqb30NKHYMCCKqbNLcJNzvgWA0kU6EuCqPlGJgrkJrgPKXLYiWXh6Z62d0s/f6k+uJGOMPsh7yl+gWSsRHnw1zw9TNlz5KGTvcalkhOdDI+8isjzGMW6e6Skh+XsJxOlgNRNVXxE3Ar0448gOuKbw3Skh28Ddr2amd6uWEg9hWWUVb2GtQBT+2OxFi8Lk96GwGCgVDG2S7VPfKHiGPapDw6K3DVnrsRnSuzf8FnYT8tMNoLVGmvspkf4RO3eAx5HF0mx3i78whACBcP/4HmAtAStK1hh1fXe0niGuJP+6A4leAUItfSWGM6q3o2lIfSEBz1sW2Kb8zULWMmsskUITk=
+            endpointURI: http://gw-elonia.acc.exchange.toop.eu/holodeckb2b/as4
+            extension: []
+            minimumAuthenticationLevel: null
+            serviceActivationDate: null
+            serviceDescription: Elonia AP
+            serviceExpirationDate: null
+            technicalContactUrl: jerouris@unipi.gr
+            technicalInformationUrl: null
+            transportProfile: bdxr-transport-ebms3-as4-v1p0
+? !!eu.toop.simulator.mock.SMPServiceMetadataKey
   documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.crewcertificate::1.40'}
   participantIdentifierType: *id001
 : !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
@@ -155,6 +181,32 @@
             technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
+  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::79d6a2ef-8342-42e6-94bc-350a53297792::UNSTRUCTURED::toop-edm:v2.0'}
+  participantIdentifierType: *id001
+: !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
+  redirect: null
+  serviceInformation:
+    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::79d6a2ef-8342-42e6-94bc-350a53297792::UNSTRUCTURED::toop-edm:v2.0'}
+    extension: []
+    participantIdentifier: {scheme: iso6523-actorid-upis, value: '9999:elonia'}
+    processList:
+      process:
+      - extension: []
+        processIdentifier: {scheme: toop-procid-agreement, value: 'urn:eu.toop.process.documentquery'}
+        serviceEndpointList:
+          endpoint:
+          - certificate: !!binary |-
+              MIIEvTCCAqWgAwIBAgICEBEwDQYJKoZIhvcNAQELBQAwVzELMAkGA1UEBhMCRVUxDTALBgNVBAoMBFRPT1AxDTALBgNVBAsMBENDVEYxKjAoBgNVBAMMIVRPT1AgUElMT1RTIFRFU1QgQUNDRVNTIFBPSU5UUyBDQTAeFw0xOTA0MjQxODMyMzBaFw0yMTA0MjMxODMyMzBaMEwxCzAJBgNVBAYTAkVVMQ0wCwYDVQQKDARUT09QMQ0wCwYDVQQLDARDQ1RGMR8wHQYDVQQDDBZnYXRld2F5LmVsb25pYS50b29wLmV1MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzBbWuqRILiMKRxJkHxYiZFYw1pRGplx4HtlTY1+RxjHT/mTQDv1cQ4PZ8RbPSLUl3dHzeddMBURX8ssGIz+UvCaA8bChCBvReFVtEWU0CZTb+eWqyYzgByTXdu5fEFsDiw55SHixo/c0zvqLMU9Qcatroa9wy4IUV+YCSiRudjSdNqKh3uoAixKSgPf7XRA6GLXQBxb/QJZQ5gIMRAN5Ql3YwsAai0ZQtrTHJ07sDq6061uYL/JU4WOuXRDomZsIDH0lUakChdHf0UdPPWT6bDauq8T4d499oo33NqRyPneuijvEwZrV/cEgpWSFWKETRFxqJdCZMFpuONJ4V3aZWwIDAQABo4GdMIGaMAkGA1UdEwQCMAAwEQYJYIZIAYb4QgEBBAQDAgQwMCoGCWCGSAGG+EIBDQQdFhtUT09QIFBpbG90IFRlc3QgQ2VydGlmaWNhdGUwDgYDVR0PAQH/BAQDAgXgMB0GA1UdDgQWBBRp1HcAq76F4SH3JzmS8Nzenk1sYzAfBgNVHSMEGDAWgBQVzruhPMDANGRod8/RFMMvwVGnwTANBgkqhkiG9w0BAQsFAAOCAgEARQPqia+/iULw07a9P59WWxmGqX+8OWJdN4cQNODNW3xL6z7RQkBGvQNPFnyTLAy9wjr8/ZmLxYoD754UTXQOXqHl+6pPGZarVpyCpP3CIAxkDUkehrYznmdYHgtcNHvX9L2Nx4s10HWidR+RLdzbH74Re2XoB7EFs0SKdPg5KAhEU5yiKUTrg/82ltyJuagnBjrS7nJguXlGmLPXc4n9WE38MS2tnDs/1hSpiUkM60G0Ut773hFHeT4ld3O3gU1/g6sra3tsy+cpBIe41mdNBiCVlwA7TwD1Tto9sq7DUXjsSzUoRylydEED1ulRN54aCKflDV9HMZpn71Ylv2z7frqb30NKHYMCCKqbNLcJNzvgWA0kU6EuCqPlGJgrkJrgPKXLYiWXh6Z62d0s/f6k+uJGOMPsh7yl+gWSsRHnw1zw9TNlz5KGTvcalkhOdDI+8isjzGMW6e6Skh+XsJxOlgNRNVXxE3Ar0448gOuKbw3Skh28Ddr2amd6uWEg9hWWUVb2GtQBT+2OxFi8Lk96GwGCgVDG2S7VPfKHiGPapDw6K3DVnrsRnSuzf8FnYT8tMNoLVGmvspkf4RO3eAx5HF0mx3i78whACBcP/4HmAtAStK1hh1fXe0niGuJP+6A4leAUItfSWGM6q3o2lIfSEBz1sW2Kb8zULWMmsskUITk=
+            endpointURI: http://gw-elonia.acc.exchange.toop.eu/holodeckb2b/as4
+            extension: []
+            minimumAuthenticationLevel: null
+            serviceActivationDate: null
+            serviceDescription: Elonia AP
+            serviceExpirationDate: null
+            technicalContactUrl: jerouris@unipi.gr
+            technicalInformationUrl: null
+            transportProfile: bdxr-transport-ebms3-as4-v1p0
+? !!eu.toop.simulator.mock.SMPServiceMetadataKey
   documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.crewcertificate-list::1.40'}
   participantIdentifierType: *id001
 : !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
@@ -181,8 +233,34 @@
             technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
-  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0'}
+  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::79d6a2ef-8342-42e6-94bc-350a53297792::UNSTRUCTURED::toop-edm:v2.0'}
   participantIdentifierType: &id002 {scheme: iso6523-actorid-upis, value: '9999:elonia-dev'}
+: !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
+  redirect: null
+  serviceInformation:
+    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::79d6a2ef-8342-42e6-94bc-350a53297792::UNSTRUCTURED::toop-edm:v2.0'}
+    extension: []
+    participantIdentifier: {scheme: iso6523-actorid-upis, value: '9999:elonia-dev'}
+    processList:
+      process:
+      - extension: []
+        processIdentifier: {scheme: toop-procid-agreement, value: 'urn:eu.toop.process.documentquery'}
+        serviceEndpointList:
+          endpoint:
+          - certificate: !!binary |-
+              MIIEvTCCAqWgAwIBAgICEBEwDQYJKoZIhvcNAQELBQAwVzELMAkGA1UEBhMCRVUxDTALBgNVBAoMBFRPT1AxDTALBgNVBAsMBENDVEYxKjAoBgNVBAMMIVRPT1AgUElMT1RTIFRFU1QgQUNDRVNTIFBPSU5UUyBDQTAeFw0xOTA0MjQxODMyMzBaFw0yMTA0MjMxODMyMzBaMEwxCzAJBgNVBAYTAkVVMQ0wCwYDVQQKDARUT09QMQ0wCwYDVQQLDARDQ1RGMR8wHQYDVQQDDBZnYXRld2F5LmVsb25pYS50b29wLmV1MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzBbWuqRILiMKRxJkHxYiZFYw1pRGplx4HtlTY1+RxjHT/mTQDv1cQ4PZ8RbPSLUl3dHzeddMBURX8ssGIz+UvCaA8bChCBvReFVtEWU0CZTb+eWqyYzgByTXdu5fEFsDiw55SHixo/c0zvqLMU9Qcatroa9wy4IUV+YCSiRudjSdNqKh3uoAixKSgPf7XRA6GLXQBxb/QJZQ5gIMRAN5Ql3YwsAai0ZQtrTHJ07sDq6061uYL/JU4WOuXRDomZsIDH0lUakChdHf0UdPPWT6bDauq8T4d499oo33NqRyPneuijvEwZrV/cEgpWSFWKETRFxqJdCZMFpuONJ4V3aZWwIDAQABo4GdMIGaMAkGA1UdEwQCMAAwEQYJYIZIAYb4QgEBBAQDAgQwMCoGCWCGSAGG+EIBDQQdFhtUT09QIFBpbG90IFRlc3QgQ2VydGlmaWNhdGUwDgYDVR0PAQH/BAQDAgXgMB0GA1UdDgQWBBRp1HcAq76F4SH3JzmS8Nzenk1sYzAfBgNVHSMEGDAWgBQVzruhPMDANGRod8/RFMMvwVGnwTANBgkqhkiG9w0BAQsFAAOCAgEARQPqia+/iULw07a9P59WWxmGqX+8OWJdN4cQNODNW3xL6z7RQkBGvQNPFnyTLAy9wjr8/ZmLxYoD754UTXQOXqHl+6pPGZarVpyCpP3CIAxkDUkehrYznmdYHgtcNHvX9L2Nx4s10HWidR+RLdzbH74Re2XoB7EFs0SKdPg5KAhEU5yiKUTrg/82ltyJuagnBjrS7nJguXlGmLPXc4n9WE38MS2tnDs/1hSpiUkM60G0Ut773hFHeT4ld3O3gU1/g6sra3tsy+cpBIe41mdNBiCVlwA7TwD1Tto9sq7DUXjsSzUoRylydEED1ulRN54aCKflDV9HMZpn71Ylv2z7frqb30NKHYMCCKqbNLcJNzvgWA0kU6EuCqPlGJgrkJrgPKXLYiWXh6Z62d0s/f6k+uJGOMPsh7yl+gWSsRHnw1zw9TNlz5KGTvcalkhOdDI+8isjzGMW6e6Skh+XsJxOlgNRNVXxE3Ar0448gOuKbw3Skh28Ddr2amd6uWEg9hWWUVb2GtQBT+2OxFi8Lk96GwGCgVDG2S7VPfKHiGPapDw6K3DVnrsRnSuzf8FnYT8tMNoLVGmvspkf4RO3eAx5HF0mx3i78whACBcP/4HmAtAStK1hh1fXe0niGuJP+6A4leAUItfSWGM6q3o2lIfSEBz1sW2Kb8zULWMmsskUITk=
+            endpointURI: http://gw-elonia.dev.exchange.toop.eu/holodeckb2b/as4
+            extension: []
+            minimumAuthenticationLevel: null
+            serviceActivationDate: null
+            serviceDescription: Elonia Dev AP
+            serviceExpirationDate: null
+            technicalContactUrl: jerouris@unipi.gr
+            technicalInformationUrl: null
+            transportProfile: bdxr-transport-ebms3-as4-v1p0
+? !!eu.toop.simulator.mock.SMPServiceMetadataKey
+  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0'}
+  participantIdentifierType: *id002
 : !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
   redirect: null
   serviceInformation:
@@ -251,12 +329,12 @@
               MIIEvTCCAqWgAwIBAgICEBEwDQYJKoZIhvcNAQELBQAwVzELMAkGA1UEBhMCRVUxDTALBgNVBAoMBFRPT1AxDTALBgNVBAsMBENDVEYxKjAoBgNVBAMMIVRPT1AgUElMT1RTIFRFU1QgQUNDRVNTIFBPSU5UUyBDQTAeFw0xOTA0MjQxODMyMzBaFw0yMTA0MjMxODMyMzBaMEwxCzAJBgNVBAYTAkVVMQ0wCwYDVQQKDARUT09QMQ0wCwYDVQQLDARDQ1RGMR8wHQYDVQQDDBZnYXRld2F5LmVsb25pYS50b29wLmV1MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzBbWuqRILiMKRxJkHxYiZFYw1pRGplx4HtlTY1+RxjHT/mTQDv1cQ4PZ8RbPSLUl3dHzeddMBURX8ssGIz+UvCaA8bChCBvReFVtEWU0CZTb+eWqyYzgByTXdu5fEFsDiw55SHixo/c0zvqLMU9Qcatroa9wy4IUV+YCSiRudjSdNqKh3uoAixKSgPf7XRA6GLXQBxb/QJZQ5gIMRAN5Ql3YwsAai0ZQtrTHJ07sDq6061uYL/JU4WOuXRDomZsIDH0lUakChdHf0UdPPWT6bDauq8T4d499oo33NqRyPneuijvEwZrV/cEgpWSFWKETRFxqJdCZMFpuONJ4V3aZWwIDAQABo4GdMIGaMAkGA1UdEwQCMAAwEQYJYIZIAYb4QgEBBAQDAgQwMCoGCWCGSAGG+EIBDQQdFhtUT09QIFBpbG90IFRlc3QgQ2VydGlmaWNhdGUwDgYDVR0PAQH/BAQDAgXgMB0GA1UdDgQWBBRp1HcAq76F4SH3JzmS8Nzenk1sYzAfBgNVHSMEGDAWgBQVzruhPMDANGRod8/RFMMvwVGnwTANBgkqhkiG9w0BAQsFAAOCAgEARQPqia+/iULw07a9P59WWxmGqX+8OWJdN4cQNODNW3xL6z7RQkBGvQNPFnyTLAy9wjr8/ZmLxYoD754UTXQOXqHl+6pPGZarVpyCpP3CIAxkDUkehrYznmdYHgtcNHvX9L2Nx4s10HWidR+RLdzbH74Re2XoB7EFs0SKdPg5KAhEU5yiKUTrg/82ltyJuagnBjrS7nJguXlGmLPXc4n9WE38MS2tnDs/1hSpiUkM60G0Ut773hFHeT4ld3O3gU1/g6sra3tsy+cpBIe41mdNBiCVlwA7TwD1Tto9sq7DUXjsSzUoRylydEED1ulRN54aCKflDV9HMZpn71Ylv2z7frqb30NKHYMCCKqbNLcJNzvgWA0kU6EuCqPlGJgrkJrgPKXLYiWXh6Z62d0s/f6k+uJGOMPsh7yl+gWSsRHnw1zw9TNlz5KGTvcalkhOdDI+8isjzGMW6e6Skh+XsJxOlgNRNVXxE3Ar0448gOuKbw3Skh28Ddr2amd6uWEg9hWWUVb2GtQBT+2OxFi8Lk96GwGCgVDG2S7VPfKHiGPapDw6K3DVnrsRnSuzf8FnYT8tMNoLVGmvspkf4RO3eAx5HF0mx3i78whACBcP/4HmAtAStK1hh1fXe0niGuJP+6A4leAUItfSWGM6q3o2lIfSEBz1sW2Kb8zULWMmsskUITk=
             endpointURI: http://gw-elonia.dev.exchange.toop.eu/holodeckb2b/as4
             extension: []
-            minimumAuthenticationLevel: ''
+            minimumAuthenticationLevel: null
             serviceActivationDate: null
             serviceDescription: Elonia test AP
             serviceExpirationDate: null
             technicalContactUrl: jerouris@unipi.gr
-            technicalInformationUrl: ''
+            technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
   documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.crewcertificate-list::1.40'}
@@ -308,6 +386,32 @@
             serviceDescription: Test AP
             serviceExpirationDate: null
             technicalContactUrl: philip@helger.com
+            technicalInformationUrl: null
+            transportProfile: bdxr-transport-ebms3-as4-v1p0
+? !!eu.toop.simulator.mock.SMPServiceMetadataKey
+  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::095c30f1-f629-4cea-b6da-668ef3efc29a::UNSTRUCTURED::toop-edm:v2.0'}
+  participantIdentifierType: *id002
+: !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
+  redirect: null
+  serviceInformation:
+    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::095c30f1-f629-4cea-b6da-668ef3efc29a::UNSTRUCTURED::toop-edm:v2.0'}
+    extension: []
+    participantIdentifier: {scheme: iso6523-actorid-upis, value: '9999:elonia-dev'}
+    processList:
+      process:
+      - extension: []
+        processIdentifier: {scheme: toop-procid-agreement, value: 'urn:eu.toop.process.documentquery'}
+        serviceEndpointList:
+          endpoint:
+          - certificate: !!binary |-
+              MIIEvTCCAqWgAwIBAgICEBEwDQYJKoZIhvcNAQELBQAwVzELMAkGA1UEBhMCRVUxDTALBgNVBAoMBFRPT1AxDTALBgNVBAsMBENDVEYxKjAoBgNVBAMMIVRPT1AgUElMT1RTIFRFU1QgQUNDRVNTIFBPSU5UUyBDQTAeFw0xOTA0MjQxODMyMzBaFw0yMTA0MjMxODMyMzBaMEwxCzAJBgNVBAYTAkVVMQ0wCwYDVQQKDARUT09QMQ0wCwYDVQQLDARDQ1RGMR8wHQYDVQQDDBZnYXRld2F5LmVsb25pYS50b29wLmV1MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzBbWuqRILiMKRxJkHxYiZFYw1pRGplx4HtlTY1+RxjHT/mTQDv1cQ4PZ8RbPSLUl3dHzeddMBURX8ssGIz+UvCaA8bChCBvReFVtEWU0CZTb+eWqyYzgByTXdu5fEFsDiw55SHixo/c0zvqLMU9Qcatroa9wy4IUV+YCSiRudjSdNqKh3uoAixKSgPf7XRA6GLXQBxb/QJZQ5gIMRAN5Ql3YwsAai0ZQtrTHJ07sDq6061uYL/JU4WOuXRDomZsIDH0lUakChdHf0UdPPWT6bDauq8T4d499oo33NqRyPneuijvEwZrV/cEgpWSFWKETRFxqJdCZMFpuONJ4V3aZWwIDAQABo4GdMIGaMAkGA1UdEwQCMAAwEQYJYIZIAYb4QgEBBAQDAgQwMCoGCWCGSAGG+EIBDQQdFhtUT09QIFBpbG90IFRlc3QgQ2VydGlmaWNhdGUwDgYDVR0PAQH/BAQDAgXgMB0GA1UdDgQWBBRp1HcAq76F4SH3JzmS8Nzenk1sYzAfBgNVHSMEGDAWgBQVzruhPMDANGRod8/RFMMvwVGnwTANBgkqhkiG9w0BAQsFAAOCAgEARQPqia+/iULw07a9P59WWxmGqX+8OWJdN4cQNODNW3xL6z7RQkBGvQNPFnyTLAy9wjr8/ZmLxYoD754UTXQOXqHl+6pPGZarVpyCpP3CIAxkDUkehrYznmdYHgtcNHvX9L2Nx4s10HWidR+RLdzbH74Re2XoB7EFs0SKdPg5KAhEU5yiKUTrg/82ltyJuagnBjrS7nJguXlGmLPXc4n9WE38MS2tnDs/1hSpiUkM60G0Ut773hFHeT4ld3O3gU1/g6sra3tsy+cpBIe41mdNBiCVlwA7TwD1Tto9sq7DUXjsSzUoRylydEED1ulRN54aCKflDV9HMZpn71Ylv2z7frqb30NKHYMCCKqbNLcJNzvgWA0kU6EuCqPlGJgrkJrgPKXLYiWXh6Z62d0s/f6k+uJGOMPsh7yl+gWSsRHnw1zw9TNlz5KGTvcalkhOdDI+8isjzGMW6e6Skh+XsJxOlgNRNVXxE3Ar0448gOuKbw3Skh28Ddr2amd6uWEg9hWWUVb2GtQBT+2OxFi8Lk96GwGCgVDG2S7VPfKHiGPapDw6K3DVnrsRnSuzf8FnYT8tMNoLVGmvspkf4RO3eAx5HF0mx3i78whACBcP/4HmAtAStK1hh1fXe0niGuJP+6A4leAUItfSWGM6q3o2lIfSEBz1sW2Kb8zULWMmsskUITk=
+            endpointURI: http://gw-elonia.dev.exchange.toop.eu/holodeckb2b/as4
+            extension: []
+            minimumAuthenticationLevel: null
+            serviceActivationDate: null
+            serviceDescription: Elonia Dev AP
+            serviceExpirationDate: null
+            technicalContactUrl: jerouris@unipi.gr
             technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
@@ -459,12 +563,12 @@
               MIIEwDCCAqigAwIBAgICEBIwDQYJKoZIhvcNAQELBQAwVzELMAkGA1UEBhMCRVUxDTALBgNVBAoMBFRPT1AxDTALBgNVBAsMBENDVEYxKjAoBgNVBAMMIVRPT1AgUElMT1RTIFRFU1QgQUNDRVNTIFBPSU5UUyBDQTAeFw0xOTA0MjQxODM1MDVaFw0yMTA0MjMxODM1MDVaME8xCzAJBgNVBAYTAkVVMQ0wCwYDVQQKDARUT09QMQ0wCwYDVQQLDARDQ1RGMSIwIAYDVQQDDBlnYXRld2F5LmZyZWVkb25pYS50b29wLmV1MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAz7uD1TrmwOdl+dJQ7nBjDWZtmu+ulG7vWEdP7jBCSDT0bV37hn8z45LIhUaLLvS5MHIyGxf7fvhXZOkPb8QXiU1C7Puo5P4i0YdMBS8IuTZmTPMTIO36+Ek5oYlgZ2ZB+LCOE0N1Pi0ko1ERM5mpkYA0+09F8HrE+lI6Ezob37A1n+kDpz5n/zsTs64vK+zKm/rjuB6Q6TUN3AhLr+3Me/j3o49K9NjMiUh2H6rWrSo9nLppXGMO1oMrqSv5SmkWdy1JYj0oBCjkXQSQWN0LnMcAUBrUr4xSXLOuXx6kY+24JbKGgDu6nFKbtPPZtA8/emb48FbJc0nf+PchonYitQIDAQABo4GdMIGaMAkGA1UdEwQCMAAwEQYJYIZIAYb4QgEBBAQDAgQwMCoGCWCGSAGG+EIBDQQdFhtUT09QIFBpbG90IFRlc3QgQ2VydGlmaWNhdGUwDgYDVR0PAQH/BAQDAgXgMB0GA1UdDgQWBBRz4VScxtiXwurCYBlUc1yjCq8A4jAfBgNVHSMEGDAWgBQVzruhPMDANGRod8/RFMMvwVGnwTANBgkqhkiG9w0BAQsFAAOCAgEAvwN2MvamBWubmWg+RC7QeGcLbjeNXiaLX3/8abGJZyI6aqMfQANkACV6MNhoR9jPdrbgFys8qmZnA0LaIyUiXuoN+anDyi+wF7zQiqB0Mnq/f51fl+qL8wq2T8Hzl5eHJ4IEzvxySEyrSl0sw+QiEbzbWLnFMh9lsxhZXxsEeyr+idGXSaQbF4dICsic1LKBxDASbxztdis8zuQs/YpiPQMMawFDkq1gYldcG3WUXmC8bPo7OpW9qRqlTYRPLkSud4qIYy4F+bSMWvqTPMs7TKftDHk+9e8awMf/CkwCsqLKyyhgws8EHKc1soq6Aw4lgvsJGe4nNkxzcUVck4R4SpQYLpFkr0XDcK+0qHYgev0pJ3kzKe/m3O9S+57xd6CCSHEX2E7QrEm9XVYWY4MBcQzDKR1P999lwwKGFu7sSswSW6yjXkllJcyU3o5ghDDZhM3IoMeug7keWP3f31rTkHKElGNaVn+Ibhk0QO4QNtxnSuOtNkXc7AwTT5E9AsjcVUlupqUhySkBA51aTyNVTn5inHxPdPqT4ZzkB2wNcWcY+jZoJDxuQdefWqN4uFWlmI38DNpgM6pfNlI5GoSQd1RNOgBeVLbtCWTTPZrvLx8EZzMCcsAMehYOsW9y8o+kucS1ssJ+Lhw6argfXInjAqMNHgrWIaRW4BlwegMAEao=
             endpointURI: http://tc-freedonia.dev.exchange.toop.eu/phase4
             extension: []
-            minimumAuthenticationLevel: ''
+            minimumAuthenticationLevel: null
             serviceActivationDate: null
             serviceDescription: Test AP
             serviceExpirationDate: null
             technicalContactUrl: philip@helger.com
-            technicalInformationUrl: ''
+            technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
       - extension: []
         processIdentifier: {scheme: toop-procid-agreement, value: 'urn:eu.toop.process.documentquery'}
@@ -474,12 +578,12 @@
               MIIEwDCCAqigAwIBAgICEBIwDQYJKoZIhvcNAQELBQAwVzELMAkGA1UEBhMCRVUxDTALBgNVBAoMBFRPT1AxDTALBgNVBAsMBENDVEYxKjAoBgNVBAMMIVRPT1AgUElMT1RTIFRFU1QgQUNDRVNTIFBPSU5UUyBDQTAeFw0xOTA0MjQxODM1MDVaFw0yMTA0MjMxODM1MDVaME8xCzAJBgNVBAYTAkVVMQ0wCwYDVQQKDARUT09QMQ0wCwYDVQQLDARDQ1RGMSIwIAYDVQQDDBlnYXRld2F5LmZyZWVkb25pYS50b29wLmV1MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAz7uD1TrmwOdl+dJQ7nBjDWZtmu+ulG7vWEdP7jBCSDT0bV37hn8z45LIhUaLLvS5MHIyGxf7fvhXZOkPb8QXiU1C7Puo5P4i0YdMBS8IuTZmTPMTIO36+Ek5oYlgZ2ZB+LCOE0N1Pi0ko1ERM5mpkYA0+09F8HrE+lI6Ezob37A1n+kDpz5n/zsTs64vK+zKm/rjuB6Q6TUN3AhLr+3Me/j3o49K9NjMiUh2H6rWrSo9nLppXGMO1oMrqSv5SmkWdy1JYj0oBCjkXQSQWN0LnMcAUBrUr4xSXLOuXx6kY+24JbKGgDu6nFKbtPPZtA8/emb48FbJc0nf+PchonYitQIDAQABo4GdMIGaMAkGA1UdEwQCMAAwEQYJYIZIAYb4QgEBBAQDAgQwMCoGCWCGSAGG+EIBDQQdFhtUT09QIFBpbG90IFRlc3QgQ2VydGlmaWNhdGUwDgYDVR0PAQH/BAQDAgXgMB0GA1UdDgQWBBRz4VScxtiXwurCYBlUc1yjCq8A4jAfBgNVHSMEGDAWgBQVzruhPMDANGRod8/RFMMvwVGnwTANBgkqhkiG9w0BAQsFAAOCAgEAvwN2MvamBWubmWg+RC7QeGcLbjeNXiaLX3/8abGJZyI6aqMfQANkACV6MNhoR9jPdrbgFys8qmZnA0LaIyUiXuoN+anDyi+wF7zQiqB0Mnq/f51fl+qL8wq2T8Hzl5eHJ4IEzvxySEyrSl0sw+QiEbzbWLnFMh9lsxhZXxsEeyr+idGXSaQbF4dICsic1LKBxDASbxztdis8zuQs/YpiPQMMawFDkq1gYldcG3WUXmC8bPo7OpW9qRqlTYRPLkSud4qIYy4F+bSMWvqTPMs7TKftDHk+9e8awMf/CkwCsqLKyyhgws8EHKc1soq6Aw4lgvsJGe4nNkxzcUVck4R4SpQYLpFkr0XDcK+0qHYgev0pJ3kzKe/m3O9S+57xd6CCSHEX2E7QrEm9XVYWY4MBcQzDKR1P999lwwKGFu7sSswSW6yjXkllJcyU3o5ghDDZhM3IoMeug7keWP3f31rTkHKElGNaVn+Ibhk0QO4QNtxnSuOtNkXc7AwTT5E9AsjcVUlupqUhySkBA51aTyNVTn5inHxPdPqT4ZzkB2wNcWcY+jZoJDxuQdefWqN4uFWlmI38DNpgM6pfNlI5GoSQd1RNOgBeVLbtCWTTPZrvLx8EZzMCcsAMehYOsW9y8o+kucS1ssJ+Lhw6argfXInjAqMNHgrWIaRW4BlwegMAEao=
             endpointURI: http://tc-freedonia.dev.exchange.toop.eu/phase4
             extension: []
-            minimumAuthenticationLevel: ''
+            minimumAuthenticationLevel: null
             serviceActivationDate: null
             serviceDescription: Test AP
             serviceExpirationDate: null
             technicalContactUrl: philip@helger.com
-            technicalInformationUrl: ''
+            technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
   documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.shipcertificate-list::1.40'}
