@@ -36,3 +36,6 @@ data
 config
 .tchistory
 release.properties
+
+# ignore generated datasets
+/datasets
