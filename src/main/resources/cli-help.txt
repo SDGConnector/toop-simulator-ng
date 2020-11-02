@@ -8,11 +8,11 @@ Commands:
                        -s: Optional, 'sender id' (e.g 9999:freedonia).
                        -r: Optional, 'receiver id' (e.g. 9999:elonia).
                        -d: Optional, 'doctype id without the scheme' (e.g.
-                       RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0).
+                       RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.1).
                        -pd: Optional, 'a predefined doctype for lazy people'.
                             Enter the corresponding number below:
-                          1-  RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0
-                          2-  FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0
+                          1-  RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.1
+                          2-  FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.1
                           3-  urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.crewcertificate-list::1.40
                           4-  urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.crewcertificate::1.40
                           5-  urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.registeredorganization::1.40
@@ -21,7 +21,7 @@ Commands:
                           (Doctypes 4 and above are deprecated and not recommended)
                          If both `-d` and `-pd` are provided, the value of `-d` will be chosen
                          The default doctype is
-                         `RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0`
+                         `RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.1`
 
   send-dp-response   [-f edm response] [-s sender] [-r receiver] [-d doctype | -pd predefinedDocType]
                          This command is only available in DC mode
@@ -30,11 +30,11 @@ Commands:
                          -s: Optional, 'sender id' (e.g 9999:elonia).
                          -r: Optional, 'receiver id' (e.g. 9999:freedonia).
                          -d: Optional, 'doctype id without the scheme' (e.g.
-                         RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0).
+                         RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.1).
                          -pd: Optional, 'a predefined doctype for lazy people'.
                               Enter the corresponding number below:
-                            1- RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0
-                            2- FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0
+                            1- RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.1
+                            2- FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.1
                             3- urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.crewcertificate-list::1.40
                             4- urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.crewcertificate::1.40
                             5- urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.registeredorganization::1.40
@@ -44,7 +44,7 @@ Commands:
                             (Doctypes 4 and above are deprecated and not recommended)
                          If both `-d` and `-pd` are provided, the value of `-d` will be chosen
                          The default doctype is
-                         `RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0`
+                         `RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.1`
 
   quit
                        exit simulator

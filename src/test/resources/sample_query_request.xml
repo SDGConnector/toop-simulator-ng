@@ -5,7 +5,7 @@
                     xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" id="8ad2f89a-f566-4c91-9b4d-9b40f095a78c">
   <rim:Slot name="SpecificationIdentifier">
     <rim:SlotValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="rim:StringValueType">
-      <rim:Value>toop-edm:v2.0</rim:Value>
+      <rim:Value>toop-edm:v2.1</rim:Value>
     </rim:SlotValue>
   </rim:Slot>
   <rim:Slot name="IssueDateTime">

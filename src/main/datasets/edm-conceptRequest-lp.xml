@@ -34,18 +34,12 @@
                     xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0"
                     xmlns:xlink="http://www.w3.org/1999/xlink"
                     xmlns:toop="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0:toop"
-                    xsi:schemaLocation="urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0                        ../../../../xsd/regrep/query.xsd
-    urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0                          ../../../../xsd/regrep/rim.xsd
-    urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0                           ../../../../xsd/regrep/rs.xsd
-    http://www.w3.org/ns/corevocabulary/AggregateComponents              ../../../../xsd/cv/CoreVocabularies-AggregateComponents-1.1.xsd
-    https://semic.org/sa/cv/cagv/agent-2.0.0# ../../../../xsd/cagv/2.0.0/xml/xsd/CV-Agent.xsd"
-
                     id="c4369c4d-740e-4b64-80f0-7b209a66d629">
 
   <!-- SPECIFICATION IDENTIFIER -->
   <rim:Slot name="SpecificationIdentifier">
     <rim:SlotValue xsi:type="rim:StringValueType">
-      <rim:Value>toop-edm:v2.0</rim:Value>
+      <rim:Value>toop-edm:v2.1</rim:Value>
     </rim:SlotValue>
   </rim:Slot>
 

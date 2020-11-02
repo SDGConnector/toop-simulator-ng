@@ -25,12 +25,12 @@
             technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
-  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0'}
+  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.1'}
   participantIdentifierType: *id001
 : !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
   redirect: null
   serviceInformation:
-    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0'}
+    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.1'}
     extension: []
     participantIdentifier: {scheme: iso6523-actorid-upis, value: '9999:elonia'}
     processList:
@@ -77,12 +77,12 @@
             technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
-  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::095c30f1-f629-4cea-b6da-668ef3efc29a::UNSTRUCTURED::toop-edm:v2.0'}
+  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::095c30f1-f629-4cea-b6da-668ef3efc29a::UNSTRUCTURED::toop-edm:v2.1'}
   participantIdentifierType: *id001
 : !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
   redirect: null
   serviceInformation:
-    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::095c30f1-f629-4cea-b6da-668ef3efc29a::UNSTRUCTURED::toop-edm:v2.0'}
+    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::095c30f1-f629-4cea-b6da-668ef3efc29a::UNSTRUCTURED::toop-edm:v2.1'}
     extension: []
     participantIdentifier: {scheme: iso6523-actorid-upis, value: '9999:elonia'}
     processList:
@@ -155,12 +155,12 @@
             technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
-  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0'}
+  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.1'}
   participantIdentifierType: *id001
 : !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
   redirect: null
   serviceInformation:
-    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0'}
+    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.1'}
     extension: []
     participantIdentifier: {scheme: iso6523-actorid-upis, value: '9999:elonia'}
     processList:
@@ -181,12 +181,12 @@
             technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
-  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::79d6a2ef-8342-42e6-94bc-350a53297792::UNSTRUCTURED::toop-edm:v2.0'}
+  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::79d6a2ef-8342-42e6-94bc-350a53297792::UNSTRUCTURED::toop-edm:v2.1'}
   participantIdentifierType: *id001
 : !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
   redirect: null
   serviceInformation:
-    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::79d6a2ef-8342-42e6-94bc-350a53297792::UNSTRUCTURED::toop-edm:v2.0'}
+    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::79d6a2ef-8342-42e6-94bc-350a53297792::UNSTRUCTURED::toop-edm:v2.1'}
     extension: []
     participantIdentifier: {scheme: iso6523-actorid-upis, value: '9999:elonia'}
     processList:
@@ -233,12 +233,12 @@
             technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
-  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::79d6a2ef-8342-42e6-94bc-350a53297792::UNSTRUCTURED::toop-edm:v2.0'}
+  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::79d6a2ef-8342-42e6-94bc-350a53297792::UNSTRUCTURED::toop-edm:v2.1'}
   participantIdentifierType: &id002 {scheme: iso6523-actorid-upis, value: '9999:elonia-dev'}
 : !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
   redirect: null
   serviceInformation:
-    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::79d6a2ef-8342-42e6-94bc-350a53297792::UNSTRUCTURED::toop-edm:v2.0'}
+    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::79d6a2ef-8342-42e6-94bc-350a53297792::UNSTRUCTURED::toop-edm:v2.1'}
     extension: []
     participantIdentifier: {scheme: iso6523-actorid-upis, value: '9999:elonia-dev'}
     processList:
@@ -259,12 +259,12 @@
             technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
-  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0'}
+  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.1'}
   participantIdentifierType: *id002
 : !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
   redirect: null
   serviceInformation:
-    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0'}
+    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.1'}
     extension: []
     participantIdentifier: {scheme: iso6523-actorid-upis, value: '9999:elonia-dev'}
     processList:
@@ -311,12 +311,12 @@
             technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
-  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0'}
+  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.1'}
   participantIdentifierType: *id002
 : !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
   redirect: null
   serviceInformation:
-    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0'}
+    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.1'}
     extension: []
     participantIdentifier: {scheme: iso6523-actorid-upis, value: '9999:elonia-dev'}
     processList:
@@ -389,12 +389,12 @@
             technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
-  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::095c30f1-f629-4cea-b6da-668ef3efc29a::UNSTRUCTURED::toop-edm:v2.0'}
+  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::095c30f1-f629-4cea-b6da-668ef3efc29a::UNSTRUCTURED::toop-edm:v2.1'}
   participantIdentifierType: *id002
 : !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
   redirect: null
   serviceInformation:
-    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::095c30f1-f629-4cea-b6da-668ef3efc29a::UNSTRUCTURED::toop-edm:v2.0'}
+    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'CriminalParticipationDocument::095c30f1-f629-4cea-b6da-668ef3efc29a::UNSTRUCTURED::toop-edm:v2.1'}
     extension: []
     participantIdentifier: {scheme: iso6523-actorid-upis, value: '9999:elonia-dev'}
     processList:
@@ -545,12 +545,12 @@
             technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
-  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'QueryResponse::toop-edm:v2.0'}
+  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'QueryResponse::toop-edm:v2.1'}
   participantIdentifierType: *id003
 : !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
   redirect: null
   serviceInformation:
-    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'QueryResponse::toop-edm:v2.0'}
+    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'QueryResponse::toop-edm:v2.1'}
     extension: []
     participantIdentifier: {scheme: iso6523-actorid-upis, value: '9999:freedonia-dev'}
     processList:
@@ -638,12 +638,12 @@
             technicalInformationUrl: null
             transportProfile: bdxr-transport-ebms3-as4-v1p0
 ? !!eu.toop.simulator.mock.SMPServiceMetadataKey
-  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'QueryResponse::toop-edm:v2.0'}
+  documentIdentifierType: {scheme: toop-doctypeid-qns, value: 'QueryResponse::toop-edm:v2.1'}
   participantIdentifierType: &id004 {scheme: iso6523-actorid-upis, value: '9999:freedonia'}
 : !!com.helger.xsds.bdxr.smp1.ServiceMetadataType
   redirect: null
   serviceInformation:
-    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'QueryResponse::toop-edm:v2.0'}
+    documentIdentifier: {scheme: toop-doctypeid-qns, value: 'QueryResponse::toop-edm:v2.1'}
     extension: []
     participantIdentifier: {scheme: iso6523-actorid-upis, value: '9999:freedonia'}
     processList:
