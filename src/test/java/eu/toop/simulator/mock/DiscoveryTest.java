@@ -15,29 +15,27 @@
  */
 package eu.toop.simulator.mock;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.junit.Test;
+
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.error.level.EErrorLevel;
-import com.helger.peppolid.IParticipantIdentifier;
 
 import eu.toop.connector.api.dsd.DSDDatasetResponse;
 import eu.toop.connector.api.error.ITCErrorHandler;
 import eu.toop.edm.error.IToopErrorCode;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.stream.Collectors;
 
 public class DiscoveryTest {
 
   @Test
-  public void dsdTest(){
+  public void dsdTestByCountry(){
     System.out.println("true");
 
     DiscoveryProvider discoveryProvider = DiscoveryProvider.getInstance();
 
-    final ICommonsSet<DSDDatasetResponse> responses = discoveryProvider.getAllDatasetResponses("", "REGISTERED_ORGANIZATION_TYPE", "SV", new ITCErrorHandler() {
+    final ICommonsSet<DSDDatasetResponse> responses = discoveryProvider.getAllDatasetResponsesByCountry("", "REGISTERED_ORGANIZATION_TYPE", "SV", new ITCErrorHandler() {
       @Override
       public void onMessage(@Nonnull EErrorLevel eErrorLevel, @Nonnull String sMsg, @Nullable Throwable t, @Nonnull IToopErrorCode eCode) {
         System.err.println(sMsg);

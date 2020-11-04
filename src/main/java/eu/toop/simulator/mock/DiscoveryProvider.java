@@ -37,7 +37,6 @@ import com.helger.peppolid.IDocumentTypeIdentifier;
 import com.helger.peppolid.IParticipantIdentifier;
 import com.helger.peppolid.IProcessIdentifier;
 import com.helger.xsds.bdxr.smp1.DocumentIdentifierType;
-import com.helger.xsds.bdxr.smp1.EndpointType;
 import com.helger.xsds.bdxr.smp1.ParticipantIdentifierType;
 import com.helger.xsds.bdxr.smp1.ServiceMetadataType;
 
@@ -140,20 +139,39 @@ public class DiscoveryProvider implements IDDServiceGroupHrefProvider, IDDServic
   /**
    * @param sLogPrefix    The logging prefix to be used. May not be <code>null</code>.
    * @param sDatasetType  Dataset Type to query. May not be <code>null</code>.
-   * @param sCountryCode  Country code to use. Must be a 2-digit string. May be
-   *                      <code>null</code>.
+   * @param sCountryCode  Country code to use. Must be a 2-digit string. May neither be
+   *                      <code>null</code> nor empty.
    * @param aErrorHandler The error handler to be used. May not be <code>null</code>.
    * @return
    */
   @Nonnull
-  public ICommonsSet<DSDDatasetResponse> getAllDatasetResponses(@Nonnull final String sLogPrefix,
-                                                                @Nonnull final String sDatasetType,
-                                                                @Nullable final String sCountryCode,
-                                                                @Nonnull final ITCErrorHandler aErrorHandler) {
+  public ICommonsSet<DSDDatasetResponse> getAllDatasetResponsesByCountry(@Nonnull final String sLogPrefix,
+                                                                         @Nonnull final String sDatasetType,
+                                                                         @Nonnull final String sCountryCode,
+                                                                         @Nonnull final ITCErrorHandler aErrorHandler) {
 
     String resultListXml = new String(resultListBytes, StandardCharsets.UTF_8);
     try {
       final String dsdXml = DsdDataConverter.convertDIRToDSDWithCountryCode(resultListXml, sDatasetType, sCountryCode);
+      final List<DCatAPDatasetType> datasetTypes = DsdDataConverter.parseDataset(dsdXml);
+      final ICommonsSet<DSDDatasetResponse> set = DSDDatasetHelper.buildDSDResponseSet(datasetTypes);
+      LOGGER.debug("Size of dsd dataset response set " + set.size());
+      return set;
+    } catch (TransformerException e) {
+      throw new IllegalStateException(e.getMessage(), e);
+    }
+
+  }
+
+  @Nonnull
+  public ICommonsSet<DSDDatasetResponse> getAllDatasetResponsesByDPType(@Nonnull final String sLogPrefix,
+                                                                        @Nonnull final String sDatasetType,
+                                                                        @Nonnull final String sDPType,
+                                                                        @Nonnull final ITCErrorHandler aErrorHandler) {
+
+    String resultListXml = new String(resultListBytes, StandardCharsets.UTF_8);
+    try {
+      final String dsdXml = DsdDataConverter.convertDIRToDSDWithDPType(resultListXml, sDatasetType, sDPType);
       final List<DCatAPDatasetType> datasetTypes = DsdDataConverter.parseDataset(dsdXml);
       final ICommonsSet<DSDDatasetResponse> set = DSDDatasetHelper.buildDSDResponseSet(datasetTypes);
       LOGGER.debug("Size of dsd dataset response set " + set.size());
