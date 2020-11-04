@@ -46,4 +46,22 @@ public class DiscoveryTest {
       System.out.println(resp.getAsJson().getAsJsonString());
     });
   }
+
+  @Test
+  public void dsdTestByDPType(){
+    System.out.println("true");
+
+    DiscoveryProvider discoveryProvider = DiscoveryProvider.getInstance();
+
+    final ICommonsSet<DSDDatasetResponse> responses = discoveryProvider.getAllDatasetResponsesByDPType("", "REGISTERED_ORGANIZATION_TYPE", "GLN", new ITCErrorHandler() {
+      @Override
+      public void onMessage(@Nonnull EErrorLevel eErrorLevel, @Nonnull String sMsg, @Nullable Throwable t, @Nonnull IToopErrorCode eCode) {
+        System.err.println(sMsg);
+      }
+    });
+
+    responses.forEach(resp->{
+      System.out.println(resp.getAsJson().getAsJsonString());
+    });
+  }
 }
