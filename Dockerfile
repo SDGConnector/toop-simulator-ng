@@ -27,9 +27,9 @@ ENV JAVA_OPTS="$JAVA_OPTS -Djava.security.egd=file:/dev/urandom" \
 
 #ADD ./target/${JAR_NAME} ./
 
-#RUN echo "Downloading $JAR_NAME" && \
-#    curl https://oss.sonatype.org/service/local/repositories/releases/content/eu/toop/toop-simulator-ng/${VERSION}/${JAR_NAME} -o
-#${JAR_NAME}
+RUN echo "Downloading $JAR_NAME" && \
+    curl https://oss.sonatype.org/service/local/repositories/releases/content/eu/toop/toop-simulator-ng/${VERSION}/${JAR_NAME} \
+    -o ${JAR_NAME}
 
 
 CMD ["sh", "-c", "java $JAVA_OPTS -jar ${JAR_NAME}"]
