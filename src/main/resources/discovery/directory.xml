@@ -32,7 +32,7 @@
       <name>Elonia ACC</name>
           <countryCode>SV</countryCode>
           <geoInfo>Country code SV for Elonia ACC</geoInfo>
-          <identifier scheme="DataProviderIdentifierType">RO</identifier>
+          <identifier scheme="DataProviderType">RO</identifier>
           <identifier scheme="DataSubjectIdentifierScheme ">DUNS</identifier>
           <identifier scheme="DataSubjectIdentifierScheme ">GLN</identifier>
           <identifier scheme="DataSubjectIdentifierScheme ">Kennziffer</identifier>
