@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2018-2020 toop.eu
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,19 +15,19 @@
  */
 package eu.toop.simulator.cli;
 
+import java.io.InputStream;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.stream.StreamHelper;
-import eu.toop.simulator.SimulationMode;
+
 import eu.toop.simulator.SimulatorConfig;
 import eu.toop.simulator.ToopSimulatorMain;
 import eu.toop.simulator.mock.MockDC;
 import eu.toop.simulator.mock.MockDP;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
 
 /**
  * Process the command line input and executes the related services.
@@ -44,8 +44,8 @@ public class CommandProcessor {
   private static String helpMessage;
 
   private static final String dcPredefinedDoctypes[] = new String[]{
-      "RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0",
-      "FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0",
+      "RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.1",
+      "FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.1",
       "urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.crewcertificate-list::1.40",
       "urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.crewcertificate::1.40",
       "urn:eu:toop:ns:dataexchange-1p40::Request##urn:eu.toop.request.registeredorganization::1.40",
@@ -55,8 +55,8 @@ public class CommandProcessor {
 
 
   private static final String dpPredefinedDoctypes[] = new String[]{
-      "RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0",
-      "FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0",
+      "RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.1",
+      "FinancialRatioDocument::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.1",
       "urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.crewcertificate-list::1.40",
       "urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.crewcertificate::1.40",
       "urn:eu:toop:ns:dataexchange-1p40::Response##urn:eu.toop.response.registeredorganization::1.40",
@@ -86,7 +86,7 @@ public class CommandProcessor {
       receiver = command.getOption("r").get(0);
     }
 
-    String docType = "RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0";
+    String docType = "RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.1";
 
     if (command.hasOption("d")) {
       docType = command.getOption("d").get(0);
@@ -139,7 +139,7 @@ public class CommandProcessor {
       receiver = command.getOption("r").get(0);
     }
 
-    String docType = "QueryResponse::toop-edm:v2.0";
+    String docType = "QueryResponse::toop-edm:v2.1";
 
     if (command.hasOption("d")) {
       docType = command.getOption("d").get(0);

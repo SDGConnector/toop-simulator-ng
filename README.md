@@ -1,8 +1,11 @@
 # TOOP Simulator Next Generation
 
-[![Build Status](https://api.travis-ci.com/TOOP4EU/toop-simulator-ng.svg?branch=master)](https://travis-ci.com/TOOP4EU/toop-simulator-ng)
+[![Build Status](https://travis-ci.com/TOOP4EU/toop-simulator-ng.svg?branch=master)](https://travis-ci.com/TOOP4EU/toop-simulator-ng)
 
 **Latest Release:** [2.0.0-rc3](https://repo1.maven.org/maven2/eu/toop/toop-simulator-ng/2.0.0-rc3/)
+
+**Current Development Version:** 2.1.0-SNAPSHOT
+
 
 ## Introduction
 
@@ -35,10 +38,10 @@ The Simulator has the ability to only discover and submit messages to the Elonia
 
 | Message Type | Receiving System | Receiving Participant Identifier | Document Type Identifier | Process Identifier | Transmission Protocol |
 |-------|:-----|:-------|:------|:------|:-------|
-| EDM Concept Request	| Elonia DP	| iso6523-actorid-upis::9999:elonia	| toop-doctypeid-qns::RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.0 | toop-procid-agreement::urn:eu.toop.process.dataquery | bdxr-transport-ebms3-as4-v1p0 |
-| EDM Document Request	| Elonia DP	| iso6523-actorid-upis::9999:elonia| 	toop-doctypeid-qns::FinancialRecord::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.0	| toop-procid-agreement::urn:eu.toop.process.documentquery |	bdxr-transport-ebms3-as4-v1p0| 
-| EDM Response (Concept)	| Freedonia DC	| iso6523-actorid-upis::9999:freedonia | toop-doctypeid-qns::QueryResponse::toop-edm:v2.0	| toop-procid-agreement::urn:eu.toop.process.dataquery	| bdxr-transport-ebms3-as4-v1p0 | 
-| EDM Response (Document)	|  Freedonia DC	| iso6523-actorid-upis::9999:freedonia | 	toop-doctypeid-qns::QueryResponse::toop-edm:v2.0 | toop-procid-agreement::urn:eu.toop.process.documentquery | bdxr-transport-ebms3-as4-v1p0 |
+| EDM Concept Request	| Elonia DP	| iso6523-actorid-upis::9999:elonia	| toop-doctypeid-qns::RegisteredOrganization::REGISTERED_ORGANIZATION_TYPE::CONCEPT##CCCEV::toop-edm:v2.1 | toop-procid-agreement::urn:eu.toop.process.dataquery | bdxr-transport-ebms3-as4-v1p0 |
+| EDM Document Request	| Elonia DP	| iso6523-actorid-upis::9999:elonia| 	toop-doctypeid-qns::FinancialRecord::FINANCIAL_RECORD_TYPE::UNSTRUCTURED::toop-edm:v2.1	| toop-procid-agreement::urn:eu.toop.process.documentquery |	bdxr-transport-ebms3-as4-v1p0| 
+| EDM Response (Concept)	| Freedonia DC	| iso6523-actorid-upis::9999:freedonia | toop-doctypeid-qns::QueryResponse::toop-edm:v2.1	| toop-procid-agreement::urn:eu.toop.process.dataquery	| bdxr-transport-ebms3-as4-v1p0 | 
+| EDM Response (Document)	|  Freedonia DC	| iso6523-actorid-upis::9999:freedonia | 	toop-doctypeid-qns::QueryResponse::toop-edm:v2.1 | toop-procid-agreement::urn:eu.toop.process.documentquery | bdxr-transport-ebms3-as4-v1p0 |
 
 ## Deployment and Users Guide
 

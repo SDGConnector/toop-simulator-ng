@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2018-2020 toop.eu
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,12 +15,30 @@
  */
 package eu.toop.simulator.mock;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.annotation.Nullable;
+
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.mime.CMimeType;
 import com.helger.commons.mime.MimeTypeDeterminator;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.response.ResponseHandlerJson;
+
 import eu.toop.connector.api.me.EMEProtocol;
-import eu.toop.connector.api.me.incoming.*;
+import eu.toop.connector.api.me.incoming.IIncomingEDMResponse;
+import eu.toop.connector.api.me.incoming.IncomingEDMErrorResponse;
+import eu.toop.connector.api.me.incoming.IncomingEDMRequest;
+import eu.toop.connector.api.me.incoming.IncomingEDMResponse;
+import eu.toop.connector.api.me.incoming.MEIncomingTransportMetadata;
 import eu.toop.connector.api.me.model.MEPayload;
 import eu.toop.connector.api.rest.TCOutgoingMessage;
 import eu.toop.connector.api.rest.TCOutgoingMetadata;
@@ -33,17 +51,6 @@ import eu.toop.playground.dp.DPException;
 import eu.toop.playground.dp.model.EDMResponseWithAttachment;
 import eu.toop.playground.dp.service.ToopDP;
 import eu.toop.simulator.SimulatorConfig;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nullable;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * A MOCK class that generates and sends DP responses
@@ -151,7 +158,7 @@ public class MockDP {
       aMetadata.setSenderID(TCRestJAXB.createTCID(response.getMetadata().getSenderID().getScheme(), response.getMetadata().getSenderID().getValue()));
       aMetadata.setReceiverID(TCRestJAXB.createTCID(response.getMetadata().getReceiverID().getScheme(), response.getMetadata().getReceiverID().getValue()));
       aMetadata.setDocTypeID(
-              TCRestJAXB.createTCID("toop-doctypeid-qns", "QueryResponse::toop-edm:v2.0"));
+              TCRestJAXB.createTCID("toop-doctypeid-qns", "QueryResponse::toop-edm:v2.1"));
       aMetadata.setProcessID(TCRestJAXB.createTCID(response.getMetadata().getProcessID().getScheme(), response.getMetadata().getProcessID().getValue()));
 
       aMetadata.setTransportProtocol(EMEProtocol.AS4.getTransportProfileID());
