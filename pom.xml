@@ -34,9 +34,9 @@
   <url>http://github.com/toop4eu/toop-simulator-ng</url>
 
   <properties>
-    <toop.version>2.1.0-1</toop.version>
+    <toop.version>2.1.1-SNAPSHOT</toop.version>
     <tc.version>${toop.version}</tc.version>
-    <dsd.version>2.1.0-1</dsd.version>
+    <dsd.version>2.1.1-SNAPSHOT</dsd.version>
     <pg.version>${toop.version}</pg.version>
   </properties>
 
@@ -75,14 +75,14 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-commons-parent-pom</artifactId>
-        <version>9.5.3</version>
+        <version>9.5.4</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.2.8</version>
+        <version>8.2.9</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
