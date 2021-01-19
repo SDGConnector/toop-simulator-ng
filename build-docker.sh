@@ -38,7 +38,7 @@
 # This bash script runs maven build for vaadin production
 # and then creates a dockerfile with the pom version.
 
-version='2.1.0-1'
+version='2.1.1'
 artifact=toop-simulator-ng
 
 echo Building toop/${toop-simulator-ng}:${version}
