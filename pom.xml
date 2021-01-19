@@ -52,7 +52,7 @@
   <url>http://github.com/toop4eu/toop-simulator-ng</url>
 
   <properties>
-    <toop.version>2.1.1-SNAPSHOT</toop.version>
+    <toop.version>2.1.1</toop.version>
     <tc.version>${toop.version}</tc.version>
     <dsd.version>${toop.version}</dsd.version>
     <pg.version>${toop.version}</pg.version>
@@ -219,7 +219,6 @@
     <dependency>
       <groupId>eu.toop</groupId>
       <artifactId>toop-demoui-dplib</artifactId>
-      <version>${pg.version}</version>
     </dependency>
 
     <dependency>
