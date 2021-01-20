@@ -32,7 +32,7 @@
 #         https://joinup.ec.europa.eu/software/page/eupl
 #
 
-FROM tomcat:8-jdk8
+FROM tomcat:9-jdk11
 
 ARG VERSION="2.1.1"
 ARG JAR_NAME=toop-simulator-ng-${VERSION}-bundle.jar
@@ -43,11 +43,7 @@ WORKDIR /simulator
 ENV JAVA_OPTS="$JAVA_OPTS -Djava.security.egd=file:/dev/urandom" \
     JAR_NAME="${JAR_NAME}"
 
-#ADD ./target/${JAR_NAME} ./
-
-RUN echo "Downloading $JAR_NAME" && \
-    curl https://oss.sonatype.org/service/local/repositories/releases/content/eu/toop/toop-simulator-ng/${VERSION}/${JAR_NAME} \
-    -o ${JAR_NAME}
+ADD ./target/${JAR_NAME} ./
 
 
 CMD ["sh", "-c", "java $JAVA_OPTS -jar ${JAR_NAME}"]
