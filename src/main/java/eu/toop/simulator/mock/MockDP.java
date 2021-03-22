@@ -34,7 +34,7 @@
 package eu.toop.simulator.mock;
 
 import java.io.IOException;
-import java.nio.file.Files;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -96,20 +96,15 @@ public class MockDP {
         aMetadata.getDocumentTypeID(), aMetadata.getProcessID());
 
     try {
-      EDMResponseWithAttachment edmResponse = miniDP.createEDMResponseWithAttachmentsFromRequest(aTopLevel);
       //we have a response from DP, push it back
+      EDMResponseWithAttachment edmResponse = miniDP.createEDMResponseWithAttachmentsFromRequest(aTopLevel);
       List<MEPayload> attachments = new ArrayList<>();
       if (!edmResponse.getAllAttachments().isEmpty()) {
         attachments =
                 edmResponse.getAllAttachments().stream()
                         .map(
                                 attachment -> {
-                                  byte[] fileBytes = new byte[0];
-                                  try {
-                                    fileBytes = Files.readAllBytes(attachment.getAttachedFile().toPath());
-                                  } catch (IOException e) {
-                                    LOGGER.error("DP encountered an error while attaching the documents: {}", e.getMessage());
-                                  }
+                                  byte[] fileBytes = attachment.getAttachment ();
 
                                   return MEPayload.builder()
                                           .data(fileBytes)
@@ -131,6 +126,8 @@ public class MockDP {
 
       return new IncomingEDMErrorResponse(edmError,"mock@toop",
           aMetadataInverse);
+    }catch (IOException ex) {
+      throw new UncheckedIOException (ex);
     }
   }
 
