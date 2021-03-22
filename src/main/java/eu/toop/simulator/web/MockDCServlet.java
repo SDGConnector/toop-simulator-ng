@@ -33,7 +33,22 @@
  */
 package eu.toop.simulator.web;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.io.stream.StreamHelper;
+
 import eu.toop.connector.api.rest.TCIncomingMessage;
 import eu.toop.connector.api.rest.TCIncomingMetadata;
 import eu.toop.connector.api.rest.TCRestJAXB;
@@ -41,18 +56,6 @@ import eu.toop.edm.EDMErrorResponse;
 import eu.toop.edm.EDMResponse;
 import eu.toop.edm.IEDMTopLevelObject;
 import eu.toop.edm.xml.EDMPayloadDeterminator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 
 @WebServlet("/to-dc")
 public class MockDCServlet extends HttpServlet {

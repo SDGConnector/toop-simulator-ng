@@ -33,10 +33,23 @@
  */
 package eu.toop.simulator.web;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.peppolid.simple.doctype.SimpleDocumentTypeIdentifier;
 import com.helger.peppolid.simple.participant.SimpleParticipantIdentifier;
 import com.helger.peppolid.simple.process.SimpleProcessIdentifier;
+
 import eu.toop.connector.api.me.incoming.IIncomingEDMResponse;
 import eu.toop.connector.api.me.incoming.MEIncomingTransportMetadata;
 import eu.toop.connector.api.rest.TCIdentifierType;
@@ -46,16 +59,6 @@ import eu.toop.connector.api.rest.TCRestJAXB;
 import eu.toop.edm.EDMRequest;
 import eu.toop.simulator.SimulatorConfig;
 import eu.toop.simulator.mock.MockDP;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 @WebServlet("/to-dp")
 public class MockDPServlet extends HttpServlet {

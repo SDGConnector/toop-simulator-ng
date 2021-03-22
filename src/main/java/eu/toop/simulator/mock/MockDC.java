@@ -33,35 +33,12 @@
  */
 package eu.toop.simulator.mock;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.mime.CMimeType;
-import com.helger.commons.url.SimpleURL;
-import com.helger.httpclient.HttpClientManager;
-import com.helger.httpclient.response.ResponseHandlerJson;
-import com.helger.json.IJson;
-import eu.toop.connector.api.me.EMEProtocol;
-import eu.toop.connector.api.rest.TCOutgoingMessage;
-import eu.toop.connector.api.rest.TCOutgoingMetadata;
-import eu.toop.connector.api.rest.TCPayload;
-import eu.toop.connector.api.rest.TCRestJAXB;
-import eu.toop.simulator.SimulatorConfig;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import java.io.IOException;
+
+import javax.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.io.*;
-import java.nio.file.Files;
-import java.util.stream.StreamSupport;
 
 /**
  * A MOCK class that generates and sends DC requests

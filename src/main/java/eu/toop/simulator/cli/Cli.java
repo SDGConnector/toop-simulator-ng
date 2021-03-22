@@ -33,12 +33,13 @@
  */
 package eu.toop.simulator.cli;
 
-import eu.toop.simulator.SimulationMode;
-import eu.toop.simulator.SimulatorConfig;
+import java.io.File;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
+import eu.toop.simulator.SimulationMode;
+import eu.toop.simulator.SimulatorConfig;
 
 /**
  * @author yerlibilgin

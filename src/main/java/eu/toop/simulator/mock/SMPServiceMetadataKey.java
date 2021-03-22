@@ -33,10 +33,10 @@
  */
 package eu.toop.simulator.mock;
 
+import java.util.Objects;
+
 import com.helger.xsds.bdxr.smp1.DocumentIdentifierType;
 import com.helger.xsds.bdxr.smp1.ParticipantIdentifierType;
-
-import java.util.Objects;
 
 /**
  * This class is a wrapper of SMP ServiceMetadataType queries, used as a key

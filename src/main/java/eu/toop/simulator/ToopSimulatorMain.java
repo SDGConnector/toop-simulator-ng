@@ -33,16 +33,17 @@
  */
 package eu.toop.simulator;
 
-import com.helger.photon.jetty.JettyStarter;
-import eu.toop.connector.api.TCConfig;
-import eu.toop.connector.app.api.TCAPIConfig;
-import eu.toop.simulator.cli.Cli;
-import eu.toop.simulator.mock.DiscoveryProvider;
+import javax.annotation.Nonnull;
+
 import org.eclipse.jetty.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
+import com.helger.photon.jetty.JettyStarter;
+
+import eu.toop.connector.app.api.TCAPIConfig;
+import eu.toop.simulator.cli.Cli;
+import eu.toop.simulator.mock.DiscoveryProvider;
 
 /**
  * The program entry point

@@ -33,9 +33,10 @@
  */
 package eu.toop.simulator;
 
-import com.typesafe.config.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.typesafe.config.Config;
 
 /**
  * The utility class for reading the toop-simulator.conf file/classpath resource.

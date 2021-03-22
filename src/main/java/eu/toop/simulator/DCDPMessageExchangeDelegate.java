@@ -33,19 +33,21 @@
  */
 package eu.toop.simulator;
 
+import javax.annotation.Nonnull;
+import javax.servlet.ServletContext;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.annotation.Nonempty;
-import eu.toop.connector.api.me.*;
+
+import eu.toop.connector.api.me.IMessageExchangeSPI;
 import eu.toop.connector.api.me.incoming.IMEIncomingHandler;
 import eu.toop.connector.api.me.model.MEMessage;
 import eu.toop.connector.api.me.outgoing.IMERoutingInformation;
 import eu.toop.connector.api.me.outgoing.MEOutgoingException;
 import eu.toop.connector.mem.external.spi.ExternalMessageExchangeSPI;
 import eu.toop.simulator.mock.MockDCDPMessageExchange;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
-import javax.servlet.ServletContext;
 
 /**
  * <p>
