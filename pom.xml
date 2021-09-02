@@ -78,14 +78,14 @@
       <dependency>
         <groupId>com.helger.commons</groupId>
         <artifactId>ph-commons-parent-pom</artifactId>
-        <version>10.0.0</version>
+        <version>10.1.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-parent-pom</artifactId>
-        <version>8.3.0</version>
+        <version>8.3.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -220,7 +220,6 @@
     <dependency>
       <groupId>org.yaml</groupId>
       <artifactId>snakeyaml</artifactId>
-      <version>1.27</version>
     </dependency>
 
     <!-- exlude slf4j-simple DONT REMOVE THID :@ -->
